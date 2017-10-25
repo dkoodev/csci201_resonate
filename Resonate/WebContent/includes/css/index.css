@@ -7,6 +7,7 @@
 #tagline {
 	margin-left: auto;
 	margin-right: auto;
+	padding-top: 80px;
 }
 #piano p {
 	font-size: 100px;
@@ -15,7 +16,7 @@
 	margin: 0;
 	display: inline;
 	float:left;
-	padding: 90px 0 0 70px;
+	padding: 75px 0 0 70px;
 }
 
 #piano img {
@@ -24,10 +25,20 @@
 	display: inline;
 }
 
+#buttons {
+	width: 500px;;
+	margin: 140px auto 0 auto;
+}
+
 #buttons button {
-	padding: 0.5rem 2rem !important;
+	padding: 0.7rem 2.5rem !important;
 	margin-right: 10px;
-	font-size: 1.5rem !important;
+	font-size: 1.7rem !important;
+	color: #FFFFFF;
 	border-radius: 0.6rem !important;
 	border: 2px solid #FFFFFF;
+}
+
+#buttons button:hover {
+	background-color: #00b4a8 !important;
 }
