@@ -38,7 +38,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
 				<% if (u != null) { %>
-					<li id="accountBtn"></li>
+					<li id="accountBtn"><a href="user.jsp">My Account</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
 				<% } %>
