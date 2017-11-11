@@ -30,12 +30,16 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<div id="navbar">
-			<img id="logo" src="images/logo.png" />
+		<div id="navbar" class="row">
+			<div class="col-sm-11 col-md-2 col-lg-2">
+				<img id="logo" src="images/logo.png" />
+			</div>
+			<div class="col-sm-1 col-md-10 col-lg-10"> <!-- TODO: if we care, switch to a menu button on small devices -->
 			<ul>
 				<li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>
 				<li>Browse Projects</li>
 			</ul>
+			</div>
 			<div id="loginPopup">
 				<form>
 					<div><p>Username: </p><input type="text" name="uname" /></div>
