@@ -44,8 +44,8 @@ public class Mailer {
 		}  
 	}
 	
-	public static void UserJoinedEmail(User u, String to) {
-		String subject = "Welcome to Resonate, " + u.getName() + "!";
+	public static void UserJoinedEmail(String username, String name, String to) {
+		String subject = "Welcome to Resonate, " + name + "!";
 		String body =   "<html>" +
 						"<body style=\"margin:0; padding: 0;\">" +
 						"<center>" +
@@ -55,10 +55,10 @@ public class Mailer {
 						"<br />" +
 						"<h1>Welcome to Resonate!</h1>" +
 						"<p>You've joined the biggest group of collaborative artists on the web!*<br />" +
-						"Click <a href=\"http://localhost:8080/Resonate/login.jsp?authenticate=" + u.getUsername() +"\">Here</a>" +
+						"Click <a href=\"http://localhost:8080/Resonate/login.jsp?authenticate=" + username +"\">Here</a>" +
 						" to confirm your email and login." +
 						"<br /><br />" +
-						"If the link does not work, please copy \"http://localhost:8080/login.jsp?authenticate="+ u.getUsername() +"\"" +
+						"If the link does not work, please copy \"http://localhost:8080/login.jsp?authenticate="+ username +"\"" +
 						" and paste to your browser." +
 						"</p>" +
 						"<br /><br />" +
