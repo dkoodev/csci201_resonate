@@ -8,8 +8,8 @@
 
 <form method="POST" action="Login" >
 	<div>
-		<input id="centerinput" type="text" name="username" placeholder="Username"/> <br />
-		<input id="centerinput" type="password" name="password" placeholder="Password" /> <br />
+		<input id="centerinput" type="text" name="username" placeholder="Username" required/> <br />
+		<input id="centerinput" type="password" name="password" placeholder="Password" required/> <br />
 	</div>
 	<div>	
 		<button class="button1">Log In</button><br />
