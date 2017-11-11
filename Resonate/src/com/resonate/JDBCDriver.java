@@ -8,8 +8,10 @@ public class JDBCDriver {
 	private static ResultSet rs = null;
 	private static PreparedStatement ps = null;
 	
-	private static final String database = "Resonate";
-	private static final String password = "root";
+	private static final String host = "sql3.freemysqlhosting.net";
+	private static final String database = "sql3204487";
+	private static final String password = "dq7vgwQD4T";
+	private static final String user = "sql3204487";
 	
 	public static Connection getConn() {
 		return conn;
@@ -18,7 +20,7 @@ public class JDBCDriver {
 	public static void connect(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/" + database + "?user=root&password="+ password +"&useSSL=false");
+			conn = DriverManager.getConnection("jdbc:mysql://"+ host +"/" + database + "?user=" + user + "&password="+ password +"&useSSL=false");
 		} catch (ClassNotFoundException e) {
 			System.out.println("Error connecting to database (cnfe): " + e.getMessage());
 			e.printStackTrace();
@@ -46,13 +48,34 @@ public class JDBCDriver {
 			sqle.printStackTrace();
 		}
 	}
+	public static void insertUser(String username, String name, String password, String email) {
+		connect();
+
+		
+		try {
+			ps = conn.prepareStatement(
+					"INSERT INTO NonAdminUsers (username, name, password, email)" + 
+							"VALUES ("
+								+ "'"+ username 		+"',"
+								+ "'"+ name 			+"',"
+								+ "'"+ password 		+"',"
+								+ "'"+ email		+"'"
+							+ ");"
+					);
+					
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
-	// TODO: Make queries
 	public static boolean checkUsernameExists(String username) {
 		connect();
 		
 		try {
-			ps = conn.prepareStatement("SELECT username FROM NonAdminUser WHERE username=?");
+			ps = conn.prepareStatement("SELECT username FROM NonAdminUsers WHERE username=?");
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			if(rs.next()){
@@ -72,7 +95,7 @@ public class JDBCDriver {
 	public static boolean login(String usr, String pwd){
 		connect();
 		try {
-			ps = conn.prepareStatement("SELECT password FROM NonAdminUser WHERE username=?");
+			ps = conn.prepareStatement("SELECT password FROM NonAdminUsers WHERE username=?");
 			ps.setString(1, usr);
 			rs = ps.executeQuery();
 			System.out.println(rs);
