@@ -40,6 +40,10 @@ public class Signup extends HttpServlet {
 	    // username doesn't exist, signup success
 	    else {
 	    		JDBCDriver.insertUser(username_req, name_req, password_req, email_req);
+	    		Mailer.SendMail(email_req, "Welcome to Resonate!", "Hi, " + username_req + "<br>"
+	    				+ "Welcome to Resonate! Where music, musicians, and music writers can collaborate."
+	    				+ "<br> <a href=\"localhost:8080/Resonate/login.jsp?authenticate="+ username_req +" \">Click</a> to verify email!  ");
+	    		
 	    		response.sendRedirect("/Resonate/login.jsp");
 	    }
 

@@ -31,7 +31,7 @@ public class Mailer {
 		message.setFrom(new InternetAddress(user));  
 		message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));  
 		message.setSubject(subject);  
-		message.setText(body);  
+		message.setContent(body,"text/html; charset=utf-8");  
 		       
 		//send the message  
 		Transport.send(message);  
