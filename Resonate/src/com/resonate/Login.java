@@ -31,37 +31,35 @@ public class Login extends HttpServlet {
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String user = request.getParameter("username");
-    	String pw = request.getParameter("password");
-
+    		String username_req = request.getParameter("username");
+    		String password_req = request.getParameter("password");
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(600); // 10 min.
+        
 		Statement st = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		
+
 		JDBCDriver.connect();
 		try {
-			st = JDBCDriver.getConn().createStatement();
-		    rs = st.executeQuery("SELECT * from NonAdminUsers where username='" + user + "' AND password='" + pw + "'");
-
-			int id = -1;
-			// Get all attributes for user
-			id = rs.getInt("_id");
-			String username = rs.getString("username");
-			String name = rs.getString("name");
-			String password = rs.getString("password");
-			String email = rs.getString("email");
-			
-			// Create instance of user
-			User validatedUser = new User(id, username, name, password, email);
-			
-	        HttpSession session = request.getSession();
-	        session.setMaxInactiveInterval(600); // 10 min.
-	        
-	        if (id != -1) {
+	        if (JDBCDriver.login(username_req, password_req)) {
+				st = JDBCDriver.getConn().createStatement();
+			    rs = st.executeQuery("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
+			    
+				// Get all attributes for user
+				int id = rs.getInt("_id");
+				String username = rs.getString("username");
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				String email = rs.getString("email");
+				
+				// Create instance of user
+				User validatedUser = new User(id, username, name, password, email);
+				
 	        		request.setAttribute("user", validatedUser); // TODO: Send the user object instead!
 	        		response.sendRedirect("/Resonate/user.jsp");
 	        } else {
-	        		// TODO: The user should be notified that the login failed
+	    			session.setAttribute("loginMessage", "Login Failed");
 	        		response.sendRedirect("/Resonate/login.jsp");
 	        }
 	        

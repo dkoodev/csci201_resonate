@@ -47,8 +47,29 @@ public class JDBCDriver {
 		}
 	}
 	
+	// TODO: Make queries
+	public static boolean checkUsernameExists(String username) {
+		connect();
+		
+		try {
+			ps = conn.prepareStatement("SELECT username FROM NonAdminUser WHERE username=?");
+			ps.setString(1, username);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				return true;
+			}
+		} catch(SQLException e) {
+			System.out.println("SQLException in checkUsernameExists(String username) ");
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return false;
+	}
 	
-	public static boolean Login(String usr, String pwd){
+	
+	public static boolean login(String usr, String pwd){
 		connect();
 		try {
 			ps = conn.prepareStatement("SELECT password FROM NonAdminUser WHERE username=?");
@@ -61,7 +82,7 @@ public class JDBCDriver {
 				}
 			}
 		} catch (SQLException e) {
-			System.out.println("SQLException in function \"validate\"");
+			System.out.println("SQLException in login(String usr, String pwd)");
 			e.printStackTrace();
 		}finally{
 			close();
