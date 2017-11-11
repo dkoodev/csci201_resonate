@@ -2,10 +2,17 @@
 
 input{
 	color: gray; 
-	width: 700px; 
+	width: 500px; 
 	padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px; 
+    display:block;
+    margin:auto;
+}
+
+#redirect{
+	font-size: 20px; 
+	text-align: center; 
 }
 
 #logo1 {
@@ -18,29 +25,43 @@ input{
 	
 }
 
-.button {
+#signup {
+	display: block;
+	margin: auto; 
+	font-size: 50px;
+	text-align: center; 
+}
+
+.button1 {
+	display: block;
+	margin: auto;
     background-color: #008CBA;
     border: none;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: block;
     font-size: 16px;
-    width: 700px; 
+    width: 500px; 
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 25px; 
 }
 
-.center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-}
-
-.td {
-	bgcolor: black;
+.button2 {
+	display: block;
+	margin: auto;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    width: 300px; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px; 
 }
 
 #footer {

@@ -8,12 +8,16 @@
 
 <form method="POST" action="Login" >
 	<div class="center">
-		<input type="text" name="username" placeholder="Username"/> <br /><br /><br />
-		<input type="password" name="password" placeholder="Password" /> <br /><br />
+		<input type="text" name="username" placeholder="Username"/> <br />
+		<input type="password" name="password" placeholder="Password" /> <br />
 	</div>
-	<div class="center">	
-		<button class="button">Log In</button>
+	<div>	
+		<button class="button1">Log In</button><br />
 	</div>
-	
+	<p id="redirect">
+		Don't have an account? <a href="signup.jsp" ><font color="00b4a8">Sign Up</font></a>
+	</p>
 </form>
+
+
 <%@ include file="includes/global_footer.jsp" %>
