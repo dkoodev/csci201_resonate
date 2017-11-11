@@ -130,7 +130,6 @@ public class JDBCDriver {
 			ps = conn.prepareStatement("SELECT password FROM NonAdminUsers WHERE username=?");
 			ps.setString(1, usr);
 			rs = ps.executeQuery();
-			System.out.println(rs);
 			if(rs.next()){
 				if(pwd.equals(rs.getString("password")) ){
 					return true;
