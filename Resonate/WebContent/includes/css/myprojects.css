@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+#userIcon {
+	border-radius: 50px;
+	height: 100px; 
+	width: auto; 
+}
+
+#userPic {
+	margin-left: 2cm; 
+}
+
+p{
+	font-family: Courier; 
+	font-size: 30px; 
+}
