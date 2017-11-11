@@ -3,6 +3,8 @@ package com.resonate;
 import java.sql.*;
 import java.util.ArrayList;
 
+import com.resonate.objects.User;
+
 public class JDBCDriver {
 	private static Connection conn = null;
 	private static ResultSet rs = null;
@@ -48,6 +50,36 @@ public class JDBCDriver {
 			sqle.printStackTrace();
 		}
 	}
+	
+	public static User getUser(String username_req, String password_req) {
+		connect();
+		int id = -1;
+		String username = null;
+		String name = null;
+		String password = null;
+		String email = null;
+		try {
+			ps = conn.prepareStatement("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
+		    rs = ps.executeQuery();
+		    
+			// Get all attributes for user
+			id = rs.getInt("_id");
+			username = rs.getString("username");
+			name = rs.getString("name");
+			password = rs.getString("password");
+			email = rs.getString("email");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		// Create instance of user
+		User validatedUser = new User(id, username, name, password, email);
+		
+		return validatedUser;
+		
+	}
+	
 	public static void insertUser(String username, String name, String password, String email) {
 		connect();
 
