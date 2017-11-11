@@ -46,7 +46,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
 				<% } %>
-				<li>Browse Projects</li>
+				<li><a href="browseProjects.jsp">Browse Projects</a></li>
 			</ul>
 			</div>
 			<!-- <div id="loginPopup">
