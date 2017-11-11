@@ -30,39 +30,23 @@ public class Signup extends HttpServlet {
 
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String user = request.getParameter("username");
-    	String pw = request.getParameter("password");
+        HttpSession session = request.getSession();
+        String username_req = request.getParameter("username");
+    		String password_req = request.getParameter("password");
+    		String name_req = request.getParameter("name");
+    		String email_req = request.getParameter("email");
 
-		Statement st = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		JDBCDriver.connect();
-		try {
-			st = JDBCDriver.getConn().createStatement();
-		    rs = st.executeQuery("SELECT username from NonAdminUsers where username='" + user);
+	    // username exists, signup success
+	    if(JDBCDriver.checkUsernameExists(username_req)) {
+	    		System.out.println("user did exist, so signup failed");
+	    		session.setAttribute("signupMessage", "Signup Failed");
+    			response.sendRedirect("/Resonate/signup.jsp");
+	    }
+	    // username doesn't exist, signup success
+	    else {
+	    		JDBCDriver.insertUser(username_req, name_req, password_req, email_req);
+	    }
 
-		//	if (rs.next() != null) // Check if username exists already, do something. Create users. Prosper.
-		    
-		    // INSERT INTO NonAdminUser blah blah blah
-	        
-		} catch (SQLException sqle) {
-			System.out.println ("SQLException: " + sqle.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (st != null) {
-					st.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		} 	
     }
 
 }

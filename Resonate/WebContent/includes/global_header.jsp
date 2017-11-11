@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
+<%@ page import="com.resonate.*" %>
+<%@ page import="com.resonate.objects.*" %>
+
 <%
-/*
-if (request.getSession().getAttribute("login") == null) { 
-	bool loggedin = false;
-	
-}*/
+User u = (User)session.getAttribute("validatedUser");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
 String pageName = refParts[refParts.length - 1].split("\\.")[0];
@@ -15,7 +14,8 @@ if (pageName.equals("Resonate")) pageName = "index";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
+	<head>		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Resonate</title>
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
@@ -37,7 +37,11 @@ if (pageName.equals("Resonate")) pageName = "index";
 			<div class="col-sm-1 col-md-10 col-lg-10"> <!-- TODO: if we care, switch to a menu button on small devices -->
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
-				<li id="loginBtn"><a href="login.jsp">Login</a></li>
+				<% if (u != null) { %>
+					<li id="accountBtn"><a href="user.jsp">My Account</a></li>
+				<% } else { %>	
+					<li id="loginBtn"><a href="login.jsp">Login</a></li>
+				<% } %>
 				<li>Browse Projects</li>
 			</ul>
 			</div>

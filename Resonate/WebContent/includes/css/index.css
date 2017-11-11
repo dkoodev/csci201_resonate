@@ -4,19 +4,10 @@
 	width: 100%;
 	height: 500px; 
 }
-#tagline {
+#tagline {/* 
 	margin-left: auto;
-	margin-right: auto;
+	margin-right: auto;  */
 	padding-top: 80px;
-}
-#piano p {
-	font-size: 80px;
-	font-weight: 700;
-	color: #FFFFFF;
-	margin: 0;
-	display: inline;
-	float:left;
-	padding: 75px 0 0 70px;
 }
 
 #piano img {
@@ -42,3 +33,84 @@
 #buttons button:hover {
 	background-color: #00b4a8 !important;
 }
+
+/* start from left side and do 300 500 800 */
+#create p{
+	opacity:0;
+	font-size: 80px;
+	font-weight: 700;
+	color: #FFFFFF;
+	position: absolute;
+	float: left;
+	animation-duration: 1.5s;
+  	animation-name: slidein;
+    animation-fill-mode: forwards;
+}
+
+#collaborate p{
+	  opacity:0;
+    font-size: 80px;
+	font-weight: 700;
+	color: #FFFFFF;
+	position: absolute;
+	float: left;
+	animation-delay: 1.5s;
+	animation-duration: 1.5s;
+  	animation-name: slidein2;
+    animation-fill-mode: forwards;
+}
+
+#resonate{
+	opacity:0;
+    font-size: 80px;
+	font-weight: 700;
+	color: #FFFFFF;
+	position: absolute;
+	float: left;
+	animation-delay: 3s;
+	animation-duration: 1.5s;
+  	animation-name: slidein3;
+    animation-fill-mode: forwards;
+} 
+
+@keyframes slidein {
+  from {
+    opacity:0;
+    margin-left: 0%;
+    width: 300%; 
+  }
+
+  to {
+    opacity:1;
+    margin-left: 10%;
+    width: 100%;
+  }
+}
+
+@keyframes slidein2 {
+  from {
+    opacity:0;
+    margin-left: 0%;
+    width: 300%; 
+  }
+
+  to {
+    opacity:1;
+    margin-left: 40%;
+    width: 100%;
+  }
+}
+
+@keyframes slidein3 {
+  from {
+    opacity:0;
+    margin-left: 0%;
+    width: 300%; 
+  } 
+
+  to {
+    opacity:1;
+    margin-left: 65%;
+    width: 100%;
+  }
+} 
