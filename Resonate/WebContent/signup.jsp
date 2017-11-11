@@ -1,4 +1,5 @@
 <%@ include file="includes/global_header.jsp" %>
+<p>Join A <font color="00b4a8">Universe</font> of Collaborative Artists.</p>
 <form method="POST" action="Signup" >
 	Name: <input type="text" name="name" placeholder="Name" /> <br />
 	Username: <input type="text" name="username" placeholder="Username" /> <br />
