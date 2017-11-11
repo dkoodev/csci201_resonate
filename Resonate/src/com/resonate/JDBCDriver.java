@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.resonate.objects.Project;
 import com.resonate.objects.User;
 
 public class JDBCDriver {
@@ -54,6 +55,12 @@ public class JDBCDriver {
 		}
 	}
 	
+	public static Project getProject(String projectId) {
+		connect();
+		
+		return null;
+	}
+	
 	public static User getUser(String username_req, String password_req) {
 		connect();
 		int id = -1;
@@ -61,6 +68,8 @@ public class JDBCDriver {
 		String name = null;
 		String password = null;
 		String email = null;
+		String photo = null;
+		String bio = null;
 		try {
 			ps = conn.prepareStatement("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
 		    rs = ps.executeQuery();
@@ -71,13 +80,15 @@ public class JDBCDriver {
 			name = rs.getString("name");
 			password = rs.getString("password");
 			email = rs.getString("email");
+			photo = rs.getString("photo");
+			bio = rs.getString("bio");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
 		// Create instance of user
-		User validatedUser = new User(id, username, name, password, email);
+		User validatedUser = new User(id, username, name, password, email, photo, bio);
 		
 		return validatedUser;
 		
@@ -85,8 +96,6 @@ public class JDBCDriver {
 	
 	public static void insertUser(String username, String name, String password, String email) {
 		connect();
-
-		
 		try {
 			ps = conn.prepareStatement(
 					"INSERT INTO NonAdminUsers (username, name, password, email)" + 
@@ -105,7 +114,7 @@ public class JDBCDriver {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static boolean checkEmailExists(String email) {
 		connect();
 		
