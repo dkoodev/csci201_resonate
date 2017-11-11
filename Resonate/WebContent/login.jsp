@@ -1,7 +1,19 @@
-<%@ include file="includes/global_header.jsp" %>
+<%@ include file="includes/global_header.jsp" %><br /><br /><br />
+<head>
+	<link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<div>
+	<img id="logo1" src="images/logo.png" /><br />
+</div>
+
 <form method="POST" action="Login" >
-	Username: <input type="text" name="username" /> <br />
-	Password: <input type="password" name="password" /> <br />
-	<input type="submit" value="Login" />
+	<div class="center">
+		<input type="text" name="username" placeholder="Username"/> <br /><br /><br />
+		<input type="password" name="password" placeholder="Password" /> <br /><br />
+	</div>
+	<div class="center">	
+		<button class="button">Log In</button>
+	</div>
+	
 </form>
 <%@ include file="includes/global_footer.jsp" %>
