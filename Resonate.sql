@@ -3,8 +3,8 @@
 --
 
 -- DROP DATABASE `Resonate`;
-CREATE DATABASE IF NOT EXISTS `Resonate`;
-USE `Resonate`;
+-- CREATE DATABASE IF NOT EXISTS `Resonate`;
+USE `sql3204487`;
 
 -- --------------------------------------------------------
 
@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS `AdminUsers` (
   `username` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `email` varchar(40) NOT NULL
+  `email` varchar(40) NOT NULL,
+  `photo` varchar(200) NULL,
+  `bio` TEXT NULL
 );
 
 
