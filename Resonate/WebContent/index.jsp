@@ -11,10 +11,10 @@
 		<!-- added this -->
 		<div id="basicTimeline">
 			<div id = "create">
-				<p>Create</p>
+				<p>Create.</p>
 			</div>
 		    <div id = "collaborate">
-				<p>Collaborate</p>
+				<p>Collaborate.</p>
 			</div>
 			<div id = "resonate">
 				<img src="images/logo.png" />
@@ -24,8 +24,8 @@
 	</div>
 	
 	<div id="buttons">
-		<!-- <button type="button" class="btn btn-outline-primary btn-lg">Learn More</button>
-		<button type="button" class="btn btn-outline-primary btn-lg">Sign Up</button> -->
+		<button type="button" class="btn btn-outline-primary btn-lg">Learn More</button>
+		<button type="button" class="btn btn-outline-primary btn-lg">Sign Up</button> 
 	</div>
 </div>
 
