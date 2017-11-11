@@ -3,13 +3,13 @@
 	<link rel="stylesheet" type="text/css" href="login.css">
 </head>
 <div>
-	<img id="logo1" src="images/logo.png" /><br />
+	<img id="loginlogo" src="images/logo.png" /><br />
 </div>
 
 <form method="POST" action="Login" >
-	<div class="center">
-		<input type="text" name="username" placeholder="Username"/> <br />
-		<input type="password" name="password" placeholder="Password" /> <br />
+	<div>
+		<input id="centerinput" type="text" name="username" placeholder="Username"/> <br />
+		<input id="centerinput" type="password" name="password" placeholder="Password" /> <br />
 	</div>
 	<div>	
 		<button class="button1">Log In</button><br />
