@@ -103,13 +103,10 @@ body {
 #footer {
 	background-color: #016e90;
 	color: #FFFFFF;
-	
+	position: absolute;
 	height: 100px;
 	width: 100%;
-	/*position: fixed;
-	bottom: 0px;
-	right: 0px;*/
-	
+	bottom: 0px;	
 	padding: 0;
 }
 
