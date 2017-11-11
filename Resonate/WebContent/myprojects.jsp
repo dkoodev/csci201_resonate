@@ -6,16 +6,15 @@
 			<td>
 				<div id="userPic">
 					<!--  replace img src with variables  -->
-					<!--  replace "Jerry Tejada" with variables  -->		
 					 
-					<img id="userIcon" src="images/0.JPG" /> <br /><br />
+					<img id="userIcon" src="images/0.JPG" /> <br />
 			</td>
 			<td>
-					<p id="name">	
+					<p id="fullname"> <!--  replace fullname with variables  -->		
 						Jerry Tejada
-					</p><br />
-					<p id="name">	
-						Jerry Tejada
+					</p>
+					<p id="username">	<!--  replace username with variables  -->
+						username
 					</p><br />
 				</div>
 			</td>

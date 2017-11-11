@@ -15,7 +15,8 @@
 	padding: 10px;   
 }
 
-#name {
+#fullname {
+	text-align: center; 
 	background-color: black; 
 	color: white; 
 	font-family: Courier; 
@@ -23,7 +24,21 @@
 	word-spacing: 0px;
 	letter-spacing: 0px;
 	width: 250px;
-	padding-left: 0.5cm;  
+	padding-left: 0.2cm;  
+	opacity: 0.7;
+}
+
+#username {
+	text-align: center; 
+	background-color: black; 
+	color: gray; 
+	font-family: Courier; 
+	font-size: 20px;
+	word-spacing: 0px;
+	letter-spacing: 0px;
+	width: 250px;
+	padding-left: 0.2cm; 
+	opacity: 0.7;	 
 }
 
 #banner{
