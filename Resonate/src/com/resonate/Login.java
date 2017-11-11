@@ -33,19 +33,15 @@ public class Login extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String user = request.getParameter("username");
     	String pw = request.getParameter("password");
-    	
-    	Connection conn = null;
+
 		Statement st = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		
+		JDBCDriver.connect();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/Resonate?user=root&password=root&useSSL=false");
-			st = conn.createStatement();
+			st = JDBCDriver.getConn().createStatement();
 		    rs = st.executeQuery("SELECT * from NonAdminUsers where username='" + user + "' AND password='" + pw + "'");
-			//ps = conn.prepareStatement("SELECT * FROM Student WHERE fname=?");
-			//ps.setString(1, name); // set first variable in prepared statement
-			//rs = ps.executeQuery();
 
 			int id = -1;
 			id = rs.getInt("_id");
@@ -63,8 +59,6 @@ public class Login extends HttpServlet {
 	        
 		} catch (SQLException sqle) {
 			System.out.println ("SQLException: " + sqle.getMessage());
-		} catch (ClassNotFoundException cnfe) {
-			System.out.println ("ClassNotFoundException: " + cnfe.getMessage());
 		} finally {
 			try {
 				if (rs != null) {
@@ -75,9 +69,6 @@ public class Login extends HttpServlet {
 				}
 				if (ps != null) {
 					ps.close();
-				}
-				if (conn != null) {
-					conn.close();
 				}
 			} catch (SQLException sqle) {
 				System.out.println("sqle: " + sqle.getMessage());
