@@ -37,7 +37,11 @@ if (pageName.equals("Resonate")) pageName = "index";
 			<div class="col-sm-1 col-md-10 col-lg-10"> <!-- TODO: if we care, switch to a menu button on small devices -->
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
-				<li id="loginBtn"><a href="login.jsp">Login</a></li>
+				<% if (u != null) { %>
+					<li id="accountBtn"></li>
+				<% } else { %>	
+					<li id="loginBtn"><a href="login.jsp">Login</a></li>
+				<% } %>
 				<li>Browse Projects</li>
 			</ul>
 			</div>
