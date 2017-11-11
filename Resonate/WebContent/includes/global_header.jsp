@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
+<%@ page import="com.resonate.*" %>
+<%@ page import="com.resonate.objects.*" %>
+
 <%
-/*
-if (request.getSession().getAttribute("login") == null) { 
-	bool loggedin = false;
-	
-}*/
+User u = (User)session.getAttribute("validatedUser");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
 String pageName = refParts[refParts.length - 1].split("\\.")[0];
@@ -15,7 +14,8 @@ if (pageName.equals("Resonate")) pageName = "index";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
+	<head>		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Resonate</title>
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />

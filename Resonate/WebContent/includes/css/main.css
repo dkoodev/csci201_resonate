@@ -129,3 +129,20 @@ body {
 .logo-usc-responsive {
 	padding-left: 40px;
 }
+
+/**** End of Footer ****/
+
+#redirect{
+	font-size: 20px; 
+	text-align: center; 
+}
+
+#centerinput{
+	color: gray; 
+	width: 500px; 
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px; 
+    display:block;
+    margin:auto;
+}
