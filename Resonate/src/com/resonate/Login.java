@@ -35,51 +35,15 @@ public class Login extends HttpServlet {
     		String password_req = request.getParameter("password");
         HttpSession session = request.getSession();
         session.setMaxInactiveInterval(600); // 10 min.
-        
-		Statement st = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
 
-		JDBCDriver.connect();
-		try {
-	        if (JDBCDriver.login(username_req, password_req)) {
-				st = JDBCDriver.getConn().createStatement();
-			    rs = st.executeQuery("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
-			    
-				// Get all attributes for user
-				int id = rs.getInt("_id");
-				String username = rs.getString("username");
-				String name = rs.getString("name");
-				String password = rs.getString("password");
-				String email = rs.getString("email");
-				
-				// Create instance of user
-				User validatedUser = new User(id, username, name, password, email);
-				
-	        		request.setAttribute("user", validatedUser); // TODO: Send the user object instead!
-	        		response.sendRedirect("/Resonate/user.jsp");
-	        } else {
-	    			session.setAttribute("loginMessage", "Login Failed");
-	        		response.sendRedirect("/Resonate/login.jsp");
-	        }
-	        
-		} catch (SQLException sqle) {
-			System.out.println ("SQLException: " + sqle.getMessage());
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (st != null) {
-					st.close();
-				}
-				if (ps != null) {
-					ps.close();
-				}
-			} catch (SQLException sqle) {
-				System.out.println("sqle: " + sqle.getMessage());
-			}
-		} 	
+        if (JDBCDriver.login(username_req, password_req)) {
+			User validatedUser = JDBCDriver.getUser(username_req, password_req);
+			
+        		request.setAttribute("user", validatedUser); 
+        		response.sendRedirect("/Resonate/user.jsp");
+        } else {
+    			session.setAttribute("loginMessage", "Login Failed");
+        		response.sendRedirect("/Resonate/login.jsp");
+        }
     }
-
 }
