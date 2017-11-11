@@ -32,7 +32,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 	<body>
 		<div id="navbar" class="row">
 			<div class="col-sm-11 col-md-2 col-lg-2">
-				<img id="logo" src="images/logo.png" />
+				<a href="index.jsp"> <img id="logo" src="images/logo.png" /> </a>
 			</div>
 			<div class="col-sm-1 col-md-10 col-lg-10"> <!-- TODO: if we care, switch to a menu button on small devices -->
 			<ul>
