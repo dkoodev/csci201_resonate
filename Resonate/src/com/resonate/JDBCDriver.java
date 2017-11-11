@@ -1,7 +1,10 @@
 package com.resonate;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import com.resonate.objects.User;
 
@@ -17,7 +20,7 @@ public class JDBCDriver {
 	
 	public static Connection getConn() {
 		return conn;
-	}
+	} 
 	
 	public static void connect(){
 		try {
@@ -101,6 +104,26 @@ public class JDBCDriver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static boolean checkEmailExists(String email) {
+		connect();
+		
+		try {
+			ps = conn.prepareStatement("SELECT username FROM NonAdminUsers WHERE email=?");
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if(rs.next()){
+				return true;
+			}
+		} catch(SQLException e) {
+			System.out.println("SQLException in checkEmailExists(String email) ");
+			e.printStackTrace();
+		}finally {
+			close();
+		}
+		
+		return false;
 	}
 	
 	public static boolean checkUsernameExists(String username) {

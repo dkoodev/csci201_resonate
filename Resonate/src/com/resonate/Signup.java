@@ -1,10 +1,6 @@
 package com.resonate;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,13 +34,17 @@ public class Signup extends HttpServlet {
 
 	    // username exists, signup success
 	    if(JDBCDriver.checkUsernameExists(username_req)) {
-	    		System.out.println("user did exist, so signup failed");
 	    		session.setAttribute("signupMessage", "Signup Failed");
     			response.sendRedirect("/Resonate/signup.jsp");
 	    }
 	    // username doesn't exist, signup success
 	    else {
 	    		JDBCDriver.insertUser(username_req, name_req, password_req, email_req);
+	    		Mailer.SendMail(email_req, "Welcome to Resonate!", "Hi, " + username_req + "<br>"
+	    				+ "Welcome to Resonate! Where music, musicians, and music writers can collaborate."
+	    				+ "<br> <a href=\"localhost:8080/Resonate/login.jsp?authenticate="+ username_req +" \">Click</a> to verify email!  ");
+	    		
+	    		response.sendRedirect("/Resonate/login.jsp");
 	    }
 
     }
