@@ -1,6 +1,11 @@
 package com.resonate;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,12 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.resonate.objects.User;
 
 /**
  * Servlet implementation class Login
@@ -44,17 +44,25 @@ public class Login extends HttpServlet {
 		    rs = st.executeQuery("SELECT * from NonAdminUsers where username='" + user + "' AND password='" + pw + "'");
 
 			int id = -1;
+			// Get all attributes for user
 			id = rs.getInt("_id");
+			String username = rs.getString("username");
 			String name = rs.getString("name");
-			System.out.println(id + " " + name);
+			String password = rs.getString("password");
+			String email = rs.getString("email");
+			
+			// Create instance of user
+			User validatedUser = new User(id, username, name, password, email);
 			
 	        HttpSession session = request.getSession();
 	        session.setMaxInactiveInterval(600); // 10 min.
+	        
 	        if (id != -1) {
-	        	request.setAttribute("userid", id); // TODO: Send the user object instead!
-	        	response.sendRedirect("/Resonate/user.jsp");
+	        		request.setAttribute("user", validatedUser); // TODO: Send the user object instead!
+	        		response.sendRedirect("/Resonate/user.jsp");
 	        } else {
-	        	response.sendRedirect("/Resonate/login.jsp");
+	        		// TODO: The user should be notified that the login failed
+	        		response.sendRedirect("/Resonate/login.jsp");
 	        }
 	        
 		} catch (SQLException sqle) {
