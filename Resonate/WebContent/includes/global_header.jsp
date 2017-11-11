@@ -28,6 +28,10 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<script src="includes/js/popper.min.js"></script>
 		<link rel="stylesheet" href="includes/css/bootstrap/bootstrap.min.css" />
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>
+		
+		<script src="includes/js/isotope.pkgd.min.js"></script>
+		
+		
 	</head>
 	<body>
 		<div id="navbar" class="row">
@@ -42,7 +46,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
 				<% } %>
-				<li>Browse Projects</li>
+				<li><a href="browseProjects.jsp">Browse Projects</a></li>
 			</ul>
 			</div>
 			<!-- <div id="loginPopup">
