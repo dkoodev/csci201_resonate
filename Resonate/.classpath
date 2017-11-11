@@ -9,12 +9,12 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/dkoo/github/csci201_resonate/Resonate/WebContent/WEB-INF/lib/mysql-connector-java-5.1.44-bin.jar">
+	<classpathentry kind="lib" path="C:/Programming/Java/csci201_resonate/Resonate/WebContent/WEB-INF/lib/mysql-connector-java-5.1.44-bin.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/dkoo/github/csci201_resonate/Resonate/lib/javax.mail.jar">
+	<classpathentry kind="lib" path="C:/Programming/Java/csci201_resonate/Resonate/lib/javax.mail.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
