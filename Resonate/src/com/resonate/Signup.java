@@ -45,7 +45,7 @@ public class Signup extends HttpServlet {
 	    		User user = JDBCDriver.getUser(username_req, password_req);
 	    		Mailer.UserJoinedEmail(username_req, name_req, email_req);
 	    		
-	    		response.sendRedirect("/Resonate/login.jsp");
+	    		response.sendRedirect("/Resonate/login.jsp?signup=" + username_req);
 	    }
 
     }
