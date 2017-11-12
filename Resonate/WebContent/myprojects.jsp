@@ -21,10 +21,36 @@
 		</tr>
 	</table>
 </div>
-<br /><hr>
-<div id="projects">
-	<table>
+<br />
+	<table id="projects">
 	<!--  Enter for loop, # of rows = # of projects that user has created -->
+		<th>
+			<font id="title"> My Projects </font>
+		</th>
+		<tr class="border_bottom">
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td>
+		</tr>
+		<tr class="border_bottom">
+			<td>
+				<!--  Replace with project image from database -->
+				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
+			</td>
+			<td>
+				<!--  Replace with project title from database -->				
+				<br><br><font id="ProjectTitle"> Project Title</font><br>
+				<!--  Replace with project score from database -->				
+				<font id="ProjectInfo"> Score </font><br>
+				<!--  Replace with number of tracks used for this project from database -->				
+				<font id="ProjectInfo"> Num Tracks </font><br>	
+				<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i>	14									
+			</td>	
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			
+			<td>
+				<font id="ProjectUpdate">Last updated: Two days ago</font>
+			</td><td></td>
+		</tr>
 		<tr class="border_bottom">
 			<td>
 				<!--  Replace with project image from database -->
@@ -33,31 +59,16 @@
 			<td>
 				<br><br><font id="ProjectTitle"> Project Title </font><br>
 				<font id="ProjectInfo"> Score </font><br>
-				<font id="ProjectInfo"> Num Tracks </font><br>			
-			</td>	
+				<font id="ProjectInfo"> Num Tracks </font><br>
+				<i class="material-icons" style="font-size:24px; color: red">trending_down</i> 12			
+			</td>
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			
+			<td>
+				<font id="ProjectUpdate">Last updated: Two days ago</font>
+			</td><td></td>
 		</tr>
-		<tr>
-			<td>
-				<!--  Replace with project image from database -->
-				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
-			</td>
-			<td>
-				<br><br><font id="ProjectTitle"> Project Title </font><br>
-				<font id="ProjectInfo"> Score </font><br>
-				<font id="ProjectInfo"> Num Tracks </font><br>				
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<!--  Replace with project image from database -->
-				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
-			</td>
-			<td>
-				<br><br><font id="ProjectTitle"> Project Title </font><br>
-				<font id="ProjectInfo"> Score </font><br>
-				<font id="ProjectInfo"> Num Tracks </font><br>				
-			</td>
-		</tr>
-	</table>
-</div>
+	</table><br /><br />
+	<button class="button" href="createproject.jsp">Create A New Project!</button><br />
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<%@ include file="includes/global_footer.jsp" %>

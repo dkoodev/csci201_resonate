@@ -21,6 +21,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 		<% // Links a stylesheet based on the name of the page we're on, to make css per page seperated and (hopefully) neater. %>
 		<link rel="stylesheet" type="text/css" href="includes/css/<%= pageName %>.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<script type="text/javascript" src="includes/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="includes/js/main.js"></script>
 		
