@@ -25,8 +25,8 @@ public class AuditionStage extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String projectId = request.getParameter("projectId");
-        
+        String projectIdString = request.getParameter("projectId");
+        int projectId = Integer.parseInt(projectIdString);
         
 	}
 

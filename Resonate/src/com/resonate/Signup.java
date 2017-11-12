@@ -41,11 +41,13 @@ public class Signup extends HttpServlet {
 	    }
 	    // username doesn't exist, signup success
 	    else {
-	    		JDBCDriver.insertUser(username_req, name_req, password_req, email_req);
-	    		User user = JDBCDriver.getUser(username_req, password_req);
-	    		Mailer.UserJoinedEmail(username_req, name_req, email_req);
+	    		if(JDBCDriver.insertUser(username_req, name_req, password_req, email_req)) {
+		    		Mailer.UserJoinedEmail(username_req, name_req, email_req);
+		    		response.sendRedirect("/Resonate/login.jsp");
+	    		}else {
+	    			response.sendRedirect("/Resonate/signup.jsp?error=true");
+	    		}
 	    		
-	    		response.sendRedirect("/Resonate/login.jsp");
 	    }
 
     }
