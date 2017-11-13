@@ -21,8 +21,6 @@ public class BrowseProjects extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String projectIdString = request.getParameter("projectId");
-        int projectId = Integer.parseInt(projectIdString);
         
         Vector<Project> projects = JDBCDriver.getProjects();
         
