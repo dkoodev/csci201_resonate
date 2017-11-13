@@ -46,7 +46,14 @@ if (pageName.equals("Resonate")) pageName = "index";
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
 				<% if (u != null) { %>
-					<li id="accountBtn"><a href="user.jsp"><%= u.getName() %></a></li>
+					<li id="accountBtn"><a href="user.jsp">
+					<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
+						<img src="<%= u.getPhoto() %>" />
+					<% } else { %>
+						<img src="images/NoUserPhoto.png" />
+					<% } %>
+					</a></li>
+					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
 				<% } %>

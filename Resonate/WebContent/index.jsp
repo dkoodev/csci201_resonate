@@ -25,7 +25,7 @@
 	
 	<div id="buttons">
 		<button type="button" class="btn btn-outline-primary btn-lg">Learn More</button>
-		<button type="button" class="btn btn-outline-primary btn-lg">Sign Up</button> 
+		<button type="button" class="btn btn-outline-primary btn-lg" onclick="window.location.href='signup.jsp'; return false;">Sign Up</button> 
 	</div>
 </div>
 
