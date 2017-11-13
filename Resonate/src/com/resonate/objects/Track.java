@@ -6,12 +6,15 @@ public class Track {
 	String fileLocation = null;
 	String fileName = null;
 	Integer delay = null;
-	public Track(String name, int id, String fileLocation, String fileName, Integer delay) {
+	User creator = null;
+	
+	public Track(String name, int id, String fileLocation, String fileName, Integer delay, User creator) {
 		this.name = name;
 		this.id = id;
 		this.fileLocation = fileLocation;
 		this.fileName = fileName;
 		this.delay = delay;
+		this.creator = creator;
 	}
 	
 	public String getName() {
@@ -44,6 +47,15 @@ public class Track {
 	public void setDelay(Integer delay) {
 		this.delay = delay;
 	}
+
+	public User getCreator() {
+		return creator;
+	}
+
+	public void setCreator(User creator) {
+		this.creator = creator;
+	}
+	
 	
 
 }
