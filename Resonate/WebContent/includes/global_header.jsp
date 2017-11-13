@@ -8,7 +8,7 @@
 User u = (User)session.getAttribute("user");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
-String pageName = refParts[refParts.length - 1].split("\\.")[0];
+String pageName = refParts[refParts.length - 1].split("\\.")[0]; 
 if (pageName.equals("Resonate")) pageName = "index";
 
 %>
@@ -22,6 +22,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 		<% // Links a stylesheet based on the name of the page we're on, to make css per page seperated and (hopefully) neater. %>
 		<link rel="stylesheet" type="text/css" href="includes/css/<%= pageName %>.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<script type="text/javascript" src="includes/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="includes/js/main.js"></script>
 		
