@@ -31,7 +31,6 @@ public class Login extends HttpServlet {
     	String username_req = request.getParameter("username");
     	String password_req = request.getParameter("password");
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(600); // 10 min.
 
         User validatedUser = null;
         if (JDBCDriver.login(username_req, password_req)) {
@@ -44,9 +43,11 @@ public class Login extends HttpServlet {
             	return;
         	}
 
+        	session.setMaxInactiveInterval(600); // 10 min.
         	session.setAttribute("user", validatedUser); 
         	response.sendRedirect("/Resonate/user.jsp");
         } else {
+        	session.setMaxInactiveInterval(30); // 30s.
     		session.setAttribute("loginMessage", "Login Failed");
         	response.sendRedirect("/Resonate/login.jsp");
         }
