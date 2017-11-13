@@ -36,12 +36,6 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>-->
 		
 		<script src="includes/js/isotope.pkgd.min.js"></script>
-
-<% if (u == null) { %>
-<script type="text/javascript">
-alert('No user.');
-</script>
-<% } %>
 	</head>
 	<body>
 		<div id="navbar" class="row">
