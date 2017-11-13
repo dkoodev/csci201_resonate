@@ -5,6 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Vector;
+
+import com.resonate.objects.Project;
+import com.resonate.objects.Role;
+import com.resonate.objects.Track;
 
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 import com.resonate.objects.User;
@@ -59,6 +65,137 @@ public class JDBCDriver {
 		}
 	}
 	
+  public static Project getProject(int projectId) {
+		connect();
+		
+		int upvoteCount = 0;
+		String project_name = null;
+		String project_description = null;
+		String createDate = null;
+		Vector<User> editors = new Vector<User>();
+		Vector<Track> tracks = new Vector<Track>();
+		Vector<User> contributors = new Vector<User>();
+		Vector<Role> roles = new Vector<Role>();
+		HashMap<User, Role> userToRole = new HashMap<User, Role>();
+		HashMap<Role, Vector<Track>> roleToTracks = new HashMap<Role, Vector<Track>>();
+
+		try {  
+			// Getting project information
+			ps = conn.prepareStatement("SELECT * from Projects where _id='" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		project_name = rs.getString("name");
+		    		project_description = rs.getString("description");
+		    		upvoteCount = rs.getInt("upvoteCount");
+		    		createDate = rs.getString("createDate");
+		    }else {
+		    		return null;
+		    }
+		    
+		    // Getting list of editors
+			ps = conn.prepareStatement("SELECT * from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = '" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("u._id");
+		    			String username = rs.getString("u.username");
+		    			String name = rs.getString("u.name");
+		    			String password = null;
+		    			String email = rs.getString("u.email");
+		    			String photo = rs.getString("u.photo");
+		    			String bio = rs.getString("u.bio");
+		    			
+		    			User editor = new User(id, username, name, password, email, photo, bio);
+		    			
+		    			editors.add(editor);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		    
+		    // Getting list of contributors
+			ps = conn.prepareStatement("SELECT * from Contributors c, NonAdminUsers u where c.project_id= u._id AND c.project_id = '" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("u._id");
+		    			String username = rs.getString("u.username");
+		    			String name = rs.getString("u.name");
+		    			String password = null;
+		    			String email = rs.getString("u.email");
+		    			String photo = rs.getString("u.photo");
+		    			String bio = rs.getString("u.bio");
+		    			
+		    			User contributor = new User(id, username, name, password, email, photo, bio);
+		    			
+		    			contributors.add(contributor);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		    
+		    // Getting list of tracks
+			ps = conn.prepareStatement("SELECT * from Tracks t, Projects p where p.project_id= t.project_id AND p.project_id = '" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("u._id");
+		    			String name = rs.getString("u.name");
+		    			String fileLocation = rs.getString("t.fileLocation");
+		    			String fileName = rs.getString("t.fileName");
+		    			int delay = rs.getInt("t.delay");
+		    			
+		    			Track track = new Track(project_name, id, fileLocation, fileName, delay);
+		    			
+		    			tracks.add(track);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		    
+		    // Getting list of roles
+			ps = conn.prepareStatement("SELECT * from Tracks t, Roles r where p.project_id= r.project_id AND p.project_id = '" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("r._id");
+		    			String name = rs.getString("r.name");
+		    			String description = rs.getString("r.description");
+		    			Role role = new Role(name , description);
+		    			
+		    			roles.add(role);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+
+		    // Getting list of maps
+//			ps = conn.prepareStatement("SELECT * from Tracks t, Projects p where p.project_id= t._id AND p.project_id = '" + projectId + "'");
+//		    rs = ps.executeQuery();
+//		    if(rs.next()) {
+//		    		do {
+//		    			int id = rs.getInt("u._id");
+//		    			String name = rs.getString("u.name");
+//		    			
+//		    			Track track = new Track(name, id );
+//		    			
+//		    			tracks.add(track);
+//		    		}while(rs.next());
+//		    }else {
+//		    		return null;
+//		    }
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+		return null;
+	}
+	
+
 	public static User getUser(String username_req, String password_req) throws SQLException {
 		connect();
 		
@@ -70,7 +207,7 @@ public class JDBCDriver {
 		String photo = null;
 		String bio = null;
 		try {
-			ps = conn.prepareStatement("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
+			ps = conn.prepareStatement("SELECT * from NonAdminUsers where _id='" + id + "';");
 		    rs = ps.executeQuery();
 		    
 			// Get all attributes for user
@@ -90,15 +227,12 @@ public class JDBCDriver {
 		}
 		// Create instance of user
 		User validatedUser = new User(id, username, name, password, email, photo, bio);
-		//System.out.println("User logged in:" + validatedUser.getName());
 		
 		return validatedUser;
-		
 	}
 	
-	public static void insertUser(String username, String name, String password, String email) {
+	public static boolean insertUser(String username, String name, String password, String email) {
 		connect();
-		
 		try {
 			ps = conn.prepareStatement(
 					"INSERT INTO NonAdminUsers (username, name, password, email)" + 
@@ -111,15 +245,17 @@ public class JDBCDriver {
 					);
 					
 			ps.executeUpdate();
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
+
 		} finally {
 			close();
 		}
+		return true;
 	}
-	
+
 	public static boolean checkEmailExists(String email) {
 		connect();
 		
@@ -142,7 +278,6 @@ public class JDBCDriver {
 	
 	public static boolean checkUsernameExists(String username) {
 		connect();
-		
 		try {
 			ps = conn.prepareStatement("SELECT username FROM NonAdminUsers WHERE username=?");
 			ps.setString(1, username);
