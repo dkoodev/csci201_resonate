@@ -13,10 +13,11 @@ public class Project {
 	private Vector<Role> roles = new Vector<Role>();
 	private Vector<Track> tracks = new Vector<Track>();
 	private Vector<User> contributors = new Vector<User>();
+	private Vector<String> tags = new Vector<String>();
 	private HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
 	
 	public Project(int id, int upvoteCount, String name, String description, String createDate, Vector<User> editors,
-			Vector<Role> roles, Vector<Track> tracks, Vector<User> contributors,
+			Vector<Role> roles, Vector<Track> tracks, Vector<User> contributors, Vector<String> tags,
 			HashMap<User, Vector<Track>> userToTracks) {
 		this.id = id;
 		this.upvoteCount = upvoteCount;
@@ -27,6 +28,7 @@ public class Project {
 		this.roles = roles;
 		this.tracks = tracks;
 		this.contributors = contributors;
+		this.tags = tags;
 		this.userToTracks = userToTracks;
 	}
 
@@ -100,6 +102,14 @@ public class Project {
 
 	public void setContributors(Vector<User> contributors) {
 		this.contributors = contributors;
+	}
+	
+	public Vector<String> getTags(){
+		return tags;
+	}
+	
+	public void setTags(Vector<String> tags) {
+		this.tags = tags;
 	}
 
 	public HashMap<User, Vector<Track>> getUserToTracks() {
