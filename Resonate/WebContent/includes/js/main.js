@@ -29,9 +29,9 @@ $(function() {
 	$("#piano").height(windowHeight-125);
 	
 	
-	$('.button1').popover().popover('show'); 
+	$('.errorNotifier').popover().popover('show'); 
 	$('.inputs').on('focus', function () {
-		$('.button1').popover('hide');
-		$('.button1').popover('disable');
+		$('.errorNotifier').popover('hide');
+		$('.errorNotifier').popover('disable');
 	});
 });
