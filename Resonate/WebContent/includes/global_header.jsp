@@ -70,3 +70,4 @@ if (pageName.equals("Resonate")) pageName = "index";
 				</form>
 			</div>-->
 		</div>
+		<div id="mainBody">
