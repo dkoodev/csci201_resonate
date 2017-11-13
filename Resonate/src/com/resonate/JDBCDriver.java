@@ -65,6 +65,76 @@ public class JDBCDriver {
 		}
 	}
 	
+	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources, User creator) {
+		connect();
+		Project project = null;
+		if(creator == null) {
+			return null;
+		}
+		try {
+			// Inserting project into table
+			ps = conn.prepareStatement(
+					"INSERT INTO Projects (name, description, upvoteCount)" + 
+							"VALUES ("
+								+ "'"+ projectName 			+"',"
+								+ "'"+ projectDescription 	+"',"
+								+ "0"
+							+ ");"
+					);
+			ps.executeUpdate();
+			
+			// Verifying/ Getting project id
+			ps = conn.prepareStatement(
+					"SELECT * from Projects"
+					+ "WHERE name = '" + projectName + "'"
+					+ "AND projectDescription = '" + projectDescription + "'"
+					+ "AND upvoteCount = " + 0 + ""
+					+ ";");
+		    rs = ps.executeQuery();
+			
+		    int project_id = -1;
+		    if(rs.next()) {
+		    		project_id = rs.getInt("_id");
+		    }else {
+		    		return null;
+		    }
+		    
+		    // Inserting project and user relationship to Editors
+			ps = conn.prepareStatement(
+					"INSERT INTO Editors (project_id, user_id)" + 
+							"VALUES ("
+								+ project_id 		+","
+								+ creator.get_id() 	+","
+								+ "0"
+							+ ");"
+					);
+			ps.executeUpdate();
+			
+		    // Inserting project and user relationship to Editors
+			ps = conn.prepareStatement(
+					"INSERT INTO MyProjects (project_id, user_id)" + 
+							"VALUES ("
+								+ project_id 		+","
+								+ creator.get_id() 	+","
+								+ "0"
+							+ ");"
+					);
+			ps.executeUpdate();
+			
+			//TODO: Update resources.. 
+			
+			project = getProject(project_id);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally { // will this run..?
+			close();
+		}
+		return project;
+	}
+	
 	public static Vector<Project> getProjects(){
 		Vector<Project> projects = new Vector<Project>();
 		
@@ -105,12 +175,6 @@ public class JDBCDriver {
 		}
 		
 		return projects;
-	}
-	
-	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources) {
-		// CreateProject.java: change the arraylist into vectors
-		
-		return null;
 	}
 	
 	public static Project getProject(int projectId) {
@@ -489,7 +553,7 @@ public class JDBCDriver {
 			e.printStackTrace();
 			return false;
 
-		} finally {
+		} finally { // will this runn..?
 			close();
 		}
 		return true;

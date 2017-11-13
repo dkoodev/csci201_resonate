@@ -2,12 +2,10 @@ package com.resonate;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,12 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.FileItem;
 import org.apache.tomcat.util.http.fileupload.FileItemFactory;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
-import com.resonate.objects.*;
+import com.resonate.objects.Project;
+import com.resonate.objects.User;
 
 /**
  * Servlet implementation class CreateProject
@@ -43,7 +41,7 @@ public class CreateProject extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String proj_name = request.getParameter("name");
     	String proj_desc = request.getParameter("description");
-    	ArrayList<String> proj_resources = new ArrayList<String>();
+    	Vector<String> proj_resources = new Vector<String>();
     	
     	//System.out.println(proj_name);
     	//System.out.println(proj_desc);
@@ -87,15 +85,17 @@ public class CreateProject extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        User creator = (User) session.getAttribute("user");
 
         Project newProject = null;
-        // newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_resources);
+        // Decide if we want the exception thing or if we just wanna do null thing
+        newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_resources, creator);
         if (newProject != null) {
-        	// session.setAttribute("project", newProject); //TODO: Do we want this?
-        	response.sendRedirect("/Resonate/auditionstage.jsp");
+        	// 	session.setAttribute("project", newProject); //TODO: Do we want this?
+        		response.sendRedirect("/Resonate/auditionstage.jsp");
         } else {
-        	session.setAttribute("loginMessage", "SQL Error"); //TODO: Error?
-        	response.sendRedirect("/Resonate/createproject.jsp");
+        		// session.setAttribute("loginMessage", "SQL Error"); //TODO: Error? | Daniel: we should make a unified "error" attribute...
+        		response.sendRedirect("/Resonate/createproject.jsp");
         }
     }
 }
