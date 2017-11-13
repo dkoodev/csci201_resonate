@@ -65,7 +65,13 @@ public class JDBCDriver {
 		}
 	}
 	
-  public static Project getProject(int projectId) {
+	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources) {
+		// CreateProject.java: change the arraylist into vectors
+		
+		return null;
+	}
+	
+	public static Project getProject(int projectId) {
 		connect();
 		
 		int upvoteCount = 0;
@@ -73,11 +79,10 @@ public class JDBCDriver {
 		String project_description = null;
 		String createDate = null;
 		Vector<User> editors = new Vector<User>();
-		Vector<Track> tracks = new Vector<Track>();
 		Vector<User> contributors = new Vector<User>();
+		Vector<Track> tracks = new Vector<Track>();
 		Vector<Role> roles = new Vector<Role>();
-		HashMap<User, Role> userToRole = new HashMap<User, Role>();
-		HashMap<Role, Vector<Track>> roleToTracks = new HashMap<Role, Vector<Track>>();
+		HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
 
 		try {  
 			// Getting project information
@@ -92,6 +97,193 @@ public class JDBCDriver {
 		    		return null;
 		    }
 		    
+		    editors = getEditorsByProjectId(projectId);
+
+		    contributors = getContributorsByProjectId(projectId);
+		    
+		    tracks = getTracksByProjectId(projectId);
+		    
+		    roles = getRolesByProjectId(projectId);
+		    
+		    userToTracks = getUserToTracksByProjectId_Contributors(projectId, contributors);
+
+		    Project project = new Project(projectId, upvoteCount, project_name, project_description, createDate, editors, roles, tracks, contributors, userToTracks);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		
+		return null;
+	}
+	
+	public static HashMap<User, Vector<Track>> getUserToTracksByProjectId_Contributors(int projectId, Vector<User> contributors){
+		connect();
+		HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
+		
+		for(User contributor: contributors) {
+			Vector<Track> tracksOfContributor = new Vector<Track>();
+			userToTracks.put(contributor, tracksOfContributor);
+		}
+
+		close();
+		
+		return userToTracks;
+	}
+	
+	public static Vector<Track> getTracksByProjectId_UserId(int projectId, int userId){
+		connect();
+		Vector<Track> tracks = new Vector<Track>();
+		try {
+		    // Getting list of editors
+			ps = conn.prepareStatement(
+					"SELECT * from Track t"
+					+ "WHERE t.project_id = '" + projectId + "'"
+					+ "AND t.user_id = '" + userId + "'"
+					+ ";");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("t._id");
+		    			String name = rs.getString("t.name");
+		    			String fileLocation = rs.getString("t.");
+		    			String fileName = rs.getString("t.fileName");
+		    			int delay = rs.getInt("t.delay");
+		    			int user_id = rs.getInt("t.user_id");
+		    					
+		    			User creator = getUserById(user_id);
+		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+
+		    			tracks.add(track);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		
+		return tracks;
+	}
+	
+	public static Vector<Role> getRolesByProjectId(int projectId){
+		connect();
+		Vector<Role> roles = new Vector<Role>();
+		try {
+		    // Getting list of editors
+			ps = conn.prepareStatement(
+					"SELECT * from Roles r"
+					+ "WHERE r.project_id = '" + projectId + "';");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("r._id");
+		    			String name = rs.getString("r.name");
+		    			String description = rs.getString("r.description");
+		    			Vector<Track> tracks = getTracksByRoleId(id);
+
+		    			Role role = new Role(id, name, description, tracks);
+		    			roles.add(role);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		
+		return roles;
+	}
+	
+	public static Vector<Track> getTracksByRoleId(int roleId){
+		connect();
+		Vector<Track> tracks = new Vector<Track>();
+		try {
+		    // Getting list of editors
+			ps = conn.prepareStatement(
+					"SELECT * from Track t"
+					+ "WHERE t.role_id = '" + roleId + "';");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("t._id");
+		    			String name = rs.getString("t.name");
+		    			String fileLocation = rs.getString("t.");
+		    			String fileName = rs.getString("t.fileName");
+		    			int delay = rs.getInt("t.delay");
+		    			int user_id = rs.getInt("t.user_id");
+		    					
+		    			User creator = getUserById(user_id);
+		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+
+		    			tracks.add(track);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		
+		return tracks;
+	}
+	
+	public static Vector<Track> getTracksByProjectId(int projectId){
+		
+		connect();
+		Vector<Track> tracks = new Vector<Track>();
+		try {
+		    // Getting list of editors
+			ps = conn.prepareStatement(
+					"SELECT * from Track t"
+					+ "WHERE t.project_id = '" + projectId + "';");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("t._id");
+		    			String name = rs.getString("t.name");
+		    			String fileLocation = rs.getString("t.");
+		    			String fileName = rs.getString("t.fileName");
+		    			int delay = rs.getInt("t.delay");
+		    			int user_id = rs.getInt("t.user_id");
+		    					
+		    			User creator = getUserById(user_id);
+		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+
+		    			tracks.add(track);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		
+		return tracks;
+	}
+	
+	public static Vector<User> getEditorsByProjectId(int projectId){
+		connect();
+		Vector<User> editors = new Vector<User>();
+		try {
 		    // Getting list of editors
 			ps = conn.prepareStatement("SELECT * from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = '" + projectId + "'");
 		    rs = ps.executeQuery();
@@ -112,7 +304,20 @@ public class JDBCDriver {
 		    }else {
 		    		return null;
 		    }
-		    
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		return editors;
+	}
+	
+	public static Vector<User> getContributorsByProjectId(int projectId){
+		connect();
+		Vector<User> contributors = new Vector<User>();
+		try {
 		    // Getting list of contributors
 			ps = conn.prepareStatement("SELECT * from Contributors c, NonAdminUsers u where c.project_id= u._id AND c.project_id = '" + projectId + "'");
 		    rs = ps.executeQuery();
@@ -133,58 +338,6 @@ public class JDBCDriver {
 		    }else {
 		    		return null;
 		    }
-		    
-		    // Getting list of tracks
-			ps = conn.prepareStatement("SELECT * from Tracks t, Projects p where p.project_id= t.project_id AND p.project_id = '" + projectId + "'");
-		    rs = ps.executeQuery();
-		    if(rs.next()) {
-		    		do {
-		    			int id = rs.getInt("u._id");
-		    			String name = rs.getString("u.name");
-		    			String fileLocation = rs.getString("t.fileLocation");
-		    			String fileName = rs.getString("t.fileName");
-		    			int delay = rs.getInt("t.delay");
-		    			
-		    			Track track = new Track(project_name, id, fileLocation, fileName, delay);
-		    			
-		    			tracks.add(track);
-		    		}while(rs.next());
-		    }else {
-		    		return null;
-		    }
-		    
-		    // Getting list of roles
-			ps = conn.prepareStatement("SELECT * from Tracks t, Roles r where p.project_id= r.project_id AND p.project_id = '" + projectId + "'");
-		    rs = ps.executeQuery();
-		    if(rs.next()) {
-		    		do {
-		    			int id = rs.getInt("r._id");
-		    			String name = rs.getString("r.name");
-		    			String description = rs.getString("r.description");
-		    			Role role = new Role(name , description);
-		    			
-		    			roles.add(role);
-		    		}while(rs.next());
-		    }else {
-		    		return null;
-		    }
-
-		    // Getting list of maps
-//			ps = conn.prepareStatement("SELECT * from Tracks t, Projects p where p.project_id= t._id AND p.project_id = '" + projectId + "'");
-//		    rs = ps.executeQuery();
-//		    if(rs.next()) {
-//		    		do {
-//		    			int id = rs.getInt("u._id");
-//		    			String name = rs.getString("u.name");
-//		    			
-//		    			Track track = new Track(name, id );
-//		    			
-//		    			tracks.add(track);
-//		    		}while(rs.next());
-//		    }else {
-//		    		return null;
-//		    }
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -192,12 +345,50 @@ public class JDBCDriver {
 		} finally {
 			close();
 		}
+		return contributors;
+	}
+
+	public static User getUserById(int user_id) {
+		connect();
 		
+		int id = user_id;
+		String username = null;
+		String name = null;
+		String password = null;
+		String email = null;
+		String photo = null;
+		String bio = null;
 		
-		return null;
+		try {
+			ps = conn.prepareStatement("SELECT * from NonAdminUsers where _id='" + id + "';");
+		    rs = ps.executeQuery();
+		    
+		    if(rs.next()) {
+			     do { // should only be one row, but needed or sqle
+					id = rs.getInt("_id");
+					username = rs.getString("username");
+					name = rs.getString("name");
+					password = null;
+					email = rs.getString("email");
+					photo = rs.getString("photo");
+					bio = rs.getString("bio");
+			    } while (rs.next());
+		    }else {
+		    		return null;
+		    }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		// Create instance of user
+		User user = new User(id, username, name, password, email, photo, bio);
+		
+		return user;
 	}
 	
-
 	public static User getUser(String username_req, String password_req) throws SQLException {
 		connect();
 		

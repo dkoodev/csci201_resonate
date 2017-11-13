@@ -1,12 +1,15 @@
 package com.resonate;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.resonate.objects.Project;
 
 /**
  * Servlet implementation class AuditionStage
@@ -27,6 +30,12 @@ public class AuditionStage extends HttpServlet {
         HttpSession session = request.getSession();
         String projectIdString = request.getParameter("projectId");
         int projectId = Integer.parseInt(projectIdString);
+        
+        Project project = JDBCDriver.getProject(projectId);
+        
+        session.setAttribute("project", project);
+        
+        // TODO: I don't know where this goes.... lol
         
 	}
 }
