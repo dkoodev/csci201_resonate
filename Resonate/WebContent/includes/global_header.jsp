@@ -5,13 +5,14 @@
 <%@ page import="com.resonate.objects.*" %>
 
 <%
-User u = (User)session.getAttribute("validatedUser");
+User u = (User)session.getAttribute("user");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
 String pageName = refParts[refParts.length - 1].split("\\.")[0];
 if (pageName.equals("Resonate")) pageName = "index";
 
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>		
@@ -35,6 +36,11 @@ if (pageName.equals("Resonate")) pageName = "index";
 		
 		<script src="includes/js/isotope.pkgd.min.js"></script>
 
+<% if (u == null) { %>
+<script type="text/javascript">
+alert('No user.');
+</script>
+<% } %>
 	</head>
 	<body>
 		<div id="navbar" class="row">

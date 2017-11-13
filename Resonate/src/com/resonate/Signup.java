@@ -1,6 +1,7 @@
 package com.resonate;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,7 +43,11 @@ public class Signup extends HttpServlet {
 	    // username doesn't exist, signup success
 	    else {
 	    		JDBCDriver.insertUser(username_req, name_req, password_req, email_req);
-	    		User user = JDBCDriver.getUser(username_req, password_req);
+	    		try {
+	    			User user = JDBCDriver.getUser(username_req, password_req);
+	    		} catch (SQLException sqle) {
+	    			// TODO
+	    		}
 	    		Mailer.UserJoinedEmail(username_req, name_req, email_req);
 	    		
 	    		response.sendRedirect("/Resonate/login.jsp?signup=" + username_req);
