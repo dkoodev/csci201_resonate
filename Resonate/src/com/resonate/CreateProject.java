@@ -3,6 +3,7 @@ package com.resonate;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,14 +43,15 @@ public class CreateProject extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String proj_name = request.getParameter("name");
     	String proj_desc = request.getParameter("description");
+    	ArrayList<String> proj_resources = new ArrayList<String>();
     	
-    	System.out.println(proj_name);
-    	System.out.println(proj_desc);
+    	//System.out.println(proj_name);
+    	//System.out.println(proj_desc);
         HttpSession session = request.getSession();
         
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         
-        System.out.println(isMultipart);
+        //System.out.println(isMultipart);
 
         if (isMultipart) {
             FileItemFactory factory = new DiskFileItemFactory();
@@ -73,7 +75,9 @@ public class CreateProject extends HttpServlet {
                         }
 
                         File uploadedFile = new File(path + "/" + fileName);
-                        System.out.println(uploadedFile.getAbsolutePath());
+                        //System.out.println(uploadedFile.getAbsolutePath());
+                        proj_resources.add(uploadedFile.getAbsolutePath());
+                        
                         item.write(uploadedFile);
                     }
                 }
@@ -84,11 +88,14 @@ public class CreateProject extends HttpServlet {
             }
         }
 
-        
-        
-
         Project newProject = null;
-       
-       // if (JDBCDriver.createProject(proj_name, proj_desc, ))
+        // newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_resources);
+        if (newProject != null) {
+        	// session.setAttribute("project", newProject); //TODO: Do we want this?
+        	response.sendRedirect("/Resonate/auditionstage.jsp");
+        } else {
+        	session.setAttribute("loginMessage", "SQL Error"); //TODO: Error?
+        	response.sendRedirect("/Resonate/createproject.jsp");
+        }
     }
 }
