@@ -88,7 +88,7 @@ public class JDBCDriver {
 			    		upvoteCount = rs.getInt("upvoteCount");
 			    		createDate = rs.getString("createDate");
 
-				    Project project = new Project(project_id, upvoteCount, project_name, project_description, createDate, null, null, null, null, null);
+				    Project project = new Project(project_id, upvoteCount, project_name, project_description, createDate, null, null, null, null, null, null);
 				    projects.add(project);
 		    		}while(rs.next());
 
@@ -151,7 +151,9 @@ public class JDBCDriver {
 		    
 		    userToTracks = getUserToTracksByProjectId_Contributors(projectId, contributors);
 
-		    project = new Project(projectId, upvoteCount, project_name, project_description, createDate, editors, roles, tracks, contributors, userToTracks);
+		    // Add in tags 
+		    
+		    project = new Project(projectId, upvoteCount, project_name, project_description, createDate, editors, roles, tracks, contributors, null, userToTracks);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
