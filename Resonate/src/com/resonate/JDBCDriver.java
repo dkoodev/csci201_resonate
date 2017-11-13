@@ -65,6 +65,48 @@ public class JDBCDriver {
 		}
 	}
 	
+	public static Vector<Project> getProjects(){
+		Vector<Project> projects = new Vector<Project>();
+		
+		connect();
+		
+		try {  
+			// Getting project information
+			ps = conn.prepareStatement("SELECT * from Projects ;");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int upvoteCount = 0;
+		    			int project_id = -1;
+		    			String project_name = null;
+		    			String project_description = null;
+		    			String createDate = null;
+		    			
+		    			project_id = rs.getInt("_id");
+			    		project_name = rs.getString("name");
+			    		project_description = rs.getString("description");
+			    		upvoteCount = rs.getInt("upvoteCount");
+			    		createDate = rs.getString("createDate");
+
+				    Project project = new Project(project_id, upvoteCount, project_name, project_description, createDate, null, null, null, null, null);
+				    projects.add(project);
+		    		}while(rs.next());
+
+		    }else {
+		    		return null;
+		    }
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} finally {
+			close();
+		}
+		
+		return projects;
+	}
+	
 	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources) {
 		// CreateProject.java: change the arraylist into vectors
 		
@@ -84,9 +126,11 @@ public class JDBCDriver {
 		Vector<Role> roles = new Vector<Role>();
 		HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
 
+		Project project = null;
+		
 		try {  
 			// Getting project information
-			ps = conn.prepareStatement("SELECT * from Projects where _id='" + projectId + "'");
+			ps = conn.prepareStatement("SELECT * from Projects where _id='" + projectId + "';");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		project_name = rs.getString("name");
@@ -107,7 +151,7 @@ public class JDBCDriver {
 		    
 		    userToTracks = getUserToTracksByProjectId_Contributors(projectId, contributors);
 
-		    Project project = new Project(projectId, upvoteCount, project_name, project_description, createDate, editors, roles, tracks, contributors, userToTracks);
+		    project = new Project(projectId, upvoteCount, project_name, project_description, createDate, editors, roles, tracks, contributors, userToTracks);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +160,7 @@ public class JDBCDriver {
 			close();
 		}
 		
-		return null;
+		return project;
 	}
 	
 	public static HashMap<User, Vector<Track>> getUserToTracksByProjectId_Contributors(int projectId, Vector<User> contributors){

@@ -1,6 +1,7 @@
 package com.resonate;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,30 +13,21 @@ import javax.servlet.http.HttpSession;
 import com.resonate.objects.Project;
 
 /**
- * Servlet implementation class AuditionStage
+ * Servlet implementation class BrowseProjects
  */
-@WebServlet("/AuditionStage")
-public class AuditionStage extends HttpServlet {
+@WebServlet("/BrowseProjects")
+public class BrowseProjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AuditionStage() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String projectIdString = request.getParameter("projectId");
         int projectId = Integer.parseInt(projectIdString);
         
-        Project project = JDBCDriver.getProject(projectId);
+        Vector<Project> projects = JDBCDriver.getProjects();
         
-        session.setAttribute("project", project);
-        
-        // TODO: I don't know where this goes(redirect or something).... lol 
-        
+        session.setAttribute("projects", projects);
+		
 	}
+
 }
