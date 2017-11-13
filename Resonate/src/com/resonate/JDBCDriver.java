@@ -64,6 +64,37 @@ public class JDBCDriver {
 			sqle.printStackTrace();
 		}
 	}
+
+	public static boolean updateUser(User user) {
+		
+		return false;
+	}
+	
+	public static boolean insertContributors(User contributor, Project project) {
+		connect();
+
+		try {
+			// Inserting project into table
+			ps = conn.prepareStatement(
+					"INSERT INTO Contributors (project_id, user_id, role_id)" + 
+							"VALUES ("
+								+ "'"+  project.getId()			+"',"
+								+ "'"+  contributor.get_id()   	+"',"
+								+ "0"
+							+ ");"
+					);
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} finally { // will this run..?
+			close();
+		}
+		
+		return false;
+	}
 	
 	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources, User creator) {
 		connect();

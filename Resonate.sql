@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `Roles` (
 --
 -- Table structure for table `Contributors`
 --
-
+-- Maybe role should be track?
 CREATE TABLE IF NOT EXISTS `Contributors` (
   `_id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `project_id` int(11) NOT NULL,
