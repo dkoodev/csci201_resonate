@@ -8,7 +8,7 @@
 User u = (User)session.getAttribute("user");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
-String pageName = refParts[refParts.length - 1].split("\\.")[0];
+String pageName = refParts[refParts.length - 1].split("\\.")[0]; 
 if (pageName.equals("Resonate")) pageName = "index";
 
 %>

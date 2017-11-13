@@ -8,11 +8,12 @@
 	border-style: solid;
 	border-width: 3px;
 	border-color: white;
+	box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.2), 10px 20px 20px 0 rgba(0, 0, 0, 0.19);  
 }
 
 #userPic {
 	margin-left: 0.1cm; 
-	padding: 10px;   
+	padding: 10px; 
 }
 
 #fullname {
@@ -27,7 +28,6 @@
 	width: 250px;
 	height:45px; 
 	padding-left: 0.2cm;  
-	padding-top: 0.2cm;
 	opacity: 0.7;
 	margin-bottom: 4px; 
 	border-radius: 10px;
@@ -44,20 +44,17 @@
 	letter-spacing: 0px;
 	width: 150px;
 	height:40px; 
-	padding-left: 0.2cm; 
-	padding-top: 0.2cm;
 	opacity: 0.7;
 	margin-top: 0;	
 	border-radius: 10px;
-	 
+	padding-top: 0.1cm;
 }
 
 #banner{
-	width: 97%;
+	width: 100%;
 	height: 300px;
 	padding-top: 0;
 	margin-top: 0; 
-	margin-left: 0.5cm;
 	margin-right: 0.5cm; 
 	background: red; /* For browsers that do not support gradients */
   	background: -webkit-linear-gradient(left top, black, #016e90); /* For Safari 5.1 to 6.0 */
@@ -78,17 +75,18 @@ table{
 }
 
 #projects {
-	opacity: 0.5;
 	border-collapse: collapse;
 	display: block; 
 	margin: auto;
 	margin-left: 1cm;
 	margin-right: 2cm;
 	padding-left: 0.5cm;
-	padding-bottom: 1cm;
-	background: linear-gradient(to bottom right, black, aquamarine);
-	
+	padding-bottom: 1cm;	
+	box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.2), 10px 10px 20px 10px rgba(0, 0, 0, 0.19);  
+	background-color: #adcad6;
+	<!--  #f09021; -->
 }
+
 th {
 	padding-top: 1cm;
 	padding-left: 1cm;
@@ -113,12 +111,6 @@ td #createProject {
 tr.border_bottom td {
   	border-bottom:1pt solid black;
   	margin-left: 1cm;
-}
-
-#projects {
-	margin-left: 2cm;
-	font-family: Courier;
-	display: inline--block;
 }
 
 #1 {
@@ -177,19 +169,22 @@ tr.border_bottom td {
 }
 
 .button {
-	display: block;
-	margin: auto;
-    background-color: #016e90;
+	float: right;
+	margin-top: 5.5cm;
+	margin-right: 2cm;
+    background-color: #f09021;
     border: none;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 15px;
     font-weight: bold;
-    width: 600px; 
-    height: 100px;
+    width: 300px; 
+    height: 70px;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 50px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 1px 1px #000000;
 }

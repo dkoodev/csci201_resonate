@@ -19,17 +19,20 @@
 				</div>
 			</td>
 		</tr>
+		<tr>
+			<button class="button" href="createproject.jsp"> + Create A New Project!</button><br />
+		</tr>
 	</table>
 </div>
-<br />
-	<table id="projects">
+<br /><br /><br />
+<table id="projects">
 	<!--  Enter for loop, # of rows = # of projects that user has created -->
 		<th>
 			<font id="title"> My Projects </font>
 		</th>
 		<tr class="border_bottom">
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td>
 		</tr>
 		<tr class="border_bottom">
 			<td>
@@ -45,7 +48,7 @@
 				<font id="ProjectInfo"> Num Tracks </font><br>	
 				<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i>	14									
 			</td>	
-			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			
 			<td>
 				<font id="ProjectUpdate">Last updated: Two days ago</font>
@@ -62,13 +65,12 @@
 				<font id="ProjectInfo"> Num Tracks </font><br>
 				<i class="material-icons" style="font-size:24px; color: red">trending_down</i> 12			
 			</td>
-			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			
 			<td>
 				<font id="ProjectUpdate">Last updated: Two days ago</font>
 			</td><td></td>
 		</tr>
-	</table><br /><br />
-	<button class="button" href="createproject.jsp">Create A New Project!</button><br />
+</table><br /><br />
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 <%@ include file="includes/global_footer.jsp" %>
