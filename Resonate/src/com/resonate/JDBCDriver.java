@@ -70,7 +70,7 @@ public class JDBCDriver {
 		
 		int upvoteCount = 0;
 		String project_name = null;
-		String description = null;
+		String project_description = null;
 		String createDate = null;
 		Vector<User> editors = new Vector<User>();
 		Vector<Track> tracks = new Vector<Track>();
@@ -85,7 +85,7 @@ public class JDBCDriver {
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		project_name = rs.getString("name");
-		    		description = rs.getString("description");
+		    		project_description = rs.getString("description");
 		    		upvoteCount = rs.getInt("upvoteCount");
 		    		createDate = rs.getString("createDate");
 		    }else {
@@ -134,12 +134,63 @@ public class JDBCDriver {
 		    		return null;
 		    }
 		    
-		    // TODO: tracks, roles, and the maps
+		    // Getting list of tracks
+			ps = conn.prepareStatement("SELECT * from Tracks t, Projects p where p.project_id= t.project_id AND p.project_id = '" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("u._id");
+		    			String name = rs.getString("u.name");
+		    			String fileLocation = rs.getString("t.fileLocation");
+		    			String fileName = rs.getString("t.fileName");
+		    			int delay = rs.getInt("t.delay");
+		    			
+		    			Track track = new Track(project_name, id, fileLocation, fileName, delay);
+		    			
+		    			tracks.add(track);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+		    
+		    // Getting list of roles
+			ps = conn.prepareStatement("SELECT * from Tracks t, Roles r where p.project_id= r.project_id AND p.project_id = '" + projectId + "'");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		do {
+		    			int id = rs.getInt("r._id");
+		    			String name = rs.getString("r.name");
+		    			String description = rs.getString("r.description");
+		    			Role role = new Role(name , description);
+		    			
+		    			roles.add(role);
+		    		}while(rs.next());
+		    }else {
+		    		return null;
+		    }
+
+		    // Getting list of maps
+//			ps = conn.prepareStatement("SELECT * from Tracks t, Projects p where p.project_id= t._id AND p.project_id = '" + projectId + "'");
+//		    rs = ps.executeQuery();
+//		    if(rs.next()) {
+//		    		do {
+//		    			int id = rs.getInt("u._id");
+//		    			String name = rs.getString("u.name");
+//		    			
+//		    			Track track = new Track(name, id );
+//		    			
+//		    			tracks.add(track);
+//		    		}while(rs.next());
+//		    }else {
+//		    		return null;
+//		    }
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		} finally {
+			close();
 		}
 		
 		
@@ -181,46 +232,6 @@ public class JDBCDriver {
 		
 		return validatedUser;
 	}
-
-	public static User getUser(String username_req, String password_req) throws SQLException {
-		connect();
-    
-		int id = -1;
-		String username = null;
-		String name = null;
-		String password = null;
-		String email = null;
-		String photo = null;
-		String bio = null;
-		try {
-			ps = conn.prepareStatement("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
-		    rs = ps.executeQuery();
-		    
-			// Get all attributes for user
-
-	    while (rs.next()) { // should only be one row, but needed or sqle
-				id = rs.getInt("_id");
-				username = rs.getString("username");
-				name = rs.getString("name");
-				password = rs.getString("password");
-				email = rs.getString("email");
-				photo = rs.getString("photo");
-				bio = rs.getString("bio");
-	    }
-		} catch (SQLException e) {
-			throw e;
-		} finally {
-			close();
-		}
-		// Create instance of user
-		User validatedUser = new User(id, username, name, password, email, photo, bio);
-
-		//System.out.println("User logged in:" + validatedUser.getName());
-		
-		return validatedUser;
-
-		
-	}
 	
 	public static boolean insertUser(String username, String name, String password, String email) {
 		connect();
@@ -236,7 +247,6 @@ public class JDBCDriver {
 					);
 					
 			ps.executeUpdate();
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
