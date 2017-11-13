@@ -1,6 +1,7 @@
 package com.resonate;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,19 +28,28 @@ public class Login extends HttpServlet {
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    		String username_req = request.getParameter("username");
-    		String password_req = request.getParameter("password");
+    	String username_req = request.getParameter("username");
+    	String password_req = request.getParameter("password");
         HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(600); // 10 min.
 
+        User validatedUser = null;
         if (JDBCDriver.login(username_req, password_req)) {
-			User validatedUser = JDBCDriver.getUser(username_req, password_req);
-			
-        		request.setAttribute("user", validatedUser); 
-        		response.sendRedirect("/Resonate/user.jsp");
+        	try {
+        		validatedUser = JDBCDriver.getUser(username_req, password_req);
+        	} catch (SQLException sqle) {
+        		sqle.printStackTrace();
+        		session.setAttribute("loginMessage", "SQL Error");
+            	response.sendRedirect("/Resonate/login.jsp");
+            	return;
+        	}
+
+        	session.setMaxInactiveInterval(600); // 10 min.
+        	session.setAttribute("user", validatedUser); 
+        	response.sendRedirect("/Resonate/user.jsp");
         } else {
-    			session.setAttribute("loginMessage", "Login Failed");
-        		response.sendRedirect("/Resonate/login.jsp");
+        	session.setMaxInactiveInterval(30); // 30s.
+    		session.setAttribute("loginMessage", "Login Failed");
+        	response.sendRedirect("/Resonate/login.jsp");
         }
     }
 }

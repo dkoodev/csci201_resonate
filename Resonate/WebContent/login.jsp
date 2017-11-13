@@ -1,18 +1,25 @@
 <%@ include file="includes/global_header.jsp" %><br /><br /><br />
-<head>
-	<link rel="stylesheet" type="text/css" href="login.css">
-</head>
+<% String authName = request.getParameter("authenticate"); 
+	String error = (String)session.getAttribute("loginMessage"); %>
 <div>
 	<img id="loginlogo" src="images/logo.png" /><br />
 </div>
 
 <form method="POST" action="Login" >
 	<div>
-		<input id="centerinput" type="text" name="username" placeholder="Username"/> <br />
-		<input id="centerinput" type="password" name="password" placeholder="Password" /> <br />
+		<input class="centerinput inputs" type="text" name="username" placeholder="Username" required /> <br />
+		<input class="centerinput inputs" type="password" name="password" placeholder="Password" required /> <br />
 	</div>
 	<div>	
+	<% if (authName != null && !authName.equals("")) { %>
+		<button class="button1" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="You're In!" data-content="Congratulations, <%= authName %>! Feel free to log in now.">Log In</button><br />
+	<% } else if (error != null && error.equals("Login Failed")) { %>
+		<button class="button1" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Sorry, that username and password doesn't exist.">Log In</button><br />
+	<% } else if (error != null && error.equals("SQL Error")) { %>
+		<button class="button1" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again.">Log In</button><br />
+	<% } else { %>
 		<button class="button1">Log In</button><br />
+	<% } %>
 	</div>
 	<p id="redirect">
 		Don't have an account? <a href="signup.jsp" ><font color="00b4a8">Sign Up</font></a>
