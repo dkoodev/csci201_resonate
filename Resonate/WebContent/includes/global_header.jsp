@@ -5,13 +5,14 @@
 <%@ page import="com.resonate.objects.*" %>
 
 <%
-User u = (User)session.getAttribute("validatedUser");
+User u = (User)session.getAttribute("user");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
 String pageName = refParts[refParts.length - 1].split("\\.")[0];
 if (pageName.equals("Resonate")) pageName = "index";
 
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>		
@@ -26,6 +27,7 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<script type="text/javascript" src="includes/js/main.js"></script>
 		
 		<!-- Bootstrap -->
+		<link rel="stylesheet" href="includes/css/bootstrap/bootstrap.min.css" />
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -35,6 +37,11 @@ if (pageName.equals("Resonate")) pageName = "index";
 		
 		<script src="includes/js/isotope.pkgd.min.js"></script>
 
+<% if (u == null) { %>
+<script type="text/javascript">
+alert('No user.');
+</script>
+<% } %>
 	</head>
 	<body>
 		<div id="navbar" class="row">

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 import com.resonate.objects.User;
 
 public class JDBCDriver {
@@ -48,36 +49,48 @@ public class JDBCDriver {
 			if(ps != null ){
 				ps = null;
 			}
-		}catch(SQLException sqle){
+			
+			// For whatever reason, jdbc is not closing this thread and tomcat is not happy.
+			//AbandonedConnectionCleanupThread.checkedShutdown(); // .shutdown();
+			AbandonedConnectionCleanupThread.uncheckedShutdown();
+		} catch(SQLException sqle) {
 			System.out.println("connection close error");
 			sqle.printStackTrace();
 		}
 	}
 	
-	public static User getUser(String username_req, String password_req) {
+	public static User getUser(String username_req, String password_req) throws SQLException {
 		connect();
+		
 		int id = -1;
 		String username = null;
 		String name = null;
 		String password = null;
 		String email = null;
+		String photo = null;
+		String bio = null;
 		try {
 			ps = conn.prepareStatement("SELECT * from NonAdminUsers where username='" + username_req + "' AND password='" + password_req + "'");
 		    rs = ps.executeQuery();
 		    
 			// Get all attributes for user
-			id = rs.getInt("_id");
-			username = rs.getString("username");
-			name = rs.getString("name");
-			password = rs.getString("password");
-			email = rs.getString("email");
+		    while (rs.next()) { // should only be one row, but needed or sqle
+				id = rs.getInt("_id");
+				username = rs.getString("username");
+				name = rs.getString("name");
+				password = rs.getString("password");
+				email = rs.getString("email");
+				photo = rs.getString("photo");
+				bio = rs.getString("bio");
+		    }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			throw e;
+		} finally {
+			close();
 		}
 		// Create instance of user
-		User validatedUser = new User(id, username, name, password, email);
+		User validatedUser = new User(id, username, name, password, email, photo, bio);
+		//System.out.println("User logged in:" + validatedUser.getName());
 		
 		return validatedUser;
 		
@@ -85,7 +98,6 @@ public class JDBCDriver {
 	
 	public static void insertUser(String username, String name, String password, String email) {
 		connect();
-
 		
 		try {
 			ps = conn.prepareStatement(
@@ -103,6 +115,8 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 	}
 	
@@ -139,7 +153,7 @@ public class JDBCDriver {
 		} catch(SQLException e) {
 			System.out.println("SQLException in checkUsernameExists(String username) ");
 			e.printStackTrace();
-		}finally {
+		} finally {
 			close();
 		}
 		
@@ -161,7 +175,7 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			System.out.println("SQLException in login(String usr, String pwd)");
 			e.printStackTrace();
-		}finally{
+		} finally {
 			close();
 		}
 		return false;		

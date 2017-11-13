@@ -23,4 +23,11 @@ $(function() {
 	var windowHeight = ("innerHeight" in window) ? window.innerHeight : document.documentElement.offsetHeight; 
 	
 	$("#piano").height(windowHeight);
+	
+	
+	$('.button1').popover().popover('show'); 
+	$('.inputs').on('focus', function () {
+		$('.button1').popover('hide');
+		$('.button1').popover('disable');
+	});
 });
