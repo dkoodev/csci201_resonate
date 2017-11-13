@@ -49,6 +49,7 @@ public class Signup extends HttpServlet {
     		}else {
     			response.sendRedirect("/Resonate/signup.jsp?error=true");
     		}
+
 	    }
 
     }

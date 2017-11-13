@@ -28,18 +28,18 @@
 <table id="projects">
 	<!--  Enter for loop, # of rows = # of projects that user has created -->
 		<th>
-			<font id="title"> My Projects </font>
+			<font id="title"> Username's Projects </font>
 		</th>
 		<tr class="border_bottom">
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-			<td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td>
 		</tr>
 		<tr class="border_bottom">
 			<td>
 				<!--  Replace with project image from database -->
 				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
 			</td>
-			<td>
+			<td id="projectBox">
 				<!--  Replace with project title from database -->				
 				<br><br><font id="ProjectTitle"> Project Title</font><br>
 				<!--  Replace with project score from database -->				
@@ -52,14 +52,15 @@
 			
 			<td>
 				<font id="ProjectUpdate">Last updated: Two days ago</font>
-			</td><td></td>
+
+			</td>
 		</tr>
 		<tr class="border_bottom">
 			<td>
 				<!--  Replace with project image from database -->
 				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
 			</td>
-			<td>
+			<td id="projectBox">
 				<br><br><font id="ProjectTitle"> Project Title </font><br>
 				<font id="ProjectInfo"> Score </font><br>
 				<font id="ProjectInfo"> Num Tracks </font><br>
@@ -69,7 +70,7 @@
 			
 			<td>
 				<font id="ProjectUpdate">Last updated: Two days ago</font>
-			</td><td></td>
+			</td>
 		</tr>
 </table><br /><br />
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />

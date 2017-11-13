@@ -11,6 +11,7 @@ import java.util.Vector;
 import com.resonate.objects.Project;
 import com.resonate.objects.Role;
 import com.resonate.objects.Track;
+
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 import com.resonate.objects.User;
 
@@ -64,7 +65,7 @@ public class JDBCDriver {
 		}
 	}
 	
-	public static Project getProject(int projectId) {
+  public static Project getProject(int projectId) {
 		connect();
 		
 		int upvoteCount = 0;
@@ -145,9 +146,11 @@ public class JDBCDriver {
 		return null;
 	}
 	
-	public static User getUserById(int id_req) {
+
+	public static User getUser(String username_req, String password_req) throws SQLException {
 		connect();
-		int id = id_req;
+		
+		int id = -1;
 		String username = null;
 		String name = null;
 		String password = null;
@@ -159,16 +162,19 @@ public class JDBCDriver {
 		    rs = ps.executeQuery();
 		    
 			// Get all attributes for user
-			id = rs.getInt("_id");
-			username = rs.getString("username");
-			name = rs.getString("name");
-			email = rs.getString("email");
-			photo = rs.getString("photo");
-			bio = rs.getString("bio");
+		    while (rs.next()) { // should only be one row, but needed or sqle
+				id = rs.getInt("_id");
+				username = rs.getString("username");
+				name = rs.getString("name");
+				password = rs.getString("password");
+				email = rs.getString("email");
+				photo = rs.getString("photo");
+				bio = rs.getString("bio");
+		    }
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+			throw e;
+		} finally {
+			close();
 		}
 		// Create instance of user
 		User validatedUser = new User(id, username, name, password, email, photo, bio);
@@ -178,7 +184,7 @@ public class JDBCDriver {
 
 	public static User getUser(String username_req, String password_req) throws SQLException {
 		connect();
-		
+    
 		int id = -1;
 		String username = null;
 		String name = null;
@@ -212,6 +218,7 @@ public class JDBCDriver {
 		//System.out.println("User logged in:" + validatedUser.getName());
 		
 		return validatedUser;
+
 		
 	}
 	
@@ -234,6 +241,7 @@ public class JDBCDriver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
+
 		} finally {
 			close();
 		}
