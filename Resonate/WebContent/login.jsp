@@ -15,6 +15,8 @@
 		<button class="button1" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="You're In!" data-content="Congratulations, <%= authName %>! Feel free to log in now.">Log In</button><br />
 	<% } else if (error != null && error.equals("Login Failed")) { %>
 		<button class="button1" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Sorry, that username and password doesn't exist.">Log In</button><br />
+	<% } else if (error != null && error.equals("SQL Error")) { %>
+		<button class="button1" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again.">Log In</button><br />
 	<% } else { %>
 		<button class="button1">Log In</button><br />
 	<% } %>

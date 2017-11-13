@@ -28,5 +28,6 @@ $(function() {
 	$('.button1').popover().popover('show'); 
 	$('.inputs').on('focus', function () {
 		$('.button1').popover('hide');
+		$('.button1').popover('disable');
 	});
 });
