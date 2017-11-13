@@ -52,6 +52,7 @@
 			
 			<td>
 				<font id="ProjectUpdate">Last updated: Two days ago</font>
+
 			</td>
 		</tr>
 		<tr class="border_bottom">
