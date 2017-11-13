@@ -105,21 +105,19 @@ body {
 #footer {
 	background-color: #016e90;
 	color: #FFFFFF;
-	position: fixed;
 	height: 100px;
 	width: 100%;
-	bottom: 0px;	
 	padding: 0;
 }
 
 #footer #right {
 	float: right;
-	padding: 20px;
+	padding: 35px;
 }
 
 #footer #left {
 	float: left;
-	padding-top: 12px;
+	padding-top: 27px;
 }
 
 #footer #left p {
@@ -156,4 +154,10 @@ body {
 
 #accountBtn {
 	padding-top: 15px !important;
+}
+
+/* Adds the absolute bottom to footer if the page is too short. */
+.down {
+	position: fixed;
+	bottom: 0px;
 }
