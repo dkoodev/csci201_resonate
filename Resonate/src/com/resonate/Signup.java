@@ -35,9 +35,9 @@ public class Signup extends HttpServlet {
   		String name_req = request.getParameter("name");
   		String email_req = request.getParameter("email");
 
-	    // username exists, signup success
+	    // username exists, signup failure
 	    if(JDBCDriver.checkUsernameExists(username_req)) {
-	    		session.setAttribute("signupMessage", "Signup Failed");
+	    		session.setAttribute("errorMessage", "Signup Failed");
     			response.sendRedirect("/Resonate/signup.jsp");
 	    }
       
@@ -45,9 +45,11 @@ public class Signup extends HttpServlet {
 	    else {
     		if(JDBCDriver.insertUser(username_req, name_req, password_req, email_req)) {
 	    		Mailer.UserJoinedEmail(username_req, name_req, email_req);
+	    		session.setAttribute("errorMessage", "User Exists");
 	    		response.sendRedirect("/Resonate/login.jsp");
     		}else {
-    			response.sendRedirect("/Resonate/signup.jsp?error=true");
+    			session.setAttribute("errorMessage", "SQL Error");
+    			response.sendRedirect("/Resonate/signup.jsp");
     		}
 
 	    }

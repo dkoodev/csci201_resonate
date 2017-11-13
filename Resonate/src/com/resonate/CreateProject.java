@@ -88,13 +88,13 @@ public class CreateProject extends HttpServlet {
         User creator = (User) session.getAttribute("user");
 
         Project newProject = null;
-        // Decide if we want the exception thing or if we just wanna do null thing
+        // Decide if we want the exception thing or if we just wanna do null thing hahaha...nullthing...nothing
         newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_resources, creator);
         if (newProject != null) {
         	// 	session.setAttribute("project", newProject); //TODO: Do we want this?
         		response.sendRedirect("/Resonate/auditionstage.jsp");
         } else {
-        		// session.setAttribute("loginMessage", "SQL Error"); //TODO: Error? | Daniel: we should make a unified "error" attribute...
+        		session.setAttribute("errorMessage", "SQL Error");
         		response.sendRedirect("/Resonate/createproject.jsp");
         }
     }
