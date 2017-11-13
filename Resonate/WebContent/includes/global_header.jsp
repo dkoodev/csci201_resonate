@@ -5,13 +5,14 @@
 <%@ page import="com.resonate.objects.*" %>
 
 <%
-User u = (User)session.getAttribute("validatedUser");
+User u = (User)session.getAttribute("user");
 String referer = request.getRequestURL().toString();
 String[] refParts = referer.split("/");
-String pageName = refParts[refParts.length - 1].split("\\.")[0];
+String pageName = refParts[refParts.length - 1].split("\\.")[0]; 
 if (pageName.equals("Resonate")) pageName = "index";
 
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>		
@@ -21,10 +22,12 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 		<% // Links a stylesheet based on the name of the page we're on, to make css per page seperated and (hopefully) neater. %>
 		<link rel="stylesheet" type="text/css" href="includes/css/<%= pageName %>.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<script type="text/javascript" src="includes/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="includes/js/main.js"></script>
 		
 		<!-- Bootstrap -->
+		<link rel="stylesheet" href="includes/css/bootstrap/bootstrap.min.css" />
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -33,7 +36,6 @@ if (pageName.equals("Resonate")) pageName = "index";
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>-->
 		
 		<script src="includes/js/isotope.pkgd.min.js"></script>
-
 	</head>
 	<body>
 		<div id="navbar" class="row">
@@ -44,7 +46,14 @@ if (pageName.equals("Resonate")) pageName = "index";
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
 				<% if (u != null) { %>
-					<li id="accountBtn"><a href="user.jsp"><%= u.getName() %></a></li>
+					<li id="accountBtn"><a href="user.jsp">
+					<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
+						<img src="<%= u.getPhoto() %>" />
+					<% } else { %>
+						<img src="images/NoUserPhoto.png" />
+					<% } %>
+					</a></li>
+					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
 				<% } %>
