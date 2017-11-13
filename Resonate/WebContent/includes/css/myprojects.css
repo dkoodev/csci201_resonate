@@ -78,12 +78,15 @@ table{
 	border-collapse: collapse;
 	display: block; 
 	margin: auto;
-	margin-left: 1cm;
+	margin-left: 2cm;
 	margin-right: 2cm;
 	padding-left: 0.5cm;
 	padding-bottom: 1cm;	
 	box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.2), 10px 10px 20px 10px rgba(0, 0, 0, 0.19);  
-	background-color: #adcad6;
+	background-color: black;
+	color: white;
+	border-radius: 10px;	
+	background: linear-gradient(to bottom, #f09021, black);
 	<!--  #f09021; -->
 }
 
@@ -96,6 +99,7 @@ th {
 	font-size: 30px; 
 	font-weight: bold;
 	font-style: italic;
+	text-shadow: 1px 1px 1px #000000;
 }
 
 td{
@@ -111,6 +115,7 @@ td #createProject {
 tr.border_bottom td {
   	border-bottom:1pt solid black;
   	margin-left: 1cm;
+  	
 }
 
 #1 {
@@ -143,7 +148,9 @@ tr.border_bottom td {
 #ProjectTitle {
 	font-size: 20px;
 	font-weight: bold; 
-	color: black; 
+	color: white; 
+	text-shadow: 1px 1px 1px #000000;
+	
 }
 
 #right {
@@ -152,13 +159,16 @@ tr.border_bottom td {
 
 #ProjectInfo {
 	font-size: 15px;
-	color: gray; 
+	color: gray;
+	text-shadow: 1px 1px 1px #000000;
+
 }
 
 #ProjectUpdate {
 	font-size: 15px;
 	color: gray; 
 	text-align: left;
+	text-shadow: 1px 1px 1px #000000;
 }
 
 #createProject {

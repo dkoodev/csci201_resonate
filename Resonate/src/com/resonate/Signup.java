@@ -29,28 +29,27 @@ public class Signup extends HttpServlet {
 
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username_req = request.getParameter("username");
-    		String password_req = request.getParameter("password");
-    		String name_req = request.getParameter("name");
-    		String email_req = request.getParameter("email");
+      HttpSession session = request.getSession();
+      String username_req = request.getParameter("username");
+  		String password_req = request.getParameter("password");
+  		String name_req = request.getParameter("name");
+  		String email_req = request.getParameter("email");
 
 	    // username exists, signup success
 	    if(JDBCDriver.checkUsernameExists(username_req)) {
 	    		session.setAttribute("signupMessage", "Signup Failed");
     			response.sendRedirect("/Resonate/signup.jsp");
 	    }
+      
 	    // username doesn't exist, signup success
 	    else {
-	    		JDBCDriver.insertUser(username_req, name_req, password_req, email_req);
-	    		try {
-	    			User user = JDBCDriver.getUser(username_req, password_req);
-	    		} catch (SQLException sqle) {
-	    			// TODO
-	    		}
+    		if(JDBCDriver.insertUser(username_req, name_req, password_req, email_req)) {
 	    		Mailer.UserJoinedEmail(username_req, name_req, email_req);
-	    		
-	    		response.sendRedirect("/Resonate/login.jsp?signup=" + username_req);
+	    		response.sendRedirect("/Resonate/login.jsp");
+    		}else {
+    			response.sendRedirect("/Resonate/signup.jsp?error=true");
+    		}
+
 	    }
 
     }
