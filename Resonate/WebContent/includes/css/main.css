@@ -48,6 +48,7 @@ body {
 
 
 /* All login popup styling looks blegh rn... */
+/*
 #loginPopup {
 	position: absolute;
 	top: 80px;
@@ -97,7 +98,7 @@ body {
 	display: inline;
 	font-size: 19px;
 	margin-right: 5px;
-}
+}*/
 
 /**** Footer ****/
 
@@ -138,7 +139,7 @@ body {
 	text-align: center; 
 }
 
-#centerinput{
+.centerinput {
 	color: gray; 
 	width: 500px; 
 	padding-top: 10px;
@@ -146,4 +147,13 @@ body {
     padding-left: 10px; 
     display:block;
     margin:auto;
+}
+
+#accountBtn img {
+	width: 50px;
+	height: 50px;	
+}
+
+#accountBtn {
+	padding-top: 15px !important;
 }

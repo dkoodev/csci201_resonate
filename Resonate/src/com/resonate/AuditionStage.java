@@ -29,6 +29,4 @@ public class AuditionStage extends HttpServlet {
         int projectId = Integer.parseInt(projectIdString);
         
 	}
-
-
 }

@@ -17,6 +17,7 @@ public class User {
 		this.email = email;
 		this.photo = photo;
 		this.bio = bio;
+
 	}
 	
 	public User() {
