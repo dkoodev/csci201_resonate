@@ -15,6 +15,9 @@ import com.resonate.objects.Track;
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 import com.resonate.objects.User;
 
+//@Daniel u._id doesn't work in jdbc
+// see here: https://stackoverflow.com/questions/7224024/jdbc-resultset-get-columns-with-table-alias
+
 public class JDBCDriver {
 	private static Connection conn = null;
 	private static ResultSet rs = null;
@@ -57,7 +60,6 @@ public class JDBCDriver {
 			}
 			
 			// For whatever reason, jdbc is not closing this thread and tomcat is not happy.
-			//AbandonedConnectionCleanupThread.checkedShutdown(); // .shutdown();
 			AbandonedConnectionCleanupThread.uncheckedShutdown();
 		} catch(SQLException sqle) {
 			System.out.println("connection close error");
@@ -97,13 +99,13 @@ public class JDBCDriver {
 		return false;
 	}
 	
-	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources, User creator) {
+	public static Project createProject(String projectName, String projectDescription, String projectPhoto, Vector<String> projectResources, User creator) {
 		if(creator == null) {
 			return null;
 		}
 		connect();
 		Project project = null;
-		
+		System.out.println("Inserting project.");
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
@@ -112,46 +114,52 @@ public class JDBCDriver {
 								+ "'"+ projectName 			+"',"
 								+ "'"+ projectDescription 	+"',"
 								+ "0,"
-								+ "'" +projectPhoto + "'"
+								+ "'" + projectPhoto + "'"
 							+ ");"
 					);
 			ps.executeUpdate();
 			
+			System.out.println("Getting inserted project");
 			// Verifying/ Getting project id
 			ps = conn.prepareStatement(
 					"SELECT * from Projects"
-					+ "WHERE name = '" + projectName + "'"
-					+ "AND projectDescription = '" + projectDescription + "'"
-					+ "AND upvoteCount = " + 0 + ""
-					+ ";");
+					+ " WHERE name = '" + projectName + "'"
+					+ " AND description = '" + projectDescription + "'"
+					+ " AND upvoteCount =0;");
 		    rs = ps.executeQuery();
 			
 		    int project_id = -1;
 		    if(rs.next()) {
 		    		project_id = rs.getInt("_id");
 		    } else {
+		    	System.out.println("no table.");
+		    	close();
+		    	return null;
+		    }
+		    System.out.println("Got project" + project_id);
+		    
+		    if (project_id == -1) {
 		    	close();
 		    	return null;
 		    }
 		    
+		    System.out.println("Creator id: " + creator.get_id());
 		    // Inserting project and user relationship to Editors
 			ps = conn.prepareStatement(
 					"INSERT INTO Editors (project_id, user_id)" + 
-							"VALUES ("
+							" VALUES ("
 								+ project_id 		+","
-								+ creator.get_id() 	+","
-								+ "0"
+								+ creator.get_id()
 							+ ");"
 					);
 			ps.executeUpdate();
 			
-		    // Inserting project and user relationship to Editors
+		    // Inserting project into user's 'my projects'
 			ps = conn.prepareStatement(
 					"INSERT INTO MyProjects (project_id, user_id)" + 
-							"VALUES ("
+							" VALUES ("
 								+ project_id 		+","
-								+ creator.get_id() 	+","
-								+ "0"
+								+ creator.get_id()
 							+ ");"
 					);
 			ps.executeUpdate();
@@ -178,7 +186,7 @@ public class JDBCDriver {
 		
 		try {  
 			// Getting project information
-			ps = conn.prepareStatement("SELECT * from Projects ;");
+			ps = conn.prepareStatement("SELECT * from Projects;");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
@@ -235,7 +243,7 @@ public class JDBCDriver {
 		
 		try {  
 			// Getting project information
-			ps = conn.prepareStatement("SELECT * from Projects where _id='" + projectId + "';");
+			ps = conn.prepareStatement("SELECT * from Projects where _id=" + projectId + ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    	project_name = rs.getString("name");
@@ -255,7 +263,9 @@ public class JDBCDriver {
 		    
 		    roles = getRolesByProjectId(projectId);
 		    
-		    userToTracks = getUserToTracksByProjectId_Contributors(projectId, contributors);
+		    if  (contributors != null) {
+		    	userToTracks = getUserToTracksByProjectId_Contributors(projectId, contributors);
+		    }
 
 		    // Add in tags 
 		    
@@ -292,21 +302,21 @@ public class JDBCDriver {
 		try {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
-					"SELECT * from Track t"
-					+ "WHERE t.project_id = '" + projectId + "'"
-					+ "AND t.user_id = '" + userId + "'"
+					"SELECT * from Tracks"
+					+ "WHERE project_id = " + projectId + ""
+					+ "AND user_id = " + userId + ""
 					+ ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 	    		do {
-	    			int id = rs.getInt("t._id");
-	    			String name = rs.getString("t.name");
-	    			String fileLocation = rs.getString("t.");
-	    			String fileName = rs.getString("t.fileName");
-	    			int delay = rs.getInt("t.delay");
-	    			int user_id = rs.getInt("t.user_id");
+	    			int id = rs.getInt("_id");
+	    			String name = rs.getString("name");
+	    			String fileLocation = rs.getString("fileLocation");
+	    			String fileName = rs.getString("fileName");
+	    			int delay = rs.getInt("delay");
+	    			//int user_id = rs.getInt("t.user_id");
 	    					
-	    			User creator = getUserById(user_id);
+	    			User creator = getUserById(userId); //(user_id);
 	    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 	    			tracks.add(track);
@@ -333,14 +343,14 @@ public class JDBCDriver {
 		try {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
-					"SELECT * from Roles r"
-					+ "WHERE r.project_id = '" + projectId + "';");
+					"SELECT * from Roles "
+					+ "WHERE project_id = " + projectId + ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
-		    			int id = rs.getInt("r._id");
-		    			String name = rs.getString("r.name");
-		    			String description = rs.getString("r.description");
+		    			int id = rs.getInt("_id");
+		    			String name = rs.getString("name");
+		    			String description = rs.getString("description");
 		    			Vector<Track> tracks = getTracksByRoleId(id);
 
 		    			Role role = new Role(id, name, description, tracks);
@@ -368,17 +378,17 @@ public class JDBCDriver {
 		try {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
-					"SELECT * from Track t"
-					+ "WHERE t.role_id = '" + roleId + "';");
+					"SELECT * from Tracks "
+					+ "WHERE role_id = " + roleId + ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
-		    			int id = rs.getInt("t._id");
-		    			String name = rs.getString("t.name");
-		    			String fileLocation = rs.getString("t.");
-		    			String fileName = rs.getString("t.fileName");
-		    			int delay = rs.getInt("t.delay");
-		    			int user_id = rs.getInt("t.user_id");
+		    			int id = rs.getInt("_id");
+		    			String name = rs.getString("name");
+		    			String fileLocation = rs.getString("fileLocation");
+		    			String fileName = rs.getString("fileName");
+		    			int delay = rs.getInt("delay");
+		    			int user_id = rs.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id);
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
@@ -408,17 +418,17 @@ public class JDBCDriver {
 		try {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
-					"SELECT * from Track t"
-					+ "WHERE t.project_id = '" + projectId + "';");
+					"SELECT * from Tracks "
+					+ "WHERE project_id = " + projectId + ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
-		    			int id = rs.getInt("t._id");
-		    			String name = rs.getString("t.name");
-		    			String fileLocation = rs.getString("t.");
-		    			String fileName = rs.getString("t.fileName");
-		    			int delay = rs.getInt("t.delay");
-		    			int user_id = rs.getInt("t.user_id");
+		    			int id = rs.getInt("_id");
+		    			String name = rs.getString("name");
+		    			String fileLocation = rs.getString("fileLocation");
+		    			String fileName = rs.getString("fileName");
+		    			int delay = rs.getInt("delay");
+		    			int user_id = rs.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id);
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
@@ -444,17 +454,20 @@ public class JDBCDriver {
 		Vector<User> editors = new Vector<User>();
 		try {
 		    // Getting list of editors
-			ps = conn.prepareStatement("SELECT * from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = '" + projectId + "'");
+			//ps = conn.prepareStatement("SELECT * from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = '" + projectId + "'");
+			ps = conn.prepareStatement("SELECT u._id as userid," +
+											" u.username, u.name, u.email, u.photo, u.bio" +
+											" from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = " + projectId + "");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
-		    			int id = rs.getInt("u._id");
-		    			String username = rs.getString("u.username");
-		    			String name = rs.getString("u.name");
+		    			int id = rs.getInt("userid");
+		    			String username = rs.getString("username");
+		    			String name = rs.getString("name");
 		    			String password = null;
-		    			String email = rs.getString("u.email");
-		    			String photo = rs.getString("u.photo");
-		    			String bio = rs.getString("u.bio");
+		    			String email = rs.getString("email");
+		    			String photo = rs.getString("photo");
+		    			String bio = rs.getString("bio");
 		    			
 		    			User editor = new User(id, username, name, password, email, photo, bio);
 		    			
@@ -478,24 +491,27 @@ public class JDBCDriver {
 		Vector<User> contributors = new Vector<User>();
 		try {
 		    // Getting list of contributors
-			ps = conn.prepareStatement("SELECT * from Contributors c, NonAdminUsers u where c.project_id= u._id AND c.project_id = '" + projectId + "'");
+			ps = conn.prepareStatement("SELECT u._id as userid," + 
+											" u.username, u.name, u.email, u.photo, u.bio from" + 
+											" Contributors c, NonAdminUsers u where c.project_id= u._id AND c.project_id = " + projectId + "");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
-		    			int id = rs.getInt("u._id");
-		    			String username = rs.getString("u.username");
-		    			String name = rs.getString("u.name");
+		    			int id = rs.getInt("userid");
+		    			String username = rs.getString("username");
+		    			String name = rs.getString("name");
 		    			String password = null;
-		    			String email = rs.getString("u.email");
-		    			String photo = rs.getString("u.photo");
-		    			String bio = rs.getString("u.bio");
+		    			String email = rs.getString("email");
+		    			String photo = rs.getString("photo");
+		    			String bio = rs.getString("bio");
 		    			
 		    			User contributor = new User(id, username, name, password, email, photo, bio);
 		    			
 		    			contributors.add(contributor);
 		    		} while(rs.next());
 		    } else {
-		    		return null;
+		    	close();
+		    	return null;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -519,7 +535,7 @@ public class JDBCDriver {
 		String bio = null;
 		
 		try {
-			ps = conn.prepareStatement("SELECT * from NonAdminUsers where _id='" + id + "';");
+			ps = conn.prepareStatement("SELECT * from NonAdminUsers where _id=" + id + ";");
 		    rs = ps.executeQuery();
 		    
 		    if(rs.next()) {
@@ -533,7 +549,8 @@ public class JDBCDriver {
 					bio = rs.getString("bio");
 			    } while (rs.next());
 		    } else {
-		    		return null;
+		    	close();
+		    	return null;
 		    }
 
 		} catch (SQLException e) {
@@ -560,7 +577,8 @@ public class JDBCDriver {
 		String photo = null;
 		String bio = null;
 		try {
-			ps = conn.prepareStatement("SELECT * from NonAdminUsers where _id='" + id + "';");
+			ps = conn.prepareStatement("SELECT * from NonAdminUsers where username='" + username_req + "'"
+													+ " and password='" + password_req + "';");
 		    rs = ps.executeQuery();
 		    
 			// Get all attributes for user
