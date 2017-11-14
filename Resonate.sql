@@ -17,9 +17,7 @@ CREATE TABLE IF NOT EXISTS `AdminUsers` (
   `username` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `photo` varchar(200) NULL,
-  `bio` TEXT NULL
+  `email` varchar(40) NOT NULL
 );
 
 
@@ -34,7 +32,9 @@ CREATE TABLE IF NOT EXISTS `NonAdminUsers` (
   `username` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `password` varchar(30) NOT NULL,
-  `email` varchar(40) NOT NULL
+  `email` varchar(40) NOT NULL,
+  `photo` varchar(200) NULL,
+  `bio` TEXT NULL
 );
 
 -- --------------------------------------------------------
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `Roles` (
 --
 -- Table structure for table `Contributors`
 --
-
+-- Maybe role should be track?
 CREATE TABLE IF NOT EXISTS `Contributors` (
   `_id` int(11) PRIMARY KEY AUTO_INCREMENT,
   `project_id` int(11) NOT NULL,
@@ -134,12 +134,14 @@ CREATE TABLE IF NOT EXISTS `Tracks` (
   `name` varchar(30) NOT NULL,
   `project_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `fileLocation` varchar(100) NOT NULL,
   `fileName` varchar(30) NOT NULL,
   `delay` int(7) NOT NULL,
   `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY fk1(project_id) REFERENCES Projects(_id),
-  FOREIGN KEY fk2(role_id) REFERENCES Roles(_id)
+  FOREIGN KEY fk2(role_id) REFERENCES Roles(_id),
+  FOREIGN KEY fk3(user_id) REFERENCES NonAdminUsers(_id)
 );
 
 -- --------------------------------------------------------
@@ -156,4 +158,17 @@ CREATE TABLE IF NOT EXISTS `UserToRoleMap` (
   FOREIGN KEY fk2(role_id) REFERENCES Roles(_id)
 );
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `ProjectResources`
+--
+
+CREATE TABLE IF NOT EXISTS `ProjectResources` (
+  `_id` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `project_id` int(11) NOT NULL,
+  `fileLocation` varchar(100) NOT NULL,
+  `fileName` varchar(30) NOT NULL,
+  `fileDescription` text,
+  FOREIGN KEY fk1(project_id) REFERENCES Projects(_id)
+);

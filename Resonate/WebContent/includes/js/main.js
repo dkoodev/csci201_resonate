@@ -21,13 +21,17 @@ $(document).click(function(e) {
 /* Any functions that should be called at the beginning of each page call */
 $(function() {
 	var windowHeight = ("innerHeight" in window) ? window.innerHeight : document.documentElement.offsetHeight; 
+
+	if($('#mainBody').height() < 625) {
+		$('#footer').addClass('down');
+	}
 	
-	$("#piano").height(windowHeight);
+	$("#piano").height(windowHeight-125);
 	
 	
-	$('.button1').popover().popover('show'); 
+	$('.errorNotifier').popover().popover('show'); 
 	$('.inputs').on('focus', function () {
-		$('.button1').popover('hide');
-		$('.button1').popover('disable');
+		$('.errorNotifier').popover('hide');
+		$('.errorNotifier').popover('disable');
 	});
 });

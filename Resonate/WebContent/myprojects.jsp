@@ -53,6 +53,9 @@
 			<td>
 				<font id="ProjectUpdate">Last Updated: Two days ago</font>
 			</td><td></td><td></td><td></td><td></td>
+				<font id="ProjectUpdate">Last updated: Two days ago</font>
+
+			</td>
 		</tr>
 		<tr class="border_bottom">
 			<td>

@@ -15,8 +15,9 @@ public class User {
 		this.name = name;
 		this.password = password;
 		this.email = email;
-		this.setPhoto(photo);
-		this.setBio(bio);
+		this.photo = photo;
+		this.bio = bio;
+
 	}
 	
 	public User() {
@@ -83,7 +84,4 @@ public class User {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-	
-	
-	
 }
