@@ -27,10 +27,11 @@
 <br /><br /><br />
 <table id="projects">
 	<!--  Enter for loop, # of rows = # of projects that user has created -->
-		<th>
-			<font id="title"> Username's Projects </font>
-		</th>
+
 		<tr class="border_bottom">
+			<td id="th">
+				<font id="title"> Username's Projects </font>
+			</td>
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td></td><td></td><td></td><td></td><td></td><td></td>
 		</tr>
@@ -39,7 +40,7 @@
 				<!--  Replace with project image from database -->
 				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
 			</td>
-			<td id="projectBox">
+			<td >
 				<!--  Replace with project title from database -->				
 				<br><br><font id="ProjectTitle"> Project Title</font><br>
 				<!--  Replace with project score from database -->				
@@ -48,9 +49,10 @@
 				<font id="ProjectInfo"> Num Tracks </font><br>	
 				<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i>	14									
 			</td>	
-			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-			
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td>
+				<font id="ProjectUpdate">Last Updated: Two days ago</font>
+			</td><td></td><td></td><td></td><td></td>
 				<font id="ProjectUpdate">Last updated: Two days ago</font>
 
 			</td>
@@ -60,17 +62,17 @@
 				<!--  Replace with project image from database -->
 				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
 			</td>
-			<td id="projectBox">
+			<td>
 				<br><br><font id="ProjectTitle"> Project Title </font><br>
 				<font id="ProjectInfo"> Score </font><br>
 				<font id="ProjectInfo"> Num Tracks </font><br>
 				<i class="material-icons" style="font-size:24px; color: red">trending_down</i> 12			
 			</td>
-			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			
-			<td>
-				<font id="ProjectUpdate">Last updated: Two days ago</font>
-			</td>
+			<td id="th">
+				<font id="ProjectUpdate"> Last updated: Two days ago</font>
+			</td><td></td><td></td><td></td><td></td>
 		</tr>
 </table><br /><br />
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
