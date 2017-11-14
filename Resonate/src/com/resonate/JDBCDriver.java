@@ -96,7 +96,7 @@ public class JDBCDriver {
 		return false;
 	}
 	
-	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources, User creator) {
+	public static Project createProject(String projectName, String projectDescription, String projectPhoto, Vector<String> projectResources, User creator) {
 		connect();
 		Project project = null;
 		if(creator == null) {
@@ -105,11 +105,12 @@ public class JDBCDriver {
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
-					"INSERT INTO Projects (name, description, upvoteCount)" + 
+					"INSERT INTO Projects (name, description, upvoteCount, photo)" + 
 							"VALUES ("
 								+ "'"+ projectName 			+"',"
 								+ "'"+ projectDescription 	+"',"
-								+ "0"
+								+ "0,"
+								+ "'" +projectPhoto + "'"
 							+ ");"
 					);
 			ps.executeUpdate();
@@ -181,17 +182,19 @@ public class JDBCDriver {
 		    			int project_id = -1;
 		    			String project_name = null;
 		    			String project_description = null;
+		    			String project_photo = null;
 		    			String createDate = null;
 		    			
 		    			project_id = rs.getInt("_id");
 			    		project_name = rs.getString("name");
 			    		project_description = rs.getString("description");
+			    		project_photo = rs.getString("photo");
 			    		upvoteCount = rs.getInt("upvoteCount");
 			    		createDate = rs.getString("createDate");
 
-				    Project project = new Project(project_id, upvoteCount, project_name, project_description, createDate, null, null, null, null, null, null);
+				    Project project = new Project(project_id, upvoteCount, project_name, project_description, project_photo, createDate, null, null, null, null, null, null);
 				    projects.add(project);
-		    		}while(rs.next());
+		    		} while(rs.next());
 
 		    }else {
 		    		return null;
@@ -214,6 +217,7 @@ public class JDBCDriver {
 		int upvoteCount = 0;
 		String project_name = null;
 		String project_description = null;
+		String project_photo = null;
 		String createDate = null;
 		Vector<User> editors = new Vector<User>();
 		Vector<User> contributors = new Vector<User>();
@@ -230,6 +234,7 @@ public class JDBCDriver {
 		    if(rs.next()) {
 		    		project_name = rs.getString("name");
 		    		project_description = rs.getString("description");
+		    		project_photo = rs.getString("photo");
 		    		upvoteCount = rs.getInt("upvoteCount");
 		    		createDate = rs.getString("createDate");
 		    }else {
@@ -248,7 +253,7 @@ public class JDBCDriver {
 
 		    // Add in tags 
 		    
-		    project = new Project(projectId, upvoteCount, project_name, project_description, createDate, editors, roles, tracks, contributors, null, userToTracks);
+		    project = new Project(projectId, upvoteCount, project_name, project_description, project_photo, createDate, editors, roles, tracks, contributors, null, userToTracks);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
