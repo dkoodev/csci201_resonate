@@ -105,7 +105,7 @@ public class JDBCDriver {
 		}
 		connect();
 		Project project = null;
-		System.out.println("Inserting project.");
+		//System.out.println("Inserting project.");
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
@@ -136,14 +136,14 @@ public class JDBCDriver {
 		    	close();
 		    	return null;
 		    }
-		    System.out.println("Got project" + project_id);
+		    //System.out.println("Got project" + project_id);
 		    
 		    if (project_id == -1) {
 		    	close();
 		    	return null;
 		    }
 		    
-		    System.out.println("Creator id: " + creator.get_id());
+		    //System.out.println("Creator id: " + creator.get_id());
 		    // Inserting project and user relationship to Editors
 			ps = conn.prepareStatement(
 					"INSERT INTO Editors (project_id, user_id)" + 
