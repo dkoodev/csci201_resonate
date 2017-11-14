@@ -88,6 +88,7 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return false;
 		} finally { // will this run..?
 			close();
@@ -97,11 +98,12 @@ public class JDBCDriver {
 	}
 	
 	public static Project createProject(String projectName, String projectDescription, Vector<String> projectResources, User creator) {
-		connect();
-		Project project = null;
 		if(creator == null) {
 			return null;
 		}
+		connect();
+		Project project = null;
+		
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
@@ -126,8 +128,9 @@ public class JDBCDriver {
 		    int project_id = -1;
 		    if(rs.next()) {
 		    		project_id = rs.getInt("_id");
-		    }else {
-		    		return null;
+		    } else {
+		    	close();
+		    	return null;
 		    }
 		    
 		    // Inserting project and user relationship to Editors
@@ -159,6 +162,7 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return null;
 		} finally { // will this run..?
 			close();
@@ -181,25 +185,29 @@ public class JDBCDriver {
 		    			int project_id = -1;
 		    			String project_name = null;
 		    			String project_description = null;
+		    			String project_photo = null;
 		    			String createDate = null;
 		    			
 		    			project_id = rs.getInt("_id");
 			    		project_name = rs.getString("name");
 			    		project_description = rs.getString("description");
+			    		project_photo = rs.getString("photo");
 			    		upvoteCount = rs.getInt("upvoteCount");
 			    		createDate = rs.getString("createDate");
 
 				    Project project = new Project(project_id, upvoteCount, project_name, project_description, createDate, null, null, null, null, null, null);
 				    projects.add(project);
-		    		}while(rs.next());
+		    		} while(rs.next());
 
-		    }else {
+		    } else {
+		    		close();
 		    		return null;
 		    }
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return null;
 		} finally {
 			close();
@@ -228,12 +236,13 @@ public class JDBCDriver {
 			ps = conn.prepareStatement("SELECT * from Projects where _id='" + projectId + "';");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
-		    		project_name = rs.getString("name");
-		    		project_description = rs.getString("description");
-		    		upvoteCount = rs.getInt("upvoteCount");
-		    		createDate = rs.getString("createDate");
-		    }else {
-		    		return null;
+		    	project_name = rs.getString("name");
+		    	project_description = rs.getString("description");
+		    	upvoteCount = rs.getInt("upvoteCount");
+		    	createDate = rs.getString("createDate");
+		    } else {
+		    	close();
+		    	return null;
 		    }
 		    
 		    editors = getEditorsByProjectId(projectId);
@@ -252,6 +261,7 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return null;
 		} finally {
 			close();
@@ -286,25 +296,27 @@ public class JDBCDriver {
 					+ ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
-		    		do {
-		    			int id = rs.getInt("t._id");
-		    			String name = rs.getString("t.name");
-		    			String fileLocation = rs.getString("t.");
-		    			String fileName = rs.getString("t.fileName");
-		    			int delay = rs.getInt("t.delay");
-		    			int user_id = rs.getInt("t.user_id");
-		    					
-		    			User creator = getUserById(user_id);
-		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+	    		do {
+	    			int id = rs.getInt("t._id");
+	    			String name = rs.getString("t.name");
+	    			String fileLocation = rs.getString("t.");
+	    			String fileName = rs.getString("t.fileName");
+	    			int delay = rs.getInt("t.delay");
+	    			int user_id = rs.getInt("t.user_id");
+	    					
+	    			User creator = getUserById(user_id);
+	    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
-		    			tracks.add(track);
-		    		}while(rs.next());
-		    }else {
-		    		return null;
+	    			tracks.add(track);
+	    		} while(rs.next());
+		    } else {
+		    	close();
+		    	return null;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return null;
 		} finally {
 			close();
@@ -331,13 +343,15 @@ public class JDBCDriver {
 
 		    			Role role = new Role(id, name, description, tracks);
 		    			roles.add(role);
-		    		}while(rs.next());
-		    }else {
-		    		return null;
+		    		} while(rs.next());
+		    } else {
+		    	close();
+		    	return null;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return null;
 		} finally {
 			close();
@@ -368,13 +382,15 @@ public class JDBCDriver {
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
-		    		}while(rs.next());
-		    }else {
-		    		return null;
+		    		} while(rs.next());
+		    } else {
+		    	close();
+		    	return null;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return null;
 		} finally {
 			close();
@@ -406,8 +422,8 @@ public class JDBCDriver {
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
-		    		}while(rs.next());
-		    }else {
+		    		} while(rs.next());
+		    } else {
 		    		return null;
 		    }
 		} catch (SQLException e) {
@@ -441,8 +457,8 @@ public class JDBCDriver {
 		    			User editor = new User(id, username, name, password, email, photo, bio);
 		    			
 		    			editors.add(editor);
-		    		}while(rs.next());
-		    }else {
+		    		} while(rs.next());
+		    } else {
 		    		return null;
 		    }
 		} catch (SQLException e) {
@@ -475,8 +491,8 @@ public class JDBCDriver {
 		    			User contributor = new User(id, username, name, password, email, photo, bio);
 		    			
 		    			contributors.add(contributor);
-		    		}while(rs.next());
-		    }else {
+		    		} while(rs.next());
+		    } else {
 		    		return null;
 		    }
 		} catch (SQLException e) {
@@ -514,12 +530,13 @@ public class JDBCDriver {
 					photo = rs.getString("photo");
 					bio = rs.getString("bio");
 			    } while (rs.next());
-		    }else {
+		    } else {
 		    		return null;
 		    }
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			close();
 			return null;
 		} finally {
 			close();
@@ -582,6 +599,7 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return false;
 
 		} finally { // will this runn..?
@@ -598,6 +616,7 @@ public class JDBCDriver {
 			ps.setString(1, email);
 			rs = ps.executeQuery();
 			if(rs.next()){
+				close();
 				return true;
 			}
 		} catch(SQLException e) {
@@ -617,6 +636,7 @@ public class JDBCDriver {
 			ps.setString(1, username);
 			rs = ps.executeQuery();
 			if(rs.next()){
+				close();
 				return true;
 			}
 		} catch(SQLException e) {
@@ -638,6 +658,7 @@ public class JDBCDriver {
 			rs = ps.executeQuery();
 			if(rs.next()){
 				if(pwd.equals(rs.getString("password")) ){
+					close();
 					return true;
 				}
 			}
@@ -647,7 +668,7 @@ public class JDBCDriver {
 		} finally {
 			close();
 		}
-		return false;		
+		return false;	
 	}
 	
 	/*
