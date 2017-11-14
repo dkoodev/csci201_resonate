@@ -81,6 +81,7 @@ public class CreateProject extends HttpServlet {
 	
 	        File uploadedFile = new File(path + "/" + filename);
 	        
+	        // TODO: This erases the file if it's name already exists
 	        try (InputStream input = filePart.getInputStream()) {
 	            Files.copy(input, uploadedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	        }
@@ -89,8 +90,8 @@ public class CreateProject extends HttpServlet {
 	        fileNum++;
         }
         
-        User creator = (User) session.getAttribute("user");
-
+        User creator = (User)request.getSession().getAttribute("user");
+        System.out.println("creator: " + creator.get_id() + ":" + creator.getName());
         Project newProject = null;
         // TODO: Decide if we want the exception thing or if we just wanna do null thing hahaha...nullthing...nothing
         newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_photo, proj_resources, creator);

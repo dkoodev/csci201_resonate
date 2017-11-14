@@ -12,6 +12,7 @@ String pageName = refParts[refParts.length - 1].split("\\.")[0];
 if (pageName.equals("Resonate")) pageName = "index";
 
 String error = (String)session.getAttribute("errorMessage");
+
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,6 +38,11 @@ String error = (String)session.getAttribute("errorMessage");
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>-->
 		
 		<script src="includes/js/isotope.pkgd.min.js"></script>
+		<% if (u != null) { %>
+		<script type="text/javascript">
+			alert('<%= u.getName() %>');
+		</script>
+		<% } %>
 	</head>
 	<body>
 		<div id="navbar" class="row">
