@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
         		validatedUser = JDBCDriver.getUser(username_req, password_req);
         	} catch (SQLException sqle) {
         		sqle.printStackTrace();
-        		session.setAttribute("loginMessage", "SQL Error");
+        		session.setAttribute("errorMessage", "SQL Error");
             	response.sendRedirect("/Resonate/login.jsp");
             	return;
         	}
@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
         	response.sendRedirect("/Resonate/user.jsp");
         } else {
         	session.setMaxInactiveInterval(30); // 30s.
-    		session.setAttribute("loginMessage", "Login Failed");
+    		session.setAttribute("errorMessage", "Login Failed");
         	response.sendRedirect("/Resonate/login.jsp");
         }
     }
