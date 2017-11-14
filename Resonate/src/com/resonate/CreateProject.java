@@ -91,7 +91,11 @@ public class CreateProject extends HttpServlet {
         }
         
         User creator = (User)request.getSession().getAttribute("user");
-        System.out.println("creator: " + creator.get_id() + ":" + creator.getName());
+        if (creator == null) {
+        	session.setAttribute("errorMessage", "Not Logged In");
+    		response.sendRedirect("/Resonate/createproject.jsp");
+        }
+        
         Project newProject = null;
         // TODO: Decide if we want the exception thing or if we just wanna do null thing hahaha...nullthing...nothing
         newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_photo, proj_resources, creator);

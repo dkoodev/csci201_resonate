@@ -18,7 +18,9 @@ function addFileBtn() {
 	</div>
 	<% if (error != null && error.equals("SQL Error")) { %>
 		<input type="submit" value="Create Project!" class="errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again." />
-<% } else { %>
+	<% } else if (error != null && error.equals("Not Logged In")) { %>
+		<input type="submit" value="Create Project!" class="errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="How did you get here?" data-content="You are not logged in..." />
+	<% } else { %>
 		<input type="submit" value="Create Project!" class="errorNotifier" /><!-- Create Project!</button>-->
 	<% } %>
 
