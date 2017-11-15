@@ -66,8 +66,89 @@ public class JDBCDriver {
 			sqle.printStackTrace();
 		}
 	}
+	
+	public static Track insertTrack(
+							String name, String fileLocation, 
+							String fileName, Integer delay, 
+							User currentUser, Project currentProject, 
+							Integer role_id){
+		connect();
+		
+		try {
+			// Inserting project into table
+			ps = conn.prepareStatement(
+					"INSERT INTO Tracks (name, project_id, role_id, user_id, fileLocation, fileName, delay)" + 
+							"VALUES ("
+								+ "'"+  name						+"',"
+								+ 	 	currentProject.getId()  	+","
+								+ 		role_id  				+","
+								+ 		currentUser.get_id()  	+","
+								+ "'"+  fileLocation  			+"',"
+								+ "'"+  fileName  				+"',"
+								+  		delay  					
+							+ ");"
+					);
+			ps.executeUpdate();
+			
+			ps = conn.prepareStatement(
+					"SELECT * Tracks "
+					+ "WHERE name='"+ name +"'"
+					+ "AND project_id=" + currentProject.getId()
+					+ "AND role_id=" + role_id
+					+ "AND user_id=" + currentUser.get_id()
+					+ "AND fileLocation='" + fileLocation +"'"
+					+ "AND fileName='" + fileName +"'"
+					+ "AND delay=" + delay
+					+";"
+					);
+			rs = ps.executeQuery();
 
+			if(rs.next()) {
+				int new_track_id = -1;
+				String new_track_name = null;
+				int new_track_project_id = -1;
+				int new_track_role_id = -1;
+				int new_track_user_id = -1;
+				String new_track_fileLocation = null;
+				String new_track_fileName = null;
+				Integer new_track_delay = null;
+				
+				do {
+					new_track_id = rs.getInt("_id");
+					new_track_name = rs.getString("name");
+					new_track_project_id = rs.getInt("project_id");
+					new_track_role_id = rs.getInt("role_id");
+					new_track_user_id = rs.getInt("user_id");
+					new_track_fileLocation = rs.getString("fileLocation");
+					new_track_fileName = rs.getString("fileName");
+					new_track_delay = rs.getInt("delay");
+				}while(rs.next());
+				
+				User creator = getUserById(new_track_user_id);
+					
+				Track track = new Track(new_track_name, new_track_id, new_track_fileLocation, new_track_fileName, new_track_delay, creator);
+				
+				return track;
+			}else {
+				close();
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return null;
+		} finally { // will this run..?
+			close();
+		}
+		
+	}
+
+	// TODO: complete this function
 	public static boolean updateUser(User user) {
+		
+		
 		
 		return false;
 	}
