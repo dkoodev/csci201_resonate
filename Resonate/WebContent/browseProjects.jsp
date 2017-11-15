@@ -1,5 +1,12 @@
-<%@ include file="includes/global_header.jsp" %>
 
+<%@ include file="includes/global_header.jsp" %>
+<%@page import="java.util.Vector"%>
+<% 
+
+// You need list of projects
+ Vector<Project> projects = JDBCDriver.getProjects();
+
+%>
 <!-- Browse Projects Page or Home Page -->
 
 
@@ -9,8 +16,16 @@
 <!-- SEARCH -->
 <p><input type="text" class="quicksearch" placeholder="Search" /></p>
 
-<h2>Filter</h2>
-<div id="filters" class="button-group">  <button class="button is-checked" data-filter="*">show all</button>
+
+<!-- try adding a div here to old everything  -->
+
+
+<div id="filterTitle">
+	<p>Filter By</p></div> 
+<div id="genreTitle">
+	<p>Genre</p></div> 
+<div id="filters" class="button-group">  
+  <button class="button is-checked" data-filter="*">show all</button>
   <button class="button" data-filter=".metal">metal</button>
   <button class="button" data-filter=".transition">transition</button>
   <button class="button" data-filter=".alkali, .alkaline-earth">alkali and alkaline-earth</button>
@@ -19,15 +34,19 @@
   <button class="button" data-filter="numberGreaterThan50">number > 50</button>
   <button class="button" data-filter="ium">name ends with &ndash;ium</button>
 </div>
+<div id="auditionTitle">
+	<p>Auditions</p></div> 
 
-<h2>Sort</h2>
-<div id="sorts" class="button-group">  <button class="button is-checked" data-sort-by="original-order">original order</button>
+<div id="sortTitle">
+<p>Sort By</p></div>
+<div id="sorts">  <button class="button is-checked" data-sort-by="original-order">original order</button>
   <button class="button" data-sort-by="name">name</button>
   <button class="button" data-sort-by="symbol">symbol</button>
   <button class="button" data-sort-by="number">number</button>
   <button class="button" data-sort-by="weight">weight</button>
   <button class="button" data-sort-by="category">category</button>
-</div>
+</div>  
+
 
 <div class="grid">
   <div class="element-item transition metal " data-category="transition">
@@ -141,6 +160,7 @@
 </div>
 
 
+
 <script>
 	//external js: isotope.pkgd.js
 	//init Isotope
@@ -234,4 +254,4 @@
 	}
 </script>
 
-<%@ include file="includes/global_footer.jsp" %>	
+<%@ include file="includes/global_footer.jsp" %>		
