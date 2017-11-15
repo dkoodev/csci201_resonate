@@ -137,6 +137,8 @@ public class JDBCDriver {
 					
 				Track track = new Track(new_track_name, new_track_id, new_track_fileLocation, new_track_fileName, new_track_delay, creator);
 				
+				insertContributor(creator, new_track_project_id, role_id);
+				
 				return track;
 			}else {
 				close();
@@ -165,7 +167,7 @@ public class JDBCDriver {
 		return false;
 	}
 	
-	public static boolean insertContributors(User contributor, Project project) {
+	public static boolean insertContributor(User contributor, int project_id, int role_id) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
 			return false;
@@ -176,9 +178,9 @@ public class JDBCDriver {
 			ps = conn.prepareStatement(
 					"INSERT INTO Contributors (project_id, user_id, role_id)" + 
 							"VALUES ("
-								+ "'"+  project.getId()			+"',"
-								+ "'"+  contributor.get_id()   	+"',"
-								+ "0"
+								+ 	 	project_id				+","
+								+  		contributor.get_id()   	+","
+								+ 		role_id 
 							+ ");"
 					);
 			ps.executeUpdate();
@@ -722,15 +724,20 @@ public class JDBCDriver {
 		    rs = ps.executeQuery();
 		    
 			// Get all attributes for user
-		    while (rs.next()) { // should only be one row, but needed or sqle
-				id = rs.getInt("_id");
-				username = rs.getString("username");
-				name = rs.getString("name");
-				password = rs.getString("password");
-				email = rs.getString("email");
-				photo = rs.getString("photo");
-				bio = rs.getString("bio");
+		    if(rs.next()) {
+			    do { // should only be one row, but needed or sqle
+					id = rs.getInt("_id");
+					username = rs.getString("username");
+					name = rs.getString("name");
+					password = rs.getString("password");
+					email = rs.getString("email");
+					photo = rs.getString("photo");
+					bio = rs.getString("bio");
+			    }while (rs.next()) ;
+		    }else {
+		    		return null;
 		    }
+
 		} catch (SQLException e) {
 			throw e;
 		} finally {

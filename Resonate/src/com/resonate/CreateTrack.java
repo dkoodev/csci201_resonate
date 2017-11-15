@@ -44,15 +44,13 @@ public class CreateTrack extends HttpServlet {
 		String track_fileName = null;
 		Integer track_delay = null;
 		Integer role_id = -1;
-		//or
-		Role role = null;
 		
 		Track track = new Track(track_name, -1, track_fileLocation, track_fileName, track_delay, currentUser);
 		
 		if(JDBCDriver.insertTrack(track_name, track_fileLocation, track_fileName, track_delay, currentUser, currentProject, role_id) != null)  {
-			// TODO: Track successfully added
+			// TODO: Track successfully added | Maybe go to auditionStage?
 		}else {
-			// TODO: Track did not get added for some reason.
+			// TODO: Track did not get added for some reason. |redirectback?
 		}
 		
 	}
