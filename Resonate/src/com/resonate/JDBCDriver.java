@@ -32,7 +32,7 @@ public class JDBCDriver {
 		return conn;
 	} 
 	
-	public static void connect(){
+	public static boolean connect(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://"+ host +"/" + database + "?user=" + user + "&password="+ password +"&useSSL=false");
@@ -42,6 +42,12 @@ public class JDBCDriver {
 		} catch (SQLException e) {
 			System.out.println("Error connecting to database (sqle): " + e.getMessage());
 			e.printStackTrace();
+		}
+		
+		if(conn == null) {
+			return false;
+		}else {
+			return true;
 		}
 	}
 	
@@ -72,7 +78,10 @@ public class JDBCDriver {
 							String fileName, Integer delay, 
 							User currentUser, Project currentProject, 
 							Integer role_id){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
 		
 		try {
 			// Inserting project into table
@@ -147,14 +156,20 @@ public class JDBCDriver {
 
 	// TODO: complete this function
 	public static boolean updateUser(User user) {
-		
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
 		
 		
 		return false;
 	}
 	
 	public static boolean insertContributors(User contributor, Project project) {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
 
 		try {
 			// Inserting project into table
@@ -181,10 +196,15 @@ public class JDBCDriver {
 	}
 	
 	public static Project createProject(String projectName, String projectDescription, String projectPhoto, Vector<String> projectResources, User creator) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		if(creator == null) {
 			return null;
 		}
-		connect();
+		
 		Project project = null;
 		//System.out.println("Inserting project.");
 		try {
@@ -261,9 +281,12 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<Project> getProjects(){
-		Vector<Project> projects = new Vector<Project>();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
 		
-		connect();
+		Vector<Project> projects = new Vector<Project>();
 		
 		try {  
 			// Getting project information
@@ -307,7 +330,10 @@ public class JDBCDriver {
 	}
 	
 	public static Project getProject(int projectId) {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
 		
 		int upvoteCount = 0;
 		String project_name = null;
@@ -364,7 +390,11 @@ public class JDBCDriver {
 	}
 	
 	public static HashMap<User, Vector<Track>> getUserToTracksByProjectId_Contributors(int projectId, Vector<User> contributors){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
 		
 		for(User contributor: contributors) {
@@ -378,7 +408,11 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<Track> getTracksByProjectId_UserId(int projectId, int userId){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		Vector<Track> tracks = new Vector<Track>();
 		try {
 		    // Getting list of editors
@@ -419,7 +453,11 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<Role> getRolesByProjectId(int projectId){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		Vector<Role> roles = new Vector<Role>();
 		try {
 		    // Getting list of editors
@@ -454,7 +492,11 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<Track> getTracksByRoleId(int roleId){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		Vector<Track> tracks = new Vector<Track>();
 		try {
 		    // Getting list of editors
@@ -493,8 +535,11 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<Track> getTracksByProjectId(int projectId){
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
 		
-		connect();
 		Vector<Track> tracks = new Vector<Track>();
 		try {
 		    // Getting list of editors
@@ -531,7 +576,11 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<User> getEditorsByProjectId(int projectId){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		Vector<User> editors = new Vector<User>();
 		try {
 		    // Getting list of editors
@@ -568,7 +617,11 @@ public class JDBCDriver {
 	}
 	
 	public static Vector<User> getContributorsByProjectId(int projectId){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
 		Vector<User> contributors = new Vector<User>();
 		try {
 		    // Getting list of contributors
@@ -605,7 +658,10 @@ public class JDBCDriver {
 	}
 
 	public static User getUserById(int user_id) {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
 		
 		int id = user_id;
 		String username = null;
@@ -648,7 +704,10 @@ public class JDBCDriver {
 	}
 	
 	public static User getUser(String username_req, String password_req) throws SQLException {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
 		
 		int id = -1;
 		String username = null;
@@ -684,7 +743,11 @@ public class JDBCDriver {
 	}
 	
 	public static boolean insertUser(String username, String name, String password, String email) {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+		
 		try {
 			ps = conn.prepareStatement(
 					"INSERT INTO NonAdminUsers (username, name, password, email)" + 
@@ -710,7 +773,10 @@ public class JDBCDriver {
 	}
 
 	public static boolean checkEmailExists(String email) {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
 		
 		try {
 			ps = conn.prepareStatement("SELECT username FROM NonAdminUsers WHERE email=?");
@@ -731,7 +797,11 @@ public class JDBCDriver {
 	}
 	
 	public static boolean checkUsernameExists(String username) {
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+		
 		try {
 			ps = conn.prepareStatement("SELECT username FROM NonAdminUsers WHERE username=?");
 			ps.setString(1, username);
@@ -752,7 +822,11 @@ public class JDBCDriver {
 	
 	
 	public static boolean login(String usr, String pwd){
-		connect();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+		
 		try {
 			ps = conn.prepareStatement("SELECT password FROM NonAdminUsers WHERE username=?");
 			ps.setString(1, usr);
