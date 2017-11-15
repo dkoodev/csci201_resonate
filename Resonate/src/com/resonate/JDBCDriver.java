@@ -853,29 +853,77 @@ public class JDBCDriver {
 		return false;	
 	}
 	
-	/*
-	public static ArrayList<ArrayList<String> >getData(){
-		ArrayList<ArrayList<String>>  stat = new ArrayList<ArrayList<String>>();
-		connect();
+	public static Vector<Project> getProjectsByUserId(int id) {
+		Vector<Project> projects = new Vector<Project>();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return projects;
+		}
+		int proj_id;
+		int proj_votes;
+		String proj_name;
+		String proj_desc;
+		String proj_photo;
+		String proj_createDate;
+		// TODO: the rest of the project stuff.
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/Lab10?user=root&password=root&useSSL=false");
-			ps = conn.prepareStatement("SELECT u.username, p.name, pv.count FROM User u, Page p, PageVisited pv "
-					+ "WHERE u.userID = pv.userID AND p.pageID = pv.pageID ORDER BY u.userID, p.pageID");
+			ps = conn.prepareStatement("SELECT e._id as EditorID, p.* from Editors e, Projects p where e.user_id=? and p._id=e.project_id;");
+			ps.setInt(1, id);
 			rs = ps.executeQuery();
-			while(rs.next()){
-				ArrayList<String> row = new ArrayList<String>();
-				row.add(rs.getString("u.username"));
-				row.add(rs.getString("p.name"));
-				row.add(rs.getString("pv.count"));
-				stat.add(row);
+			while (rs.next()) {
+				proj_id = rs.getInt("_id");
+				proj_votes = rs.getInt("upvoteCount");
+				proj_name = rs.getString("name");
+				proj_desc = rs.getString("description");
+				proj_photo = rs.getString("photo");
+				proj_createDate = rs.getString("createDate");
+				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_photo, proj_createDate, null, null, null, null, null, null);
+				projects.add(p);
 			}
-		}catch(SQLException sqle){
-			System.out.println("SQLException in function \" getData\": ");
-			sqle.printStackTrace();
-		}finally{
+		} catch (SQLException e) {
+			System.out.println("SQLException in getProjectByUserId");
+			e.printStackTrace();
+		} finally {
 			close();
 		}
-		return stat;
+		
+		return projects;
 	}
-	*/
+
+	public static Vector<Project> getLikedProjectsByUserId(int id) {
+		Vector<Project> projects = new Vector<Project>();
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return projects;
+		}
+		int proj_id;
+		int proj_votes;
+		String proj_name;
+		String proj_desc;
+		String proj_photo;
+		String proj_createDate;
+		// TODO: the rest of the project stuff.
+		try {
+			ps = conn.prepareStatement("SELECT l._id as LProjID, p.* from LikedProjects l, Projects p where l.user_id=? and p._id=l.project_id;");
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				proj_id = rs.getInt("_id");
+				proj_votes = rs.getInt("upvoteCount");
+				proj_name = rs.getString("name");
+				proj_desc = rs.getString("description");
+				proj_photo = rs.getString("photo");
+				proj_createDate = rs.getString("createDate");
+				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_photo, proj_createDate, null, null, null, null, null, null);
+				projects.add(p);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQLException in getProjectByUserId");
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return projects;
+	}
 }
