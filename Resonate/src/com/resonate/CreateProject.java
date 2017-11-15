@@ -37,13 +37,14 @@ public class CreateProject extends HttpServlet {
     }
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String proj_name = request.getParameter("name");
-    	String proj_desc = request.getParameter("description");
-    	String proj_photo = null;
-    	Vector<String> proj_resources = new Vector<String>();
-    	
-    	System.out.println(proj_name);
-    	System.out.println(proj_desc);
+	    	String proj_name = request.getParameter("name");
+	    	String proj_desc = request.getParameter("description");
+	    	String proj_photo = null;
+	    	Vector<String> proj_resources = new Vector<String>();
+	    	
+	    	System.out.println(proj_name);
+	    	System.out.println(proj_desc);
+	    	
         HttpSession session = request.getSession();
         
         String root = "/Resonate/uploads";
@@ -71,8 +72,8 @@ public class CreateProject extends HttpServlet {
         
         int fileNum = 0;
         while((filePart = request.getPart("file_" + fileNum)) != null) {
-        	filename = filePart.getSubmittedFileName();
-        	if (filename.equals("")) continue; //Skip the blank ones.
+	        	filename = filePart.getSubmittedFileName();
+	        	if (filename.equals("")) continue; //Skip the blank ones.
        	 
 	        File path = new File(root + "/projectResources");
 	        if (!path.exists()) {
@@ -92,17 +93,17 @@ public class CreateProject extends HttpServlet {
         
         User creator = (User)request.getSession().getAttribute("user");
         if (creator == null) {
-        	session.setAttribute("errorMessage", "Not Logged In");
-    		response.sendRedirect("/Resonate/createproject.jsp");
+	        	session.setAttribute("errorMessage", "Not Logged In");
+	    		response.sendRedirect("/Resonate/createproject.jsp");
         }
         
         Project newProject = null;
         // TODO: Decide if we want the exception thing or if we just wanna do null thing hahaha...nullthing...nothing
         newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_photo, proj_resources, creator);
         if (newProject != null) {
-        	// 	session.setAttribute("project", newProject); //TODO: Do we want this?
-        	System.out.println("Project Creation success.");
-        	response.sendRedirect("/Resonate/auditionstage.jsp");
+	        	// 	session.setAttribute("project", newProject); //TODO: Do we want this?
+	        	System.out.println("Project Creation success.");
+	        	response.sendRedirect("/Resonate/auditionstage.jsp");
         } else {
         		session.setAttribute("errorMessage", "SQL Error");
         		response.sendRedirect("/Resonate/createproject.jsp");

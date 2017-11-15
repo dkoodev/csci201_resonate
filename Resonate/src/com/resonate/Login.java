@@ -44,7 +44,10 @@ public class Login extends HttpServlet {
         	}
         	
         	if (validatedUser != null) {
-        		System.out.println("User logged in: " + validatedUser.getName());
+        		System.out.println("User logged in: " + validatedUser.getName()
+        						+ ", username: " + validatedUser.getUsername()
+        						+ ", id: " + validatedUser.get_id()
+        				);
         		
 	        	session.setMaxInactiveInterval(600); // 10 min.
 	        	session.setAttribute("user", validatedUser); 
