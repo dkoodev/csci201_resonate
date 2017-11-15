@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+body {
+	background-image: url(http://www.norwoodlibrary.org/wp-content/uploads/2016/05/piano-03.jpg);
+	background-opacity: 0.7;
+}
+
 #userIcon {
 	border-radius: 50px;
 	height: 150px; 
@@ -8,7 +13,7 @@
 	border-style: solid;
 	border-width: 3px;
 	border-color: white;
-	box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.2), 10px 20px 20px 0 rgba(0, 0, 0, 0.19);  
+	box-shadow: 10px 10px 20px 0 rgba(0, 0, 0, 0.7), 10px 20px 20px 0 rgba(0, 0, 0, 0.19);  
 }
 
 #userPic {
@@ -81,18 +86,30 @@ table{
 	margin-left: 2cm;
 	margin-right: 2cm;
 	padding-bottom: 1cm;	
-	box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.2), 10px 10px 20px 10px rgba(0, 0, 0, 0.19);  
-	background-color: black;
+	box-shadow: 5px 5px 20px 10px rgba(0, 0, 0, 0.6), 10px 10px 20px 10px rgba(0, 0, 0, 0.19);  
 	color: white;
 	border-radius: 10px;	
-	background: linear-gradient(to bottom, #f09021, black);
+	background: linear-gradient(to bottom right, #f09021, black);
 	<!--  #f09021; -->
 }
 
-#th {
+#long {
 	padding-top: 1cm;
-	width: 100% important!;
+	width: 300% !important;
 }
+
+#long1 {
+	padding-top: 1cm;
+	padding-left: 1cm;
+	width: 300% !important;
+}
+
+#long2 {
+	padding-left: 1cm;
+	width: 300% !important;
+	padding-top: 0;
+}
+
 #title {
 	font-family: Courier;
 	font-size: 30px; 
@@ -104,7 +121,6 @@ table{
 td{
 	padding-left: 1cm;
 	padding-bottom: 1cm;
-	width: 200%;
 }
 
 td #createProject {
@@ -192,7 +208,7 @@ tr.border_bottom td {
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     width: 300px; 
     height: 70px;
