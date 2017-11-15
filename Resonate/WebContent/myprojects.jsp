@@ -20,7 +20,7 @@
 			</td>
 		</tr>
 		<tr>
-			<button class="button" href="createproject.jsp"> + Create A New Project!</button><br />
+			<a href="createproject.jsp"><button class="button"> + Create A New Project!</button> </a><br />
 		</tr>
 	</table>
 </div>
@@ -29,8 +29,10 @@
 	<!--  Enter for loop, # of rows = # of projects that user has created -->
 
 		<tr class="border_bottom">
-			<td id="th">
-				<font id="title"> Username's Projects </font>
+			<td>
+				<p id="long1">
+					<font id="title"> Username's Projects </font>
+				</p>
 			</td>
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td></td><td></td><td></td><td></td><td></td><td></td>
@@ -41,8 +43,10 @@
 				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
 			</td>
 			<td >
-				<!--  Replace with project title from database -->				
-				<br><br><font id="ProjectTitle"> Project Title</font><br>
+				<p id="long">
+					<!--  Replace with project title from database -->				
+					<br><br><font id="ProjectTitle"> Project Title</font>
+				</p>
 				<!--  Replace with project score from database -->				
 				<font id="ProjectInfo"> Score </font><br>
 				<!--  Replace with number of tracks used for this project from database -->				
@@ -51,11 +55,11 @@
 			</td>	
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td>
-				<font id="ProjectUpdate">Last Updated: Two days ago</font>
+				<p id="long2">				
+					<font id="ProjectUpdate">Last Updated: Two days ago</font>
+				</p>
 			</td><td></td><td></td><td></td><td></td>
-				<font id="ProjectUpdate">Last updated: Two days ago</font>
 
-			</td>
 		</tr>
 		<tr class="border_bottom">
 			<td>
@@ -63,16 +67,22 @@
 				<img id="tableImg" src="http://bennettfeely.com/gradients/img/gradient.webp" />
 			</td>
 			<td>
-				<br><br><font id="ProjectTitle"> Project Title </font><br>
+				<p id="long">
+					<!--  Replace with project title from database -->				
+					<br><br><font id="ProjectTitle"> Project Title</font>
+				</p>				
 				<font id="ProjectInfo"> Score </font><br>
 				<font id="ProjectInfo"> Num Tracks </font><br>
 				<i class="material-icons" style="font-size:24px; color: red">trending_down</i> 12			
 			</td>
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			
-			<td id="th">
-				<font id="ProjectUpdate"> Last updated: Two days ago</font>
-			</td><td></td><td></td><td></td><td></td>
+			<td>
+				<p id="long2">				
+					<font id="ProjectUpdate">Last Updated: Two days ago</font>
+				</p>
+			</td>
+			<td></td><td></td><td></td><td></td>
 		</tr>
 </table><br /><br />
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
