@@ -1,29 +1,5 @@
-<%@ include file="includes/global_header.jsp" %>
+<%@ include file="includes/banner.jsp" %>
 
-<div id="banner">
-	<table>
-		<tr>
-			<td>
-				<div id="userPic">
-					<!--  replace img src with variables  -->
-					 
-					<img id="userIcon" src="images/0.JPG" /> <br />
-			</td>
-			<td>
-					<br /><br /><br /><p id="fullname"> <!--  replace fullname with variables  -->		
-						Jerry Tejada
-					</p>
-					<p id="username">	<!--  replace username with variables  -->
-						username
-					</p><br />
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<a href="createproject.jsp"><button class="button"> + Create A New Project!</button> </a><br />
-		</tr>
-	</table>
-</div>
 <br /><br /><br />
 <table id="projects">
 	<!--  Enter for loop, # of rows = # of projects that user has created -->
@@ -31,6 +7,7 @@
 		<tr class="border_bottom">
 			<td>
 				<p id="long1">
+					<!--  replace username with variables  -->
 					<font id="title"> Username's Projects </font>
 				</p>
 			</td>
@@ -51,11 +28,13 @@
 				<font id="ProjectInfo"> Score </font><br>
 				<!--  Replace with number of tracks used for this project from database -->				
 				<font id="ProjectInfo"> Num Tracks </font><br>	
+				<!--  Replace with trend data from database -->				
 				<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i>	14									
 			</td>	
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td>
-				<p id="long2">				
+				<p id="long2">	
+					<!--  Replace with data from database -->							
 					<font id="ProjectUpdate">Last Updated: Two days ago</font>
 				</p>
 			</td><td></td><td></td><td></td><td></td>
@@ -84,6 +63,6 @@
 			</td>
 			<td></td><td></td><td></td><td></td>
 		</tr>
-</table><br /><br />
+</table>
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 <%@ include file="includes/global_footer.jsp" %>
