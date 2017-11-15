@@ -51,22 +51,9 @@
 			</td>	
 			<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
 			<td>
-<<<<<<< HEAD
-<<<<<<< HEAD
 				<font id="ProjectUpdate">Last Updated: Two days ago</font>
 			</td><td></td><td></td><td></td><td></td>
-=======
-				<font id="ProjectUpdate">Last updated: Two days ago</font>
 
-			</td>
->>>>>>> origin/master
-=======
-				<font id="ProjectUpdate">Last Updated: Two days ago</font>
-			</td><td></td><td></td><td></td><td></td>
-				<font id="ProjectUpdate">Last updated: Two days ago</font>
-
-			</td>
->>>>>>> c0feb400d5dc1e06f04c1bfedcd650cf622c8322
 		</tr>
 		<tr class="border_bottom">
 			<td>
