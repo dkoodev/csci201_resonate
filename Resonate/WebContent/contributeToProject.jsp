@@ -7,7 +7,8 @@
 
 <!-- I copied the form from createproject.jsp, so nothing should be right -->
  
-<form name="cp" id="cp" action="CreateProject" method="POST" enctype="multipart/form-data">
+<!-- Please include role_id somehow -->
+<form name="cp" id="cp" action="CreateTrack" method="POST" enctype="multipart/form-data">
 	<input class="inputs" type="text" name="name" placeholder="Name" /><br />
 	<input class="inputs" type="text" name="description" placeholder="A short description" /><br />
   	Add a Project Photo: <input class="inputs" type="file" id="photoFile" name="photo" accept=".png, .jpg, .jpeg" /><br />
