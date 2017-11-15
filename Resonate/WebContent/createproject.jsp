@@ -1,4 +1,11 @@
 <%@ include file="includes/global_header.jsp" %>
+<%
+if (u == null) {
+	response.sendRedirect("/Resonate/login.jsp");
+	return;
+}
+%>
+
 <script type="text/javascript">
 var numFiles = 0;
 function addFileBtn() {
