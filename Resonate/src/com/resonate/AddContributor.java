@@ -37,7 +37,9 @@ public class AddContributor extends HttpServlet {
         // File file = file?!?!?
         
         // File ? Resource?
-        if(JDBCDriver.insertContributors(contributor, project)) {
+        
+        // Maybe scrap this java? Because adding the track to the project should automatically add the user to the project as a contributor
+        if(JDBCDriver.insertContributor(contributor, project.getId(),0)) {
         		
         }else {
         	
