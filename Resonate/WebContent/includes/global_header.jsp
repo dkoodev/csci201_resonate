@@ -36,8 +36,10 @@ String error = (String)session.getAttribute("errorMessage");
 		<!--<script src="includes/js/popper.min.js"></script>
 		<link rel="stylesheet" href="includes/css/bootstrap/bootstrap.min.css" />
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>-->
-		
+		<!-- Isotope.js -->
 		<script src="includes/js/isotope.pkgd.min.js"></script>
+		<!-- Interact.js -->
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.9/interact.min.js"></script>
 	</head>
 	<body>
 		<div id="navbar" class="row">
