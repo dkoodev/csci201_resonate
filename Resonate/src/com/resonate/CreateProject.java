@@ -40,10 +40,12 @@ public class CreateProject extends HttpServlet {
 	    	String proj_name = request.getParameter("name");
 	    	String proj_desc = request.getParameter("description");
 	    	String proj_photo = null;
+	    	String proj_genre = request.getParameter("genre");
 	    	Vector<String> proj_resources = new Vector<String>();
 	    	
 	    	System.out.println(proj_name);
 	    	System.out.println(proj_desc);
+	    	
 	    	
         HttpSession session = request.getSession();
         
@@ -99,7 +101,7 @@ public class CreateProject extends HttpServlet {
         
         Project newProject = null;
         // TODO: Decide if we want the exception thing or if we just wanna do null thing hahaha...nullthing...nothing
-        newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_photo, proj_resources, creator);
+        newProject = JDBCDriver.createProject(proj_name, proj_desc, proj_genre, proj_photo, proj_resources, creator);
         if (newProject != null) {
 	        	// 	session.setAttribute("project", newProject); //TODO: Do we want this?
 	        	System.out.println("Project Creation success.");

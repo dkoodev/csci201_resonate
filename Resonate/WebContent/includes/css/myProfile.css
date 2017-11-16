@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+#accountOverview{
+	display: block;
+	margin-left:0px; 
+	font-size: 50px;
+	text-align: center; 
+	font-family: Courier; 
+	word-spacing: -10px;
+}
+
+#profile{
+    font-size: 25px;
+	font-family: Courier; 
+	word-spacing: -10px;
+}
+
+
+#box{
+	padding-left:30px;
+	padding-right:30px;
+	padding-top:30px;
+	padding-bottom:30px;
+	margin-left:500px;
+	margin-right:500px;
+	background-color:#ffffff;
+}
+
+#name{
+	font-size: 20px;
+}
+
+#usernamev{
+	font-size: 20px;
+}
+
+#email{
+	font-size: 20px;
+}
+
+#edit{
+	font-size: 30px;
+	font-family: Courier; 
+	word-spacing: -10px;
+	text-align:center;
+}
+
+#nameTitle{
+	font-color:#00b4a8;
+}
+
+#usernameTitle{
+	font-color:#00b4a8;
+}
+
+#emailTitle{
+	font-color:#00b4a8;
+}

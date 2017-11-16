@@ -163,8 +163,37 @@ public class JDBCDriver {
 			return false;
 		}
 		
-		
-		return false;
+		try {
+			int _id = user.get_id();
+			String username = user.getUsername();
+			String name = user.getName();
+			String password = user.getPassword();
+			String email = user.getEmail();
+			String photo = user.getPhoto();
+			String bio = user.getBio();
+			
+			ps = conn.prepareStatement(
+					"UPDATE NonAdminUsers "
+					+ "SET 	username = '"	+ username 	+ "',"
+					+ "		name = '" 		+ name 		+ "',"
+					+ "		password = '" 	+ password	+ "',"
+					+ "		email = '"		+ email		+ "',"
+					+ "		photo = '"		+ photo 		+ "',"
+					+ "		bio = '"			+ bio		+ "'"
+					+ "WHERE _id="+ _id + ";"
+					);
+					
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return false;
+
+		} finally { // will this runn..?
+			close();
+		}
+		return true;
 	}
 	
 	public static boolean insertContributor(User contributor, int project_id, int role_id) {
@@ -197,7 +226,7 @@ public class JDBCDriver {
 		return false;
 	}
 	
-	public static Project createProject(String projectName, String projectDescription, String projectPhoto, Vector<String> projectResources, User creator) {
+	public static Project createProject(String projectName, String projectDescription, String projectGenre, String projectPhoto, Vector<String> projectResources, User creator) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
 			return null;
@@ -206,16 +235,18 @@ public class JDBCDriver {
 		if(creator == null) {
 			return null;
 		}
+
 		
 		Project project = null;
 		//System.out.println("Inserting project.");
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
-					"INSERT INTO Projects (name, description, upvoteCount, photo)" + 
+					"INSERT INTO Projects (name, description, genre, upvoteCount, photo)" + 
 							"VALUES ("
 								+ "'"+ projectName 			+"',"
 								+ "'"+ projectDescription 	+"',"
+								+ "'"+ projectGenre			+"',"
 								+ "0,"
 								+ "'" + projectPhoto + "'"
 							+ ");"
@@ -228,6 +259,7 @@ public class JDBCDriver {
 					"SELECT * from Projects"
 					+ " WHERE name = '" + projectName + "'"
 					+ " AND description = '" + projectDescription + "'"
+					+ "	AND genre = '" + projectGenre + "'"
 					+ " AND upvoteCount =0;");
 		    rs = ps.executeQuery();
 			
@@ -300,17 +332,19 @@ public class JDBCDriver {
 		    			int project_id = -1;
 		    			String project_name = null;
 		    			String project_description = null;
+		    			String project_genre = null;
 		    			String project_photo = null;
 		    			String createDate = null;
 		    			
 		    			project_id = rs.getInt("_id");
 			    		project_name = rs.getString("name");
 			    		project_description = rs.getString("description");
+			    		project_genre = rs.getString("genre");
 			    		project_photo = rs.getString("photo");
 			    		upvoteCount = rs.getInt("upvoteCount");
 			    		createDate = rs.getString("createDate");
 
-				    Project project = new Project(project_id, upvoteCount, project_name, project_description, project_photo, createDate, null, null, null, null, null, null);
+				    Project project = new Project(project_id, upvoteCount, project_name, project_description,project_genre, project_photo, createDate, null, null, null, null, null, null);
 				    projects.add(project);
 		    		} while(rs.next());
 
@@ -340,6 +374,7 @@ public class JDBCDriver {
 		int upvoteCount = 0;
 		String project_name = null;
 		String project_description = null;
+		String project_genre = null;
 		String project_photo = null;
 		String createDate = null;
 		Vector<User> editors = new Vector<User>();
@@ -357,6 +392,7 @@ public class JDBCDriver {
 		    if(rs.next()) {
 		    	project_name = rs.getString("name");
 		    	project_description = rs.getString("description");
+		    	project_genre = rs.getString("genre");
 		    	upvoteCount = rs.getInt("upvoteCount");
 		    	createDate = rs.getString("createDate");
 		    } else {
@@ -378,7 +414,7 @@ public class JDBCDriver {
 
 		    // Add in tags 
 		    
-		    project = new Project(projectId, upvoteCount, project_name, project_description, project_photo, createDate, editors, roles, tracks, contributors, null, userToTracks);
+		    project = new Project(projectId, upvoteCount, project_name, project_description, project_genre, project_photo, createDate, editors, roles, tracks, contributors, null, userToTracks);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -863,6 +899,7 @@ public class JDBCDriver {
 		int proj_votes;
 		String proj_name;
 		String proj_desc;
+		String proj_genre;
 		String proj_photo;
 		String proj_createDate;
 		// TODO: the rest of the project stuff.
@@ -875,9 +912,10 @@ public class JDBCDriver {
 				proj_votes = rs.getInt("upvoteCount");
 				proj_name = rs.getString("name");
 				proj_desc = rs.getString("description");
+				proj_genre = rs.getString("genre");
 				proj_photo = rs.getString("photo");
 				proj_createDate = rs.getString("createDate");
-				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_photo, proj_createDate, null, null, null, null, null, null);
+				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_genre, proj_photo, proj_createDate, null, null, null, null, null, null);
 				projects.add(p);
 			}
 		} catch (SQLException e) {
@@ -900,6 +938,7 @@ public class JDBCDriver {
 		int proj_votes;
 		String proj_name;
 		String proj_desc;
+		String proj_genre;
 		String proj_photo;
 		String proj_createDate;
 		// TODO: the rest of the project stuff.
@@ -912,9 +951,10 @@ public class JDBCDriver {
 				proj_votes = rs.getInt("upvoteCount");
 				proj_name = rs.getString("name");
 				proj_desc = rs.getString("description");
+				proj_genre = rs.getString("genre");
 				proj_photo = rs.getString("photo");
 				proj_createDate = rs.getString("createDate");
-				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_photo, proj_createDate, null, null, null, null, null, null);
+				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc,proj_genre, proj_photo, proj_createDate, null, null, null, null, null, null);
 				projects.add(p);
 			}
 		} catch (SQLException e) {
