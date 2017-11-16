@@ -24,7 +24,9 @@ String error = (String)session.getAttribute("errorMessage");
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 		<% // Links a stylesheet based on the name of the page we're on, to make css per page seperated and (hopefully) neater. %>
 		<link rel="stylesheet" type="text/css" href="includes/css/<%= pageName %>.css" />
-		<link rel="stylesheet" type="text/css" href="includes/css/myprojects.css" />
+		<% if (pageName.equals("user")) { %>
+			<link rel="stylesheet" type="text/css" href="includes/css/banner.css" />
+		<% } %>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<script type="text/javascript" src="includes/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="includes/js/main.js"></script>
@@ -37,8 +39,10 @@ String error = (String)session.getAttribute("errorMessage");
 		<!--<script src="includes/js/popper.min.js"></script>
 		<link rel="stylesheet" href="includes/css/bootstrap/bootstrap.min.css" />
 		<script src="includes/js/bootstrap/bootstrap.min.js"></script>-->
-		
+		<!-- Isotope.js -->
 		<script src="includes/js/isotope.pkgd.min.js"></script>
+		<!-- Interact.js -->
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.9/interact.min.js"></script>
 	</head>
 	<body>
 		<div id="navbar" class="row">
