@@ -2,17 +2,16 @@
 	</table>
 </div> <!--  end of banner -->
 <div id="background">
+<div id="navbar">
 	<table>
 		<tr>
-			<ul id="nav">
-			  <li id="li_nav"><a id="li_a_nav" href="#" onclick='show(1);'>My Projects</a></li>
-			  <li id="li_nav"><a id="li_a_nav" href="#" onclick='show(2);'>Liked Projects</a></li>
-			  <li id="li_nav" style="float:right"><a id="li_a_nav" class="active" href="#" onclick='show(3);'>About Me</a></li>
-			</ul>
-		</tr>
-	</table>
-	<table>
-		<tr>
+			<td>
+				<ul id="nav">
+				  <li><a id="li_a_nav" href="#" onclick='show(1);'>My Projects</a></li>
+				  <li><a id="li_a_nav" href="#" onclick='show(2);'>Liked Projects</a></li>
+				  <li style="float:right"><a id="li_a_nav" class="active" href="#" onclick='show(3);'>About Me</a></li>
+				</ul>
+			</td>
 			<td>
 		        &nbsp;
 		    </td>
@@ -35,9 +34,9 @@
 					 </p>
 	            </div>     
 		     </td>
-		</tr>
-	
+	     </tr>
 	</table>
+</div>
 <div>
 <script>
 	function show(nr) {
