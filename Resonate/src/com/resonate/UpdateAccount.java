@@ -31,23 +31,46 @@ public class UpdateAccount extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
+		User user = (User) session.getAttribute("user");
+		
 		// File if 
 		String username = request.getParameter("username");
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String photo = request.getParameter("photo");
-//		String bio = request.getParameter("bio");
+		String bio = request.getParameter("bio");
 		
-		// TODO: Create new user? or something
-		
-		User user = null;
-		
-		
-		if(JDBCDriver.updateUser(user)) {
+		if(		JDBCDriver.checkUsernameExists(username) ||
+				username.equals("") ||
+				name.equals("") ||
+				password.equals("") ||
+				JDBCDriver.checkEmailExists(email) ||
+				email.equals("") ||
+				photo.equals("") ||
+				bio.equals("")
+				) {
+			// Redirect to accounts page with failed message
+			session.setAttribute("error", "Fields are not valid");
+			response.sendRedirect("/updateProfile.jsp");
+			return;
+		}else {
+			user.setName(name);
+			user.setUsername(username);
+			user.setPassword(password);
+			user.setEmail(email);
+			user.setPhoto(photo);
+			user.setBio(bio);
 			
+			if(JDBCDriver.updateUser(user)) {
+				user = JDBCDriver.getUserById(user.get_id());
+				session.setAttribute("user", user);
+				
+			}else {
+				
+			}
 		}
-		
 	}
 
 }
