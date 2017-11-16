@@ -3,7 +3,7 @@
 	</table>
 </div> <!--  end of banner -->
 <div id="background">
-	<table>
+	<table id="user">
 		<tr>
 			<td id="navbar2">
 				<ul id="nav">
@@ -24,7 +24,6 @@
 	     </tr>
 	</table>
 </div>
-<div>
 <%-- 
 <%@page import="java.util.Vector" %>
 
