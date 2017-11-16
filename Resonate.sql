@@ -48,7 +48,8 @@ CREATE TABLE IF NOT EXISTS `Projects` (
   `name` varchar(30) NOT NULL,
   `description` text NOT NULL,
   `upvoteCount` int(6) NOT NULL DEFAULT '0',
-  `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `photo` varchar(200) NULL
 );
 
 -- --------------------------------------------------------

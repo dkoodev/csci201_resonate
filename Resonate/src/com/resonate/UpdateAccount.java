@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.resonate.objects.User;
+
 /**
  * Servlet implementation class UpdateAccount
  */
@@ -35,9 +37,16 @@ public class UpdateAccount extends HttpServlet {
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String photo = request.getParameter("photo");
-//		String bio = request.getParameter("");
+//		String bio = request.getParameter("bio");
+		
+		// TODO: Create new user? or something
+		
+		User user = null;
 		
 		
+		if(JDBCDriver.updateUser(user)) {
+			
+		}
 		
 	}
 

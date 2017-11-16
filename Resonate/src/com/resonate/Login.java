@@ -33,23 +33,33 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
 
         User validatedUser = null;
-        if (JDBCDriver.login(username_req, password_req)) {
+        //if (JDBCDriver.login(username_req, password_req)) {
         	try {
         		validatedUser = JDBCDriver.getUser(username_req, password_req);
         	} catch (SQLException sqle) {
         		sqle.printStackTrace();
-        		session.setAttribute("loginMessage", "SQL Error");
+        		session.setAttribute("errorMessage", "SQL Error");
             	response.sendRedirect("/Resonate/login.jsp");
             	return;
         	}
-
-        	session.setMaxInactiveInterval(600); // 10 min.
-        	session.setAttribute("user", validatedUser); 
-        	response.sendRedirect("/Resonate/user.jsp");
-        } else {
+        	
+        	if (validatedUser != null) {
+        		System.out.println("User logged in: " + validatedUser.getName()
+        						+ ", username: " + validatedUser.getUsername()
+        						+ ", id: " + validatedUser.get_id()
+        				);
+        		
+	        	session.setMaxInactiveInterval(600); // 10 min.
+	        	session.setAttribute("user", validatedUser); 
+	        	response.sendRedirect("/Resonate/user.jsp");
+        	} else {
+        		session.setAttribute("errorMessage", "SQL Error");
+            	response.sendRedirect("/Resonate/login.jsp");
+        	}
+        /*} else {
         	session.setMaxInactiveInterval(30); // 30s.
-    		session.setAttribute("loginMessage", "Login Failed");
+    		session.setAttribute("errorMessage", "Login Failed");
         	response.sendRedirect("/Resonate/login.jsp");
-        }
+        }*/
     }
 }

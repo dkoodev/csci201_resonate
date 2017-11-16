@@ -26,4 +26,10 @@
 		Already have an account? <a href="login.jsp" ><font color="00b4a8">Log in</font></a>
 	</p>
 </form>
+<%
+if (error != null && !error.equals("")) {
+	//session.invalidate();
+	session.removeAttribute("errorMessage");
+}
+%>
 <%@ include file="includes/global_footer.jsp" %>
