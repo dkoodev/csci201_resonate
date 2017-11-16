@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+#td1 {
+	padding: 0 !important;
+}
+
+#likedprojects{
+	background-color: white; 
+	font-size: 25px; 
+	font-family: Courier; 
+	padding-top: 80px;
+	padding-left: 70px; 
+	padding-bottom: 70px;
+	padding-right: 70px;
+	border-style: outset; 
+	border-color: #f09021; 
+	border-width: 5px;
+	height: 800px;
+	width: 970px; 
+}
+
+#nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+	height: 100%;	
+    
+}
+
+#navbar2 {
+	padding-left: 0 !important; 
+	background: #333;
+	height: 800px; 
+}
+
+#li {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+	width: 200px;
+}
+
+li a:hover {
+	background-color: #f09021;
+	text-decoration: none;
+}
+
+.active {
+	background-color: #111;
+    border-style: solid;
+    border-bottom: #333;
+    border-right: #333;
+    border-top: #333;
+    border-color: #f09021;
+    border-width: 6px;
+}
+
+.button2 {
+	margin-left: 80px;
+    background-color: #f09021;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    width: 300px; 
+    height: 70px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 50px; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-shadow: 1px 1px 1px #000000;
+    transition: all 0.5s;
+  	cursor: pointer;
+}
+
+.button2 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button2 span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button2:hover span {
+  padding-right: 25px;
+}
+
+.button2:hover span:after {
+  opacity: 1;
+  right: 0;
+}
