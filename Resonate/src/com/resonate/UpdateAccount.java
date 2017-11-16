@@ -42,13 +42,13 @@ public class UpdateAccount extends HttpServlet {
 		String photo = request.getParameter("photo");
 		String bio = request.getParameter("bio");
 		
+		
 		if(		JDBCDriver.checkUsernameExists(username) ||
 				username.equals("") ||
 				name.equals("") ||
 				password.equals("") ||
 				JDBCDriver.checkEmailExists(email) ||
 				email.equals("") ||
-				photo.equals("") ||
 				bio.equals("")
 				) {
 			// Redirect to accounts page with failed message
