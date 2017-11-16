@@ -66,9 +66,10 @@ public class UpdateAccount extends HttpServlet {
 			if(JDBCDriver.updateUser(user)) {
 				user = JDBCDriver.getUserById(user.get_id());
 				session.setAttribute("user", user);
-				
+				response.sendRedirect("/updateProfile.jsp");
 			}else {
-				
+				session.setAttribute("error", "Updating profile didn't work");
+				response.sendRedirect("/updateProfile.jsp");
 			}
 		}
 	}
