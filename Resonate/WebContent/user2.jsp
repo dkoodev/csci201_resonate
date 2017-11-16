@@ -7,15 +7,17 @@
 		<tr>
 			<td id="navbar2">
 				<ul id="nav">
-				  <li><a id="li_1" href="user3.jsp">My Projects</a></li>
-				  <li><a id="li_2" class="active">Liked Projects</a></li>
-				  <li><a id="li_3" href="user.jsp" >About Me</a></li>
+				  <li><a id="li" href="user3.jsp">My Projects</a></li>
+				  <li><a id="li" class="active">Liked Projects</a></li>
+				  <li><a id="li" href="user.jsp" >About Me</a></li>
 				</ul>
 			</td>
 		    <td id="td1"> 
 	            <div id="table2">
 		        		 <p id="likedprojects">
-						Looks like you haven't liked any projects yet! Make one "now"
+						Looks like you haven't liked any projects yet! <br>
+						Explore the Resonate Community! <br><br>
+						<a href="browseProjects.jsp" style="text-decoration: none;"><button class="button2"> <span>Browse Projects </span></button> </a><br />
 					 </p>
 	            </div>     
 		     </td>

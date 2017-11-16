@@ -3,6 +3,7 @@
 #background {
 	background-repeat: repeat-y;
 	background-image: url(http://www.norwoodlibrary.org/wp-content/uploads/2016/05/piano-03.jpg);
+	height: 1000px;
 }
 
 #userIcon {
@@ -77,6 +78,7 @@ table{
 	display: block; 
 	margin: auto;
 	margin-left: 1cm;
+	height: 1500px;
 }
 
 #projects {

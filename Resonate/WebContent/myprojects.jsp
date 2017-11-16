@@ -70,8 +70,5 @@
 			</tr>
 	</table>
 <br /><br /><br />
-<table id="background"><tr></tr></table>
 </div>
-
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 <%@ include file="includes/global_footer.jsp" %>

@@ -7,22 +7,22 @@
 		<tr>
 			<td id="navbar2">
 				<ul id="nav">
-				  <li><a id="li_1" class="active" href="#">My Projects</a></li>
-				  <li><a id="li_2" href="user2.jsp">Liked Projects</a></li>
-				  <li><a id="li_3" href="user.jsp" >About Me</a></li>
+				  <li><a id="li" class="active" href="#">My Projects</a></li>
+				  <li><a id="li" href="user2.jsp">Liked Projects</a></li>
+				  <li><a id="li" href="user.jsp" >About Me</a></li>
 				</ul>
 			</td>
 		    <td id="td1">
 		    		<div id="table1">
 		        		 <p id="myprojects">
-						Looks like you haven't created any projects yet! Make one "now"
+						Looks like you haven't created any projects yet! <br><br>
+						<a href="createproject.jsp" style="text-decoration: none;"><button class="button2"> <span> Create Your First Project </span></button> </a><br />
 					 </p>
 	            </div>       
 		     </td>
 	     </tr>
 	</table>
 </div>
-<div>
 <%-- 
 <%@page import="java.util.Vector" %>
 
