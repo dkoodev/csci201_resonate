@@ -1,5 +1,9 @@
 package com.resonate.objects;
 
+import java.util.Vector;
+
+import com.resonate.JDBCDriver;
+
 public class User {
 	private String username = null;
 	private int _id = -1;
@@ -83,5 +87,13 @@ public class User {
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+	
+	public Vector<Project> getProjects() {
+		return JDBCDriver.getProjectsByUserId(_id);
+	}
+	
+	public Vector<Project> getLikedProjects() {
+		return JDBCDriver.getLikedProjectsByUserId(_id);
 	}
 }

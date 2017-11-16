@@ -8,7 +8,8 @@ public class Project {
 	private int upvoteCount = 0;
 	private String name = null;
 	private String description = null;
-	private 	String createDate = null;
+	private String photo = null;
+	private String createDate = null;
 	private Vector<User> editors = new Vector<User>();
 	private Vector<Role> roles = new Vector<Role>();
 	private Vector<Track> tracks = new Vector<Track>();
@@ -16,13 +17,14 @@ public class Project {
 	private Vector<String> tags = new Vector<String>();
 	private HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
 	
-	public Project(int id, int upvoteCount, String name, String description, String createDate, Vector<User> editors,
+	public Project(int id, int upvoteCount, String name, String description, String photo, String createDate, Vector<User> editors,
 			Vector<Role> roles, Vector<Track> tracks, Vector<User> contributors, Vector<String> tags,
 			HashMap<User, Vector<Track>> userToTracks) {
 		this.id = id;
 		this.upvoteCount = upvoteCount;
 		this.name = name;
 		this.description = description;
+		this.setPhoto(photo);
 		this.createDate = createDate;
 		this.editors = editors;
 		this.roles = roles;
@@ -118,6 +120,14 @@ public class Project {
 
 	public void setUserToTracks(HashMap<User, Vector<Track>> userToTracks) {
 		this.userToTracks = userToTracks;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
 	
