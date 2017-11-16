@@ -1,3 +1,5 @@
+<%@ include file="global_header.jsp" %>
+
 <div id="banner">
 	<table>
 		<tr>

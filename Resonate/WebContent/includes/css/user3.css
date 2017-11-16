@@ -4,6 +4,10 @@
 	padding: 0 !important;
 }
 
+#user {
+	margin-left: 30px;
+}
+
 #myprojects{
 	background-color: white; 
 	font-size: 25px; 
@@ -14,8 +18,8 @@
 	border-style: outset; 
 	border-color: #f09021; 
 	border-width: 5px;
-	height: 800px;
-	width: 970px; 
+	height: 1000px;
+	width: 1020px; 
 }
 
 #nav {

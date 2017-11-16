@@ -24,9 +24,9 @@ String error = (String)session.getAttribute("errorMessage");
 		<link rel="stylesheet" type="text/css" href="includes/css/main.css" />
 		<% // Links a stylesheet based on the name of the page we're on, to make css per page seperated and (hopefully) neater. %>
 		<link rel="stylesheet" type="text/css" href="includes/css/<%= pageName %>.css" />
-		<% if (pageName.equals("user")) { %>
+		<%-- <% if (pageName.equals("user")) { %>
 			<link rel="stylesheet" type="text/css" href="includes/css/banner.css" />
-		<% } %>
+		<% } %> --%>
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<script type="text/javascript" src="includes/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="includes/js/main.js"></script>
@@ -53,13 +53,27 @@ String error = (String)session.getAttribute("errorMessage");
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
 				<% if (u != null) { %>
-					<li id="accountBtn"><a href="user.jsp">
+					<li id="accountBtn"><a href="user3.jsp">
 					<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
 						<img src="<%= u.getPhoto() %>" />
 					<% } else { %>
 						<img src="images/NoUserPhoto.png" />
 					<% } %>
 					</a></li>
+					<!-- Tried to make dropdown menu -->
+					<%-- <li id="drop"> 
+					<div class="dropdown">
+						<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
+							<button  class="dropbtn"><p><img id="dropimg" src="<%= u.getPhoto() %>" /></p></button>
+						<% } else { %>
+							<button  class="dropbtn"><p><img id="dropimg" src="images/NoUserPhoto.png" /></p></button>
+						<% } %>
+						<div id="drop" class="dropdown-content">
+						    <a href="#">Link 1</a>
+						    <a href="#">Link 2</a>
+						</div>
+					</div>
+					</li> --%>
 					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
