@@ -17,8 +17,3 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
-			<a href="createproject.jsp"><button class="button"> + Create A New Project!</button> </a><br />
-		</tr>
-	</table>
-</div>
