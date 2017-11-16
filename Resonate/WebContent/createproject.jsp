@@ -18,6 +18,7 @@ function addFileBtn() {
 <form name="cp" id="cp" action="CreateProject" method="POST" enctype="multipart/form-data">
 	<input class="inputs" type="text" name="name" placeholder="Name" /><br />
 	<input class="inputs" type="text" name="description" placeholder="A short description" /><br />
+	<input class="inputs" type="text" name="genre" placeholder="Genre" /><br />
   	Add a Project Photo: <input class="inputs" type="file" id="photoFile" name="photo" accept=".png, .jpg, .jpeg" /><br />
 	<p>Add some resources for others to build from:</p>
 	<input class="inputs" type="button" onClick="addFileBtn()" value="Add A File" />
