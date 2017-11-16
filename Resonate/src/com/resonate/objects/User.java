@@ -57,7 +57,7 @@ public class User {
 	}
 
 	// Made private to restrict access
-	private String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 

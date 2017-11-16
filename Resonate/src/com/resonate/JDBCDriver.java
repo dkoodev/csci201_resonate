@@ -163,8 +163,37 @@ public class JDBCDriver {
 			return false;
 		}
 		
-		
-		return false;
+		try {
+			int _id = user.get_id();
+			String username = user.getUsername();
+			String name = user.getName();
+			String password = user.getPassword();
+			String email = user.getEmail();
+			String photo = user.getPhoto();
+			String bio = user.getBio();
+			
+			ps = conn.prepareStatement(
+					"UPDATE NonAdminUsers "
+					+ "SET 	username = '"	+ username 	+ "',"
+					+ "		name = '" 		+ name 		+ "',"
+					+ "		password = '" 	+ password	+ "',"
+					+ "		email = '"		+ email		+ "',"
+					+ "		photo = '"		+ photo 		+ "',"
+					+ "		bio = '"			+ bio		+ "'"
+					+ "WHERE _id="+ _id + ";"
+					);
+					
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return false;
+
+		} finally { // will this runn..?
+			close();
+		}
+		return true;
 	}
 	
 	public static boolean insertContributor(User contributor, int project_id, int role_id) {

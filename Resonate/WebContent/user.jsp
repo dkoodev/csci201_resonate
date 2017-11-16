@@ -1,4 +1,7 @@
+
 <%@ include file="includes/global_header.jsp" %>
+<%@ include file="includes/banner.jsp" %>
+
 <%@page import="java.util.Vector" %>
 
 <%
