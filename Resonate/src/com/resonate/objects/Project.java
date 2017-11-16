@@ -8,6 +8,7 @@ public class Project {
 	private int upvoteCount = 0;
 	private String name = null;
 	private String description = null;
+	private String genre = null;
 	private String photo = null;
 	private String createDate = null;
 	private Vector<User> editors = new Vector<User>();
@@ -17,7 +18,7 @@ public class Project {
 	private Vector<String> tags = new Vector<String>();
 	private HashMap<User, Vector<Track>> userToTracks = new HashMap<User, Vector<Track>>();
 	
-	public Project(int id, int upvoteCount, String name, String description, String photo, String createDate, Vector<User> editors,
+	public Project(int id, int upvoteCount, String name, String description, String genre, String photo, String createDate, Vector<User> editors,
 			Vector<Role> roles, Vector<Track> tracks, Vector<User> contributors, Vector<String> tags,
 			HashMap<User, Vector<Track>> userToTracks) {
 		this.id = id;
@@ -66,6 +67,14 @@ public class Project {
 		this.description = description;
 	}
 
+	public String getGenre() {
+		return genre;
+	}
+	
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	
 	public String getCreateDate() {
 		return createDate;
 	}
