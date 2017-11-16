@@ -48,7 +48,7 @@
 
 <!-- try adding a div here to old everything  -->
 
-<!-- <div id="filterTitle">
+<div id="filterTitle">
 	<p>Filter By</p></div> 
 <div id="genreTitle">
 	<p>Genre</p></div> 
@@ -69,7 +69,7 @@
   <button class="button" data-sort-by="name">Name</button>
   <button class="button" data-sort-by="date">Date</button>
   <button class="button" data-sort-by="genre">Genre</button>
-</div>  -->
+</div>  
 
 <!-- 
 filter by:
@@ -82,23 +82,21 @@ sort by:
 	Most popular
 	
  -->
- <%
+<%-- <%
 	for(Project project : projects){
 	 
  %>
 	 <div class="element-item <%= project.getGenre() %>  " data-category="transition">
 	 <h3 class="name"> <%= project.getName() %></h3>
 	 <p class="date"> <%= project.getCreateDate() %></p>
-	 <p class="number">80</p>
-	 <p class="weight">200.59</p>
 	</div>
 
 <%
 	}
- %>
+ %>  --%>
 
 
-<div id="filterTitle">
+<!-- <div id="filterTitle">
 	<p>Filter By</p></div> 
 <div id="genreTitle">
 	<p>Genre</p></div> 
@@ -124,7 +122,7 @@ sort by:
   <button class="button" data-sort-by="weight">weight</button>
   <button class="button" data-sort-by="category">category</button>
 </div>  
-
+ -->
 
 <div class="grid">
 
