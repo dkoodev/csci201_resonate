@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+#update {
+	display: block;
+	margin-left:0px; 
+	font-size: 30px;
+	text-align: center; 
+	font-family: Courier; 
+	word-spacing: -10px;
+}
+
+.button2 {
+	display: block;
+	margin: auto;
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    width: 300px; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 25px; 
+}

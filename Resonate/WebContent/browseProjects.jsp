@@ -8,7 +8,7 @@
 
 %>
 <!-- Browse Projects Page or Home Page -->
-
+<%-- <%= %> --%>
 
 <div id="title1"> Listen </div>
 <div id="title2"> Up </div>
@@ -17,7 +17,85 @@
 <p><input type="text" class="quicksearch" placeholder="Search" /></p>
 
 
+
+<!-- added this  NOT SURE HOWWWW : ARE WE GONNA HARDCODE PROJECTS?? bc this was hardcoded -->
+<!-- 
+<div id="filterTitle">
+	<p>Filter By</p></div> 
+<div id="genreTitle">
+	<p>Genre</p></div> 
+<div id="filters" class="button-group">  
+  <button class="button is-checked" data-filter="*">show all</button>
+  <button class="button" data-filter=".funk">Funk</button>
+  <button class="button" data-filter=".r&b">R&B</button>
+  <button class="button" data-filter=".pop">Pop</button>
+  <button class="button" data-filter=".classical">Classical</button>
+<div id="auditionTitle">
+	<p>Auditions</p></div> 
+</div> 
+
+<div id="sortTitle">
+<p>Sort By</p></div>
+<div id="sorts">  <button class="button is-checked" data-sort-by="original-order">Original Order</button>
+  <button class="button" data-sort-by="popular">Most Popular</button>
+  <button class="button" data-sort-by="name">Name</button>
+  <button class="button" data-sort-by="date">Date</button>
+  <button class="button" data-sort-by="genre">Genre</button>
+</div>  -->
+
+<!-- // -->
+
+
 <!-- try adding a div here to old everything  -->
+
+<!-- <div id="filterTitle">
+	<p>Filter By</p></div> 
+<div id="genreTitle">
+	<p>Genre</p></div> 
+<div id="filters" class="button-group">  
+  <button class="button is-checked" data-filter="*">show all</button>
+  <button class="button" data-filter=".funk">Funk</button>
+  <button class="button" data-filter=".r&b">R&B</button>
+  <button class="button" data-filter=".pop">Pop</button>
+  <button class="button" data-filter=".classical">Classical</button>
+<div id="auditionTitle">
+	<p>Auditions</p></div> 
+</div> 
+
+<div id="sortTitle">
+<p>Sort By</p></div>
+<div id="sorts">  <button class="button is-checked" data-sort-by="original-order">Original Order</button>
+  <button class="button" data-sort-by="popular">Most Popular</button>
+  <button class="button" data-sort-by="name">Name</button>
+  <button class="button" data-sort-by="date">Date</button>
+  <button class="button" data-sort-by="genre">Genre</button>
+</div>  -->
+
+<!-- 
+filter by:
+	genre
+	
+sort by:
+	name
+	date
+	genre
+	Most popular
+	
+ -->
+ <%
+	for(Project project : projects){
+	 
+ %>
+	 <div class="element-item <%= project.getGenre() %>  " data-category="transition">
+	 <h3 class="name"> <%= project.getName() %></h3>
+	 <p class="date"> <%= project.getCreateDate() %></p>
+	 <p class="number">80</p>
+	 <p class="weight">200.59</p>
+	</div>
+
+<%
+	}
+ %>
 
 
 <div id="filterTitle">
@@ -49,6 +127,8 @@
 
 
 <div class="grid">
+
+
   <div class="element-item transition metal " data-category="transition">
     <h3 class="name">Mercury</h3>
     <p class="symbol">Hg</p>
