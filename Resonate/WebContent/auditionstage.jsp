@@ -83,6 +83,35 @@ var scrolloffset = 0;
 var playhead = 0;
 var playing = false;
 
+function audioLoad(audio, element, index) {
+	$(element).css('opacity', 1);
+	
+	var aWidth = 40*(audio.duration);
+	
+	var min = Math.floor((audio.duration)/60);
+	var sec = Math.floor(audio.duration);
+	var ms = Math.floor(((audio.duration%1)*1000)%60);
+	var timeString;
+	if (min < 10) {
+		timeString = "0" + min.toString() + ":"; 
+	} else {
+		timeString = min.toString() + ":";
+	}
+	if (sec < 10) {
+		timeString = timeString + "0" + sec.toString() + ":"; 
+	} else {
+		timeString = timeString + sec.toString() + ":";
+	}
+	if (ms < 10) {
+		timeString = timeString + "0" + ms.toString(); 
+	} else {
+		timeString = timeString + ms.toString();
+	}
+	$("#duration_" + index.toString()).text(timeString);
+	
+	return aWidth;
+}
+
 $(function() {
 	$('.snapTrack').each(function(index) {
 		var element = document.getElementById('track_' + index.toString());
@@ -93,52 +122,10 @@ $(function() {
 		$(audio).data('tOffset', 0);
 		audio.loop = false;
 		if (audio.readyState > 3) {
-			$(element).css('opacity', 1);
-			aWidth = 25*(audio.duration);
-			var min = Math.floor((audio.duration)/60);
-			var sec = Math.floor(audio.duration);
-			var ms = Math.floor(((audio.duration%1)*1000)%60);
-			var timeString;
-			if (min < 10) {
-				timeString = "0" + min.toString() + ":"; 
-			} else {
-				timeString = min.toString() + ":";
-			}
-			if (sec < 10) {
-				timeString = timeString + "0" + sec.toString() + ":"; 
-			} else {
-				timeString = timeString + sec.toString() + ":";
-			}
-			if (ms < 10) {
-				timeString = timeString + "0" + ms.toString(); 
-			} else {
-				timeString = timeString + ms.toString();
-			}
-			$("#duration_" + index.toString()).text(timeString);
+			aWidth = audioLoad(audio, element, index);
 		} else {
 			$(audio).on('canplaythrough', function(event) {
-				$(element).css('opacity', 1);
-				aWidth = 25*(audio.duration);
-				var min = Math.floor((audio.duration)/60);
-				var sec = Math.floor(audio.duration);
-				var ms = Math.floor(((audio.duration%1)*1000)%60);
-				var timeString;
-				if (min < 10) {
-					timeString = "0" + min.toString() + ":"; 
-				} else {
-					timeString = min.toString() + ":";
-				}
-				if (sec < 10) {
-					timeString = timeString + "0" + sec.toString() + ":"; 
-				} else {
-					timeString = timeString + sec.toString() + ":";
-				}
-				if (ms < 10) {
-					timeString = timeString + "0" + ms.toString(); 
-				} else {
-					timeString = timeString + ms.toString();
-				}
-				$("#duration_" + index.toString()).text(timeString);
+				aWidth = audioLoad(audio, element, index);
 			});
 		}
 		/* Audio initialized */
@@ -165,6 +152,8 @@ $(function() {
 			}
 		})
 		.on('dragmove', function (event) {
+			
+			x = $(element).data('xVal');
 			x += event.dx;
 			$(element).data('xVal', x);
 			$(element).data('yVal', y);
@@ -176,7 +165,7 @@ $(function() {
 			
 	
 			var ofs = $(audio).data('tOffset');
-			$(audio).data('tOffset', ofs + (0.01*event.dx));
+			$(audio).data('tOffset', ofs + (0.022*event.dx));
 			console.log($(audio).data('tOffset'));
 			if (playhead == 0) audio.currentTime = 0;
 			else audio.currentTime = (playhead-$(audio).data('tOffset'));
@@ -218,12 +207,17 @@ $(function() {
 	});
 	
 	$('#scroller').scrollLeft(0);
-
+	var prevScroll = 0;
+	var scrollAmt = 0;
+	
 	$('#scroller').scroll(function() {
 		scrolloffset = $('#scroller').scrollLeft();
+		scrollAmt = scrolloffset - prevScroll;
 		$('.snapTrack').each(function(index) {
 			var element = document.getElementById('track_' + index.toString());
-			var x = $(element).data('xVal') - scrolloffset;
+			var x = $(element).data('xVal') - scrollAmt;
+			console.log(x);
+			$(element).data('xVal', x);
 			var y = $(element).data('yVal');
 			//y += event.dy; TODO
 			
@@ -231,6 +225,7 @@ $(function() {
 			element.style.transform =
 			    'translate(' + x + 'px, ' + y + 'px)';
 		});
+		prevScroll = $('#scroller').scrollLeft();
 	});
 	
 	$("#playBtn").click(function() {
