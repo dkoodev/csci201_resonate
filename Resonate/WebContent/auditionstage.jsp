@@ -74,6 +74,10 @@ if (p == null) {
 </table>
 
 <script type="text/javascript">
+
+// TODO: Potentially waveforms, if there's time.
+// https://www.npmjs.com/package/waveform-data
+
 var tracksin = 0;
 var scrolloffset = 0;
 var playhead = 0;

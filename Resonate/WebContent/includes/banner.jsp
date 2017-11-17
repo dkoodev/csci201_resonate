@@ -6,14 +6,14 @@
 			<td>
 				<div id="userPic">
 					<!--  replace img src with variables  -->
-					<img id="userIcon" src="images/0.JPG" /> <br />
+					<img id="userIcon" src="<%=(u.getPhoto() == null) ? "images/NoUserPhoto.png" : u.getPhoto() %>" /> <br />
 			</td>
 			<td>
 					<br /><br /><br /><p id="fullname"> <!--  replace fullname with variables  -->		
-						Jerry Tejada
+						<%=u.getName() %>
 					</p>
 					<p id="username">	<!--  replace username with variables  -->
-						username
+						<%=u.getUsername() %>
 					</p><br />
 				</div>
 			</td>
