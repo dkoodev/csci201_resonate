@@ -1,0 +1,118 @@
+@charset "ISO-8859-1";
+
+.snapTrack {
+	width: 306px; 
+	height:60px; 
+	border: #9f9f9f 2px solid; 
+	border-radius: 7px;
+	-webkit-transition: transform 300ms, width 300ms; 
+	transition: transform 300ms, width 300ms, background 300ms, top 300ms; 
+	-moz-user-select: -moz-none; 
+	-khtml-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none;	
+	position: absolute;
+	top: 120px;
+	left: 7px;
+	z-index: 15;
+}
+
+.title {
+	height: 35px;
+	font-size: 22px;
+	font-weight: 700;
+	color: #00b5a9;
+	border-bottom: 1px #bebebe solid;
+}
+
+#hideDiv {
+	background: #ffffff;
+	position: absolute; 
+	top:120px; 
+	left:0px; 
+	height: 570px; 
+	width: 320px; 
+	z-index: 10;
+}
+
+#scroller {
+	width: 940px; 
+	height: 515px; 
+	overflow-x:scroll; 
+	float:left;
+}
+
+#playBtn {
+	width: 100px; 
+	height: 80px;
+	float:left;
+	background: #00b5a9;
+	border-radius: 15px;
+	margin-right: 10px;
+}
+
+#playTriangle {
+  width: 0; 
+  height: 0; 
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  
+  border-left: 40px solid #FFFFFF;
+  
+  margin: 15px auto 0 auto;
+}
+
+#stopSquare {
+	width: 40px;
+	height:40px;
+	
+	background: #ffffff;
+	border: none;
+	
+	margin: 20px auto 0 auto;
+}
+
+#stopBtn {
+	width: 100px; 
+	height: 80px;
+	float: left;
+	background: #bfbfbf;
+	border-radius: 15px;
+}
+/*
+#track_0 {
+	background: #ffffff url(../../images/waveform0.PNG) repeat-x left bottom;	
+}
+
+#track_1 {
+	background: #ffffff url(../../images/waveform1.PNG) repeat-x left bottom;	
+}
+
+#track_2 {
+	background: #ffffff url(../../images/waveform2.PNG) repeat-x left bottom;	
+}
+
+#track_3 {
+	background: #ffffff url(../../images/waveform3.PNG) repeat-x left bottom;	
+}
+
+#track_4 {
+	background: #ffffff url(../../images/waveform0.PNG) repeat-x left bottom;	
+}
+
+#track_5 {
+	background: #ffffff url(../../images/waveform1.PNG) repeat-x left bottom;	
+}
+
+#track_6 {
+	background: #ffffff url(../../images/waveform2.PNG) repeat-x left bottom;	
+}
+
+#track_7 {
+	background: #ffffff url(../../images/waveform3.PNG) repeat-x left bottom;	
+}
+
+#track_8 {
+	background: #ffffff url(../../images/waveform0.PNG) repeat-x left bottom;	
+}*/
