@@ -60,20 +60,17 @@ String error = (String)session.getAttribute("errorMessage");
 						<img src="images/NoUserPhoto.png" />
 					<% } %>
 					</a></li>
-					<!-- Tried to make dropdown menu -->
-					<%-- <li id="drop"> 
-					<div class="dropdown">
-						<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
-							<button  class="dropbtn"><p><img id="dropimg" src="<%= u.getPhoto() %>" /></p></button>
-						<% } else { %>
-							<button  class="dropbtn"><p><img id="dropimg" src="images/NoUserPhoto.png" /></p></button>
-						<% } %>
-						<div id="drop" class="dropdown-content">
-						    <a href="#">Link 1</a>
-						    <a href="#">Link 2</a>
-						</div>
-					</div>
-					</li> --%>
+					
+<!-- 					<div class="dropdown">
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
+</div> -->
+					
+					
 					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
