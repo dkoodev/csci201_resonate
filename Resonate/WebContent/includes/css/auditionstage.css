@@ -6,7 +6,7 @@
 	border: #9f9f9f 2px solid; 
 	border-radius: 7px;
 	-webkit-transition: transform 300ms, width 300ms; 
-	transition: transform 300ms, width 300ms, background 300ms, top 300ms; 
+	transition: transform 300ms, width 300ms, background 300ms, top 300ms, opacity 300ms;; 
 	-moz-user-select: -moz-none; 
 	-khtml-user-select: none; 
 	-webkit-user-select: none; 
@@ -16,6 +16,7 @@
 	top: 120px;
 	left: 7px;
 	z-index: 15;
+	opacity: 0;
 }
 
 .title {
@@ -71,6 +72,20 @@
 	border: none;
 	
 	margin: 20px auto 0 auto;
+}
+
+.pauseRect {
+	width: 15px;
+	height: 40px;
+	float:left;
+	margin: 0 5px 0 5px;
+	background: #ffffff;
+	border:none;
+}
+#pauseSq {
+	margin: 20px auto 0 auto;
+	width: 50px;
+	height: 40px;
 }
 
 #stopBtn {

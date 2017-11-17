@@ -14,7 +14,7 @@ if (p == null) {
 		Creator: isaac<br />
 	</div>
 	<div style="float:right;">
-		00:00:00<br />
+		<span id="duration_0">00:00:00</span><br />
 		Votes
 	</div>
 </div>
@@ -24,7 +24,7 @@ if (p == null) {
 		Creator: git god<br />
 	</div>
 	<div style="float:right;">
-		00:00:00<br />
+		<span id="duration_1">00:00:00</span><br />
 		Votes
 	</div>
 </div>
@@ -34,7 +34,7 @@ if (p == null) {
 		Creator: git god<br />
 	</div>
 	<div style="float:right;">
-		00:00:00<br />
+		<span id="duration_2">00:00:00</span><br />
 		Votes
 	</div>
 </div>
@@ -85,12 +85,63 @@ var playing = false;
 
 $(function() {
 	$('.snapTrack').each(function(index) {
+		var element = document.getElementById('track_' + index.toString());
+		
+		/* Initializing audio */
 		var audio = document.getElementById("audio_" + index.toString());
-		var aWidth = 25*(audio.duration);
+		var aWidth = 60;
 		$(audio).data('tOffset', 0);
 		audio.loop = false;
-		
-		var element = document.getElementById('track_' + index.toString());
+		if (audio.readyState > 3) {
+			$(element).css('opacity', 1);
+			aWidth = 25*(audio.duration);
+			var min = Math.floor((audio.duration)/60);
+			var sec = Math.floor(audio.duration);
+			var ms = Math.floor(((audio.duration%1)*1000)%60);
+			var timeString;
+			if (min < 10) {
+				timeString = "0" + min.toString() + ":"; 
+			} else {
+				timeString = min.toString() + ":";
+			}
+			if (sec < 10) {
+				timeString = timeString + "0" + sec.toString() + ":"; 
+			} else {
+				timeString = timeString + sec.toString() + ":";
+			}
+			if (ms < 10) {
+				timeString = timeString + "0" + ms.toString(); 
+			} else {
+				timeString = timeString + ms.toString();
+			}
+			$("#duration_" + index.toString()).text(timeString);
+		} else {
+			$(audio).on('canplaythrough', function(event) {
+				$(element).css('opacity', 1);
+				aWidth = 25*(audio.duration);
+				var min = Math.floor((audio.duration)/60);
+				var sec = Math.floor(audio.duration);
+				var ms = Math.floor(((audio.duration%1)*1000)%60);
+				var timeString;
+				if (min < 10) {
+					timeString = "0" + min.toString() + ":"; 
+				} else {
+					timeString = min.toString() + ":";
+				}
+				if (sec < 10) {
+					timeString = timeString + "0" + sec.toString() + ":"; 
+				} else {
+					timeString = timeString + sec.toString() + ":";
+				}
+				if (ms < 10) {
+					timeString = timeString + "0" + ms.toString(); 
+				} else {
+					timeString = timeString + ms.toString();
+				}
+				$("#duration_" + index.toString()).text(timeString);
+			});
+		}
+		/* Audio initialized */
 		
 		var x = 0, y = 0;
 		var box = (120 + 72*index).toString() + "px";
@@ -197,8 +248,13 @@ $(function() {
 				audio.pause();
 			}
 		});
-		if (!playing) playing = true;
-		else playing = false;
+		if (!playing) {
+			playing = true;
+			$('#playBtn').html('<div id="pauseSq"><div class="pauseRect"></div><div class="pauseRect"></div></div>');
+		} else {
+			playing = false;
+			$('#playBtn').html('<div id="playTriangle"></div>');
+		}
 	});
 	
 	$("#stopBtn").click(function() {
@@ -210,6 +266,7 @@ $(function() {
 			audio.currentTime = 0;
 		});
 		playing = false;
+		$('#playBtn').html('<div id="playTriangle"></div>');
 		playhead = 0;
 	});
 });
@@ -242,6 +299,7 @@ setInterval(function () {
 		if (!anyplays) {
 			playhead = 0;
 			playing = false;
+			$('#playBtn').html('<div id="playTriangle"></div>');
 		} else anyplays = false;
 	}
 	
