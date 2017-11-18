@@ -42,9 +42,11 @@
 	for(Project project : projects){	 
  %>
 	 <div class="element-item <%= project.getGenre() %>" data-category=<%= project.getGenre() %> >
-	 <p class="name"> <%= project.getName() %></p>
+	 <p class="name"> <a href="auditionstage.jsp?project=<%=project.getId()%>"> <%= project.getName() %></a></p>
 	 <p class="date"> <%= project.getCreateDate() %></p>
-	 <p><i class="arrow up"></i></p>
+	 <!-- <p><i class="arrow up"></i></p> -->
+	 <img id="arrow" src="images/vote_blue.png" />
+	 
 	 <p id="v" class="vote"> <%= project.getUpvoteCount() %></p>      
 	 <p class="genre"> <%= project.getGenre() %></p>    
 	</div>
