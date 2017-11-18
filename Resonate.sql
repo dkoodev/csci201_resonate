@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `Tracks` (
   `project_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
+  `upvoteCount` int(6) NOT NULL DEFAULT 0,
   `fileLocation` varchar(100) NOT NULL,
   `fileName` varchar(30) NOT NULL,
   `delay` int(7) NOT NULL,

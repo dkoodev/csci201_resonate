@@ -25,6 +25,9 @@ public class Project {
 		this.upvoteCount = upvoteCount;
 		this.name = name;
 		this.description = description;
+		//
+		this.genre = genre;
+		//
 		this.setPhoto(photo);
 		this.createDate = createDate;
 		this.editors = editors;

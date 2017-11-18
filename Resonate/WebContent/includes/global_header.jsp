@@ -52,6 +52,7 @@ String error = (String)session.getAttribute("errorMessage");
 			<div class="col-sm-1 col-md-10 col-lg-10"> <!-- TODO: if we care, switch to a menu button on small devices -->
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
+				<div class="dropdown">
 				<% if (u != null) { %>
 					<li id="accountBtn"><a href="user3.jsp">
 					<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
@@ -60,20 +61,17 @@ String error = (String)session.getAttribute("errorMessage");
 						<img src="images/NoUserPhoto.png" />
 					<% } %>
 					</a></li>
-					<!-- Tried to make dropdown menu -->
-					<%-- <li id="drop"> 
-					<div class="dropdown">
-						<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
-							<button  class="dropbtn"><p><img id="dropimg" src="<%= u.getPhoto() %>" /></p></button>
-						<% } else { %>
-							<button  class="dropbtn"><p><img id="dropimg" src="images/NoUserPhoto.png" /></p></button>
-						<% } %>
-						<div id="drop" class="dropdown-content">
-						    <a href="#">Link 1</a>
-						    <a href="#">Link 2</a>
-						</div>
-					</div>
-					</li> --%>
+					
+				
+				  <button class="dropbtn"></button>
+				  <div class="dropdown-content">
+				    <a href="myProfile.jsp">View Profile</a>
+				    <a href="updateProfile.jsp">Edit Profile</a>
+				    <a href="index.jsp?logout">Logout</a>
+				  </div>
+				</div>
+					
+					
 					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
