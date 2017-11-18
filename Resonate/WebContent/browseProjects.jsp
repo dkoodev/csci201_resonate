@@ -20,22 +20,21 @@
 	<p>Filter By</p></div> 
 <div id="genreTitle">
 	<p>Genre</p></div> 
-<div id="filters" class="button-group">  
+<div id="filters" class="button-group clickable">  
   <button class="button is-checked" data-filter="*">show all</button>
   <button class="button" data-filter=".jazz">Jazz</button>
   <button class="button" data-filter=".rock">Rock</button>
   <button class="button" data-filter=".kpop">Kpop</button>
   <button class="button" data-filter=".classical">Classical</button>
-<div id="auditionTitle">
-	<p>Auditions</p></div> 
 </div> 
 
 <div id="sortTitle">
 <p>Sort By</p></div>
-<div id="sorts">  <button class="button is-checked" data-sort-by="original-order">Original Order</button>
-  <button class="button" data-sort-by="vote">Most Popular</button>
+<div id="sorts" class="clickable">  
+  <button class="button is-checked" data-sort-by="original-order">Original Order</button>
+  <button class="button" data-sort-by="vote">Popularity</button>
   <button class="button" data-sort-by="name">Name</button>
-  <button class="button" data-sort-by="date">Date</button>
+  <button class="button" data-sort-by="date">Date</button>  
 </div>  
 
  <div class="grid">
@@ -45,7 +44,9 @@
 	 <div class="element-item <%= project.getGenre() %>" data-category=<%= project.getGenre() %> >
 	 <p class="name"> <%= project.getName() %></p>
 	 <p class="date"> <%= project.getCreateDate() %></p>
-	 <p class="vote"> <%= project.getUpvoteCount() %></p>        
+	 <p><i class="arrow up"></i></p>
+	 <p id="v" class="vote"> <%= project.getUpvoteCount() %></p>      
+	 <p class="genre"> <%= project.getGenre() %></p>    
 	</div>
 
 <%
@@ -61,11 +62,13 @@
 	 name: '.name',
 	 date: '.date',
 	 vote: '.vote parseInt',
-	 category: '[data-category]',
-	 weight: function( itemElem ) {
-	   var weight = $( itemElem ).find('.weight').text();
-	   return parseFloat( weight.replace( /[\(\)]/g, '') );
-	 }
+	 category: '[data-category]'
+	},
+	sortAscending: {
+		name: true,
+		 date: true,
+		 vote: false,
+		 category: true
 	}
 	});
 	
@@ -98,17 +101,14 @@
 	});
 	
 	//change is-checked class on buttons
-	$('.button-group').each( function( i, buttonGroup ) {
+	$('.clickable').each( function( i, buttonGroup ) {
 	var $buttonGroup = $( buttonGroup );
 	$buttonGroup.on( 'click', 'button', function() {
 	 $buttonGroup.find('.is-checked').removeClass('is-checked');
 	 $( this ).addClass('is-checked');
 	});
 	});
-	
-	
-	
-	
+
 
 	// quick search regex
 	var qsRegex;

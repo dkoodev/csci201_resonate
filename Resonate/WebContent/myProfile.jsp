@@ -6,7 +6,7 @@ String name = u.getName();
 String username = u.getUsername();
 String email = u.getEmail();
 %>
-
+<div id="piano">
 <p id="accountOverview"><font color="00b4a8">Account Overview</font></p><br />
 
 <div id="box">
@@ -21,5 +21,6 @@ String email = u.getEmail();
 	<div id="email"><p><%=email%></p></div>
 
 	<div id="edit"><a href="updateProfile.jsp" ><font color="00b4a8">EDIT PROFILE</font></a></div>
+</div>
 </div>
 <%@ include file="includes/global_footer.jsp" %>

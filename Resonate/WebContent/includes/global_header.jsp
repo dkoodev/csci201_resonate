@@ -52,6 +52,7 @@ String error = (String)session.getAttribute("errorMessage");
 			<div class="col-sm-1 col-md-10 col-lg-10"> <!-- TODO: if we care, switch to a menu button on small devices -->
 			<ul>
 				<!-- <li id="loginBtn" onClick="loginPopup();"><a href="#">Login</a></li>-->
+				<div class="dropdown">
 				<% if (u != null) { %>
 					<li id="accountBtn"><a href="user3.jsp">
 					<% if (u.getPhoto() != null && !u.getPhoto().equals("")) { %>
@@ -61,14 +62,14 @@ String error = (String)session.getAttribute("errorMessage");
 					<% } %>
 					</a></li>
 					
-<!-- 					<div class="dropdown">
-  <button class="dropbtn">Dropdown</button>
-  <div class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
-  </div>
-</div> -->
+				
+				  <button class="dropbtn"></button>
+				  <div class="dropdown-content">
+				    <a href="myProfile.jsp">View Profile</a>
+				    <a href="updateProfile.jsp">Edit Profile</a>
+				    <a href="index.jsp?logout">Logout</a>
+				  </div>
+				</div>
 					
 					
 					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>

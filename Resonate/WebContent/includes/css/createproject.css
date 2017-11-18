@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+#catchphrase{
+	display: block;
+	margin: auto; 
+	font-size: 35px;
+	text-align: center; 
+	font-family: Gotham Bold; 
+	color:white;
+	padding-top:10px;
+}
+#cpTwo{
+    display: block;
+	margin: auto; 
+	font-size: 35px;
+	text-align: center; 
+	font-family: Gotham Bold; 
+	color:white;
+}
+
+#piano {
+	background: #000000 url('../../images/piano.jpg') no-repeat fixed;
+	background-size: cover;
+	width: 100%;
+	height: 500px; 
+}
+
+#inp{
+	padding-top:30px;
+	padding-left:30px;
+	padding-bottom:30px;
+	padding-right:80px;
+	margin-top:30px;
+	margin-left:400px;
+	margin-right:400px;
+	background-color:white;
+}
+
+.inputs{
+	padding-right:60px;
+	padding-left:60px;
+}
