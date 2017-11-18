@@ -3,9 +3,10 @@
 #update {
 	display: block;
 	margin-left:0px; 
-	font-size: 30px;
+	font-size: 35px;
 	text-align: center; 
-	font-family: Gotham Bold;  
+	font-family: Ubuntu;  
+	font-weight:bold;
 }
 
 .button2 {
