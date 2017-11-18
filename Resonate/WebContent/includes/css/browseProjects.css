@@ -84,23 +84,24 @@ body {
     border-radius: 0;
 } 
 
-i {
-	margin-top: 170px;
+img{
+	margin-top: 70px;	
+	width: 30px;
+	height: 30x;
 	position: absolute;
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
+    bottom: 0;
+	/* display: inline; */
 }
 
-.up {
+/* .up {
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
-}
+} */
 
 #v{
 	position:relative;
-	margin-top: 140px;
+	left: 52px;
+	top: 166px;
 }
 
 .button:hover {
@@ -196,7 +197,7 @@ i {
   position: absolute;
   left: 10px;
   top: 0px;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   color: white;
 }
@@ -212,9 +213,9 @@ i {
 }
 
 .element-item .vote {
-  position: absolute;
+/*   position: absolute; */
   right: 8px;
-  top: 5px;
+/*   top: 5px; */
 }
 
 .element-item .genre {
