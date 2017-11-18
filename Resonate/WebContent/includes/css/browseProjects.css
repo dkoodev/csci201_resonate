@@ -98,7 +98,7 @@ img{
     -webkit-transform: rotate(-135deg);
 } */
 
-#v{
+.v{
 	position:relative;
 	left: 52px;
 	top: 166px;
@@ -212,7 +212,7 @@ img{
   font-weight: normal;
 }
 
-.element-item .vote {
+.element-item .vote{
 /*   position: absolute; */
   right: 8px;
 /*   top: 5px; */
