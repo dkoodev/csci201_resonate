@@ -14,65 +14,53 @@
 			</td>
 		    <td id="td1"> 
 	            <div id="table2">
-		        		 <p id="likedprojects">
-						Looks like you haven't liked any projects yet! <br>
-						Explore the Resonate Community! <br><br>
-						<a href="browseProjects.jsp" style="text-decoration: none;"><button class="button2"> <span>Browse Projects </span></button> </a><br />
-					 </p>
+		        		<div id="likedprojects">
+		        			<table id="projects">
+							<tr class="border_bottom">
+								<td>
+									<p id="long1">
+										<font id="title"> Projects liked by <%= u.getUsername() %></font>
+									</p>
+								</td>
+							</tr>
+							<% Vector<Project> projects = u.getLikedProjects();
+								if (projects.size() == 0) {
+								%>
+									Looks like you haven't liked any projects yet!
+									Explore the Resonate Community! <br><br>
+									<a href="browseProjects.jsp" style="text-decoration: none;"><button class="button2"> <span>Browse Projects </span></button> </a><br />
+								<%
+								} else {
+									for(int i=0; i < projects.size(); i++) { 
+									Project p = projects.elementAt(i); 				
+								%>
+									<tr class="border_bottom">
+										<td>
+											<img id="tableImg" src="<%= p.getPhoto() %>" />
+										</td>
+										<td >
+											<p id="long">
+												<br><br><font id="ProjectTitle"> <%= p.getName() %></font>
+											</p>
+											<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font><br>								
+											<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>									
+										</td>	
+										<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+										<td>
+											<p id="long2">	
+												<!--  Replace with data from database -->							
+												<font id="ProjectUpdate">Last Updated: Two days ago</font>
+											</p>
+										</td><td></td><td></td><td></td><td></td>
+									</tr>
+									<% } //end of for loop
+								} //end of else statement%>
+						</table>	
+					 </div>
 	            </div>     
-		     </td>
+		    </td>
 	     </tr>
 	</table>
 </div>
-<%-- 
-<%@page import="java.util.Vector" %>
 
-<%
-
-if (u == null) {
-	response.sendRedirect("/Resonate/login.jsp");
-	return;
-}
-
-String name = u.getName();
-String username = u.getUsername();
-int id = u.get_id();
-String email = u.getEmail();
-Vector<Project> myprojects = u.getProjects();
-Vector<Project> likedprojects = u.getLikedProjects();
-%>
-
-(This page needs to look like myprojects.jsp. Waiting for Jerry to finish that, then we can make the changes.)
-<br /><br />
-Welcome, <%=u.getName() %>.
-
-<p class="header">My Projects</p>
-<%
-if (myprojects.size() == 0) {
-%>
-You have no projects yet. <a href="createproject.jsp">Create one!</a>
-<%
-} else {
-	for (int i=0; i<myprojects.size(); i++) {
-%>
-	<div id="project_<%=i %>" class="project"><%= myprojects.elementAt(i).getName() %></div>
-<%	
-	}
-}
-%>
-<p class="header">Liked Projects</p>
-<%
-if (likedprojects.size() == 0) {
-%>
-You haven't liked any projects yet. <a href="browseproject.jsp">Go find one!</a>
-<%
-} else {
-	for (int i=0; i<likedprojects.size(); i++) {
-%>
-	<div id="project_<%=i %>" class="project"><%= likedprojects.elementAt(i).getName() %></div>
-<%	
-	}
-}
-%>
- --%>
 <%@ include file="includes/global_footer.jsp" %>
