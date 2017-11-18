@@ -72,7 +72,7 @@ String error = (String)session.getAttribute("errorMessage");
 				</div>
 					
 					
-					<li id="myProjectsBtn"><a href="myprojects.jsp">My Projects</a></li>
+					<li id="myProjectsBtn"><a href="user3.jsp">My Projects</a></li>
 				<% } else { %>	
 					<li id="loginBtn"><a href="login.jsp">Login</a></li>
 				<% } %>

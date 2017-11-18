@@ -14,10 +14,50 @@
 			</td>
 		    <td id="td1">
 		    		<div id="table1">
-		        		 <p id="myprojects">
-						Looks like you haven't created any projects yet! <br><br>
-						<a href="createproject.jsp" style="text-decoration: none;"><button class="button2"> <span> Create Your First Project </span></button> </a><br />
-					 </p>
+		        		<div id="myprojects">
+						<table id="projects">
+							<tr class="border_bottom">
+								<td>
+									<p id="long1">
+										<font id="title"> <%= u.getUsername() %>'s Projects </font>
+									</p>
+								</td>
+							</tr>
+							<tr class="border_bottom">
+							<% Vector<Project> projects = u.getProjects();
+								if (projects.size() == 0) {
+								%>
+									<td>
+										Looks like you haven't created any projects yet!
+										<a href="createproject.jsp" style="text-decoration: none;"><button class="button2"> <span>Create a New Project! </span></button> </a><br />
+									</td>
+								<%
+								} else {
+									for(int i=0; i < projects.size(); i++) { 
+									Project p = projects.elementAt(i); 
+								%>
+									<td>
+										<img id="tableImg" src="<%= p.getPhoto() %>" />
+									</td>
+									<td >
+										<p id="long">
+											<br><br><font id="ProjectTitle"> <%= p.getName() %></font>
+										</p>
+										<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font><br>								
+										<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>									
+									</td>	
+									<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+									<td>
+										<p id="long2">	
+											<!--  Replace with data from database -->							
+											<font id="ProjectUpdate">Last Updated: Two days ago</font>
+										</p>
+									</td><td></td><td></td><td></td><td></td>
+									</tr>
+									<% } //end of for loop
+								} //end of else statement%>
+						</table>	
+					</div>
 	            </div>       
 		     </td>
 	     </tr>
