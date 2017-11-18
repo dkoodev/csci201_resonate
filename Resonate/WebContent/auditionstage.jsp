@@ -32,8 +32,8 @@ for (int i=0; i<tracks.size(); i++ ) {
 	</div>
 	<div style="float:right; text-align: right;">
 		<span id="duration_0">00:00:00</span><br />
-		<img src="images/vote_orange.png" class="voteArrow" />
-		<span id="vote_track_0" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
+		<a href="#" onClick="addTrackVote(<%=p.getId() %>, <%=tracks.elementAt(i).getId() %>);"><img src="images/vote_orange.png" class="voteArrow" /></a>
+		<span id="track_vote_<%=tracks.elementAt(i).getId() %>" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
 </div>
 <audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>

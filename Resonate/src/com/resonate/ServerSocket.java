@@ -19,6 +19,25 @@ public class ServerSocket {
 	@OnMessage
 	public void onMessage(String message, Session session) {
 		System.out.println(message);
+		String messageParts[] = message.split(" ");
+		String type = messageParts[0];
+		int thing_id = Integer.parseInt(messageParts[1]);
+		int user_proj_id = -1;
+		if (messageParts[2] != null && !messageParts[2].equals("-1")) {
+			user_proj_id = Integer.parseInt(messageParts[2]);
+		}
+
+		if (type.equals("p")) {
+			if (user_proj_id != -1) {
+				
+				JDBCDriver.insertProjectLike(thing_id, user_proj_id);
+			}
+		} else if (type.equals("t")) {
+			if (user_proj_id != -1) {
+				JDBCDriver.updateTrackVote(user_proj_id, thing_id);
+			}
+		}
+		
 		try {
 			for (Session s : sessions) {
 				s.getBasicRemote().sendText(message);
