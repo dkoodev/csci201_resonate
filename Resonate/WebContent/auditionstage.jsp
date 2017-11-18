@@ -7,6 +7,10 @@ if (p == null) {
 	response.sendRedirect("/Resonate/myprojects.jsp");
 }*/
 %>
+<div id="playhead">
+	<div id="topArrow"></div>
+	<div id="line"></div>
+</div>
 <div id="hideDiv"></div>
 <div id="track_0" class="snapTrack">
 	<div style="float:left">
@@ -79,7 +83,7 @@ if (p == null) {
 // https://www.npmjs.com/package/waveform-data
 
 var tracksin = 0;
-var scrolloffset = 0;
+var scrollOffset = 0;
 var playhead = 0;
 var playing = false;
 
@@ -134,6 +138,7 @@ $(function() {
 		var box = (120 + 72*index).toString() + "px";
 
 		$(element).css('top', box);
+		$(element).data('inserted', false);
 		$(element).data('xVal', null);
 		$(element).data('yVal', null);
 		
@@ -177,11 +182,12 @@ $(function() {
 			
 			if (x == 0 && y == 0) {
 				x = 333; y = 22 + 72*(tracksin-(index));
+				$(element).data('inserted', true);
 				$(element).data('xVal', x);
 				$(element).data('yVal', y);
 				  element.style.webkitTransform =
 					    element.style.transform =
-					        'translate(' + (333 - scrolloffset) + 'px, ' + y + 'px)';
+					        'translate(' + (333 - scrollOffset) + 'px, ' + y + 'px)';
 				  $(element).css('width', aWidth);
 				  $(element).css('z-index', 5);
 				  $(element).css('background', '#ffffff url(images/waveform' + index%3 + '.PNG) repeat-x left bottom');
@@ -194,6 +200,7 @@ $(function() {
 				    element.style.transform =
 				        'translate(0px, 0px)';
 			  	x=y=0;
+			  	$(element).data('inserted', false);
 			  	$(element).data('xVal', null);
 				$(element).data('yVal', null);
 				$(audio).data('tOffset', 0);
@@ -211,8 +218,8 @@ $(function() {
 	var scrollAmt = 0;
 	
 	$('#scroller').scroll(function() {
-		scrolloffset = $('#scroller').scrollLeft();
-		scrollAmt = scrolloffset - prevScroll;
+		scrollOffset = $('#scroller').scrollLeft();
+		scrollAmt = scrollOffset - prevScroll;
 		$('.snapTrack').each(function(index) {
 			var element = document.getElementById('track_' + index.toString());
 			var x = $(element).data('xVal') - scrollAmt;
@@ -234,7 +241,7 @@ $(function() {
 			var audio = document.getElementById("audio_" + index.toString());
 			
 			if (!playing) {
-				if ($(element).data('xVal') != null) {
+				if (!$(element).data('inserted')) {
 					if (audio.ended) {
 						audio.currentTime = 0;
 					}
@@ -254,7 +261,7 @@ $(function() {
 	
 	$("#stopBtn").click(function() {
 		$('.snapTrack').each(function(index) {
-			var element = document.getElementById("track_" + index.toString());
+			//var element = document.getElementById("track_" + index.toString());
 			var audio = document.getElementById("audio_" + index.toString());
 			
 			audio.pause();
@@ -263,6 +270,11 @@ $(function() {
 		playing = false;
 		$('#playBtn').html('<div id="playTriangle"></div>');
 		playhead = 0;
+		var playheadDiv = document.getElementById("playhead");
+		
+		playheadDiv.style.webkitTransform =
+			playheadDiv.style.transform =
+			    'translate(0px, 0px)';
 	});
 });
 var d = new Date();
@@ -276,13 +288,25 @@ setInterval(function () {
 	if (playing) {
 		playhead += addTime/1000;
 		console.log(playhead);
+		var playheadDiv = document.getElementById("playhead");
+			
+		var playheadPos = (playhead*(1000/25)-scrollOffset);
+		
+		if (playheadPos < 0) {
+			$(playheadDiv).hide();
+		} else {
+			$(playheadDiv).show();
+			playheadDiv.style.webkitTransform =
+				playheadDiv.style.transform =
+				    'translate(' + playheadPos + 'px, 0px)';
+		}
 		
 		var anyplays = false;
 
 		$('.snapTrack').each(function(index) {
 			var element = document.getElementById("track_" + index.toString());
 			var audio = document.getElementById("audio_" + index.toString());
-			if (!audio.playing && $(element).data('xVal') != null) {
+			if (!audio.playing && $(element).data('inserted')) {
 				anyplays = true;
 				var cOffset = $(audio).data('tOffset');
 				if (playhead >= cOffset && playhead < (cOffset + audio.duration)) {
