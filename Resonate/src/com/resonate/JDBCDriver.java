@@ -15,9 +15,6 @@ import com.resonate.objects.Track;
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 import com.resonate.objects.User;
 
-//@Daniel u._id doesn't work in jdbc
-// see here: https://stackoverflow.com/questions/7224024/jdbc-resultset-get-columns-with-table-alias
-
 public class JDBCDriver {
 	private static Connection conn = null;
 	private static ResultSet rs = null;
@@ -405,6 +402,7 @@ public class JDBCDriver {
 		    contributors = getContributorsByProjectId(projectId);
 		    
 		    tracks = getTracksByProjectId(projectId);
+		    System.out.println("tracks: " + tracks);
 		    
 		    roles = getRolesByProjectId(projectId);
 		    
@@ -512,16 +510,16 @@ public class JDBCDriver {
 
 		    			Role role = new Role(id, name, description, tracks);
 		    			roles.add(role);
-		    		} while(rs.next());
+		    		} while(rs != null && rs.next());
 		    } else {
 		    	close();
-		    	return null;
+		    	return roles;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			close();
-			return null;
+			return roles;
 		} finally {
 			close();
 		}
@@ -555,16 +553,16 @@ public class JDBCDriver {
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
-		    		} while(rs.next());
+		    		} while(rs != null && rs.next());
 		    } else {
 		    	close();
-		    	return null;
+		    	return tracks;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			close();
-			return null;
+			return tracks;
 		} finally {
 			close();
 		}
@@ -583,8 +581,10 @@ public class JDBCDriver {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
 					"SELECT * from Tracks "
-					+ "WHERE project_id = " + projectId + ";");
+					+ "WHERE project_id=?");
+			ps.setInt(1, projectId);
 		    rs = ps.executeQuery();
+		    System.out.println("Query executed.");
 		    if(rs.next()) {
 		    		do {
 		    			int id = rs.getInt("_id");
@@ -596,16 +596,17 @@ public class JDBCDriver {
 		    					
 		    			User creator = getUserById(user_id);
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
-
+		    			System.out.println("Track Made: " + track.getName());
 		    			tracks.add(track);
-		    		} while(rs.next());
+		    			System.out.println("Track Made: " + track.getName());
+		    		} while(rs!= null && rs.next());
 		    } else {
-		    		return null;
+		    	System.out.println("Returning " + tracks.size() + " tracks.");
+		    	return tracks;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		} finally {
 			close();
 		}

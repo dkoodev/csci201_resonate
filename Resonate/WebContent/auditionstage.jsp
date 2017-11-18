@@ -1,50 +1,81 @@
 <%@ include file="includes/global_header.jsp" %>
+<%@ page import="java.util.Vector" %>
 <%
-/*if (u == null) {
-	response.sendRedirect("/Resonate/login.jsp");
-} 
+String pidStr = request.getParameter("project");
+if (pidStr == null || pidStr.equals("")) {
+	response.sendRedirect("/Resonate/browseProjects.jsp");
+	return;
+}
+int projid = Integer.parseInt(pidStr);
+Project p = JDBCDriver.getProject(projid);
+
 if (p == null) {
-	response.sendRedirect("/Resonate/myprojects.jsp");
-}*/
+	response.sendRedirect("/Resonate/browseProjects.jsp");
+	return;
+}
+
+Vector<Track> tracks = p.getTracks();
 %>
 <div id="playhead">
 	<div id="topArrow"></div>
 	<div id="line"></div>
 </div>
 <div id="hideDiv"></div>
-<div id="track_0" class="snapTrack">
+<% 
+for (int i=0; i<tracks.size(); i++ ) {
+%>
+<div id="track_<%= i %>" class="snapTrack trackable">
 	<div style="float:left">
-		Track Title<br />
-		Creator: isaac<br />
+		<span class="trackTitle"><%= tracks.elementAt(i).getName() %></span><br />
+		<span class="creator">Creator: <%= tracks.elementAt(i).getCreator().getName() %></span><br />
 	</div>
-	<div style="float:right;">
+	<div style="float:right; text-align: right;">
 		<span id="duration_0">00:00:00</span><br />
-		Votes
+		<img src="images/vote_orange.png" class="voteArrow" />
+		<span id="vote_track_0" class="voteNums">12</span>
 	</div>
 </div>
-<div id="track_1" class="snapTrack">
+<%
+}
+%>
+<!-- 
+<div id="track_0" class="snapTrack trackable">
 	<div style="float:left">
-		Track Title 2<br />
-		Creator: git god<br />
+		<span class="trackTitle">Track Title</span><br />
+		<span class="creator">Creator: isaac</span><br />
 	</div>
-	<div style="float:right;">
+	<div style="float:right; text-align: right;">
+		<span id="duration_0">00:00:00</span><br />
+		<img src="images/vote_orange.png" class="voteArrow" />
+		<span id="vote_track_0" class="voteNums">12</span>
+	</div>
+</div>
+<div id="track_1" class="snapTrack trackable">
+	<div style="float:left">
+		<span class="trackTitle">Track Title 2</span><br />
+		<span class="creator">Creator: git god</span><br />
+	</div>
+	<div style="float:right; text-align: right;">
 		<span id="duration_1">00:00:00</span><br />
-		Votes
+		<img src="images/vote_orange.png" class="voteArrow" />
+		<span id="vote_track_0" class="voteNums">14</span>
 	</div>
 </div>
-<div id="track_2" class="snapTrack">
+<div id="track_2" class="snapTrack trackable">
 	<div style="float:left">
-		Solo<br />
-		Creator: git god<br />
+		<span class="trackTitle">Solo</span><br />
+		<span class="creator">Creator: git god</span><br />
 	</div>
-	<div style="float:right;">
+	<div style="float:right; text-align: right;">
 		<span id="duration_2">00:00:00</span><br />
-		Votes
+		<img src="images/vote_orange.png" class="voteArrow" />
+		<span id="vote_track_0" class="voteNums">8</span>
 	</div>
-</div>
-<audio id="audio_0" src="uploads/project1/project1_audio1_guitar1.mp3" preload="auto"></audio>
-<audio id="audio_1" src="uploads/project1/project1_audio2_bass1.mp3" preload="auto"></audio>
-<audio id="audio_2" src="uploads/project1/project1_audio3_guitar2.mp3" preload="auto"></audio>
+</div> -->
+
+<audio id="audio_0" src="uploads/tracks/project1/project1_audio1_guitar1.mp3" preload="auto"></audio>
+<audio id="audio_1" src="uploads/tracks/project1/project1_audio2_bass1.mp3" preload="auto"></audio>
+<audio id="audio_2" src="uploads/tracks/project1/project1_audio3_guitar2.mp3" preload="auto"></audio>
 <table style="width:100%; height:100%; overflow-x: scroll;">
 	<tr style="width:100%; height:625px;">
 		<td style="width: 320px; padding: 0px 7px 0px 7px;">
@@ -65,13 +96,14 @@ if (p == null) {
 			</div>
 			<div id="scroller">
 				<div id="stage" style="width:8000px; height: 495px;">
+					<div id="noInserts">Double click a track to add it to your mix!</div>
 				</div>		
 			</div>
-			<div style="width:100%; height: 80px; float:left;">
-				<div style="width: 210px;margin:auto;">
-					<div id="playBtn"><div id="playTriangle"></div></div>
-					<div id="stopBtn"><div id="stopSquare"></div></div>
-				</div>
+			<div id="controls">
+				<div id="projInfo">Project: <span class="bold">DKoo's Masterpiece</span><br />
+								Project Owner: <span class="bold">You</span></div>
+				<div id="stopBtn"><div id="stopSquare"></div></div>
+				<div id="playBtn"><div id="playTriangle"></div></div>
 			</div>
 		</td>
 	</tr>
@@ -117,7 +149,7 @@ function audioLoad(audio, element, index) {
 }
 
 $(function() {
-	$('.snapTrack').each(function(index) {
+	$('.trackable').each(function(index) {
 		var element = document.getElementById('track_' + index.toString());
 		
 		/* Initializing audio */
@@ -135,7 +167,7 @@ $(function() {
 		/* Audio initialized */
 		
 		var x = 0, y = 0;
-		var box = (120 + 72*index).toString() + "px";
+		var box = (130 + 72*index).toString() + "px";
 
 		$(element).css('top', box);
 		$(element).data('inserted', false);
@@ -192,6 +224,11 @@ $(function() {
 				  $(element).css('z-index', 5);
 				  $(element).css('background', '#ffffff url(images/waveform' + index%3 + '.PNG) repeat-x left bottom');
 				  tracksin++;
+				  $(element).addClass('snapTrackInserted');
+				  $(element).removeClass('snapTrack');
+				  
+				  $('#noInserts').css('opacity', 0);
+				  
 				  dragobj.draggable(true);
 		
 			  } else {
@@ -206,8 +243,10 @@ $(function() {
 				$(audio).data('tOffset', 0);
 			  	dragobj.draggable(false);
 			  	$(element).css('width', 306);
-			  	$(element).css('background', 'none');
 			  	$(element).css('z-index', 15);
+			  	$(element).addClass('snapTrack');
+			  	$(element).removeClass('snapTrackInserted');
+			  
 			  	tracksin--;
 			  }
 	  	});
@@ -220,7 +259,7 @@ $(function() {
 	$('#scroller').scroll(function() {
 		scrollOffset = $('#scroller').scrollLeft();
 		scrollAmt = scrollOffset - prevScroll;
-		$('.snapTrack').each(function(index) {
+		$('.trackable').each(function(index) {
 			var element = document.getElementById('track_' + index.toString());
 			var x = $(element).data('xVal') - scrollAmt;
 			console.log(x);
@@ -236,7 +275,7 @@ $(function() {
 	});
 	
 	$("#playBtn").click(function() {
-		$('.snapTrack').each(function(index) {
+		$('.trackable').each(function(index) {
 			var element = document.getElementById("track_" + index.toString());
 			var audio = document.getElementById("audio_" + index.toString());
 			
@@ -260,7 +299,7 @@ $(function() {
 	});
 	
 	$("#stopBtn").click(function() {
-		$('.snapTrack').each(function(index) {
+		$('.trackable').each(function(index) {
 			//var element = document.getElementById("track_" + index.toString());
 			var audio = document.getElementById("audio_" + index.toString());
 			
@@ -303,7 +342,7 @@ setInterval(function () {
 		
 		var anyplays = false;
 
-		$('.snapTrack').each(function(index) {
+		$('.trackable').each(function(index) {
 			var element = document.getElementById("track_" + index.toString());
 			var audio = document.getElementById("audio_" + index.toString());
 			if (!audio.playing && $(element).data('inserted')) {

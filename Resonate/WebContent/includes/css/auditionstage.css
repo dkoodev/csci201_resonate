@@ -3,7 +3,7 @@
 .snapTrack {
 	width: 306px; 
 	height:60px; 
-	border: #9f9f9f 2px solid; 
+	border: #606060 1px solid; 
 	border-radius: 7px;
 	-webkit-transition: transform 300ms, width 300ms; 
 	transition: transform 300ms, width 300ms, background 300ms, top 300ms, opacity 300ms;; 
@@ -15,7 +15,61 @@
 	position: absolute;
 	top: 120px;
 	left: 7px;
-	z-index: 20;
+	z-index: 15;
+	opacity: 0;
+	padding: 5px;
+	background: #e7e7e7 !important;
+	box-shadow: inset 0px 0px 25px -7px #000000;
+}
+
+.snapTrack .trackTitle {
+	font-weight: 700;
+	font-size: 19px;
+	margin-left: 2px;
+}
+
+.snapTrack .creator {
+	font-size: 13px;
+	margin-left: 4px;
+}
+
+.snapTrackInserted {
+	width: 306px; 
+	height:60px; 
+	border: #606060 1px solid; 
+	border-radius: 7px;
+	-webkit-transition: transform 300ms, width 300ms; 
+	transition: transform 300ms, width 300ms, background 300ms, top 300ms, opacity 300ms;; 
+	-moz-user-select: -moz-none; 
+	-khtml-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none;	
+	position: absolute;
+	top: 120px;
+	left: 7px;
+	z-index: 5;
+	opacity: 0;
+	padding: 5px;
+	background: #a0a0a0;
+	box-shadow: inset 0px 0px 25px -7px #000000;
+}
+
+.snapTrackInserted .trackTitle {
+	font-weight: 700;
+	font-size: 21px;
+	/*text-shadow: 1px 1px rgba(0, 181, 169, 0.5);*/
+	text-shadow: 2px 2px 2px #888888; 
+}
+
+.snapTrackInserted .creator {
+	font-size: 13px;
+	margin: 0 0 2px 4px;
+	font-weight: 700;
+	text-shadow: 1px 1px #6b6b6b;
+}
+
+.snapTrackInserted .voteArrow, .snapTrackInserted .voteNums {
 	opacity: 0;
 }
 
@@ -39,61 +93,74 @@
 
 #scroller {
 	width: 940px; 
-	height: 515px; 
+	height: 535px; 
 	overflow-x:scroll; 
 	float:left;
 }
 
 #playBtn {
-	width: 100px; 
-	height: 80px;
-	float:left;
+	width: 60px;
+	height: 50px;
+	float: right;
 	background: #00b5a9;
 	border-radius: 15px;
-	margin-right: 10px;
+	margin-top: 5px;'
 }
 
 #playTriangle {
-  width: 0; 
-  height: 0; 
-  border-top: 25px solid transparent;
-  border-bottom: 25px solid transparent;
-  
-  border-left: 40px solid #FFFFFF;
-  
-  margin: 15px auto 0 auto;
+	width: 0; 
+	height: 0; 
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 23px solid #FFFFFF;
+	margin: 10px auto 0 auto;
 }
 
 #stopSquare {
-	width: 40px;
-	height:40px;
-	
+	width: 25px;
+	height: 25px;
 	background: #ffffff;
 	border: none;
-	
-	margin: 20px auto 0 auto;
+	margin: 13px auto 0 auto;
 }
 
 .pauseRect {
-	width: 15px;
-	height: 40px;
-	float:left;
-	margin: 0 5px 0 5px;
-	background: #ffffff;
-	border:none;
+	width: 10px;
+    height: 25px;
+    float: left;
+    margin: 0 3px 0 3px;
+    background: #ffffff;
+    border: none;
 }
+
+#projInfo {
+	float:left;
+	color: #ffffff;
+	margin: 8px 0 0 30px;
+	font-size: 14px;
+}
+
+#controls {
+	width:100%;
+	height: 60px; 
+	float:left;
+	background: #686868;
+	border-radius: 30px;
+}
+
 #pauseSq {
-	margin: 20px auto 0 auto;
-	width: 50px;
-	height: 40px;
+	margin: 13px auto 0 auto;
+	width: 32px;
+	height: 25px;
 }
 
 #stopBtn {
-	width: 100px; 
-	height: 80px;
-	float: left;
+	width: 60px;
+	height: 50px;
+	float: right;
 	background: #bfbfbf;
 	border-radius: 15px;
+	margin: 5px 30px 0 10px
 }
 
 #playhead {
@@ -101,7 +168,7 @@
 	height: 515px;
 	
 	position: absolute;
-	top: 100px;
+	top: 110px;
 	left: 330px;
 	
 	z-index: 10;
@@ -111,7 +178,7 @@
 	border-left: 1px #4f4f4f solid;
 	border-right: 1px #4f4f4f solid;
 	margin: 0 0 0 9px;
-	height: 480px;
+	height: 500px;
 }
 
 #playhead #topArrow {
@@ -124,39 +191,27 @@
 	margin: 0;
 	
 }
-/*
-#track_0 {
-	background: #ffffff url(../../images/waveform0.PNG) repeat-x left bottom;	
+
+.voteArrow {
+	width:17px; 
+	height:18px; 
+	margin-bottom: 5px;
 }
 
-#track_1 {
-	background: #ffffff url(../../images/waveform1.PNG) repeat-x left bottom;	
+.voteNums {
+	font-size: 17px;
+	font-weight: 700;
+	margin-right: 5px;
+	/*font-family: 'Open Sans', sans-serif;*/
 }
 
-#track_2 {
-	background: #ffffff url(../../images/waveform2.PNG) repeat-x left bottom;	
+#noInserts {
+	position: relative;
+	top: 48%;
+	left:4%;
+	transition: opacity 500ms;
 }
 
-#track_3 {
-	background: #ffffff url(../../images/waveform3.PNG) repeat-x left bottom;	
+.bold {
+    font-weight: 700;
 }
-
-#track_4 {
-	background: #ffffff url(../../images/waveform0.PNG) repeat-x left bottom;	
-}
-
-#track_5 {
-	background: #ffffff url(../../images/waveform1.PNG) repeat-x left bottom;	
-}
-
-#track_6 {
-	background: #ffffff url(../../images/waveform2.PNG) repeat-x left bottom;	
-}
-
-#track_7 {
-	background: #ffffff url(../../images/waveform3.PNG) repeat-x left bottom;	
-}
-
-#track_8 {
-	background: #ffffff url(../../images/waveform0.PNG) repeat-x left bottom;	
-}*/
