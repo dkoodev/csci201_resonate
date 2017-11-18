@@ -45,7 +45,7 @@
 	 <p class="name"> <a href="auditionstage.jsp?project=<%=project.getId()%>"> <%= project.getName() %></a></p>
 	 <p class="date"> <%= project.getCreateDate() %></p>
 	 <!-- <p><i class="arrow up"></i></p> -->
-	 <a href="#" onclick="addProjectLike(<%=project.getId()%>)"><img id="arrow" src="images/vote_blue.png" /></a>
+	 <a href="#" onclick="addProjectLike(<%=project.getId()%> , <%= (u == null) ? -1 : u.get_id() %>)"><img id="arrow" src="images/vote_blue.png" /></a>
 	 
 	 <p id="project_vote_<%=project.getId()%>" class="v vote"> <%= project.getUpvoteCount() %></p>    
 	 

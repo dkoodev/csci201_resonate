@@ -19,6 +19,7 @@ body {
   font-weight: bold;
   font-size: 250%;
   display: inline;
+  margin-left:40px;
   
 }
 #title2 {
@@ -225,7 +226,12 @@ img{
   font-size: 15px;
 }
 
-.element-item.jazz            { background: #00B4A8; /* background: hsl(   0, 100%, 50%); */ }
-.element-item.rock            { background: #097CB5;/*  background: hsl(  36, 100%, 50%); */ }
-.element-item.kpop            { background: #ADCAD6; /* background: hsl(  72, 100%, 50%);  */}
-.element-item.classical       { background: #016E90;/*  background: hsl( 108, 100%, 50%);  */}
+.date{
+	color:white;
+}
+
+
+.element-item.jazz            { background: url('https://i.pinimg.com/originals/dd/2b/18/dd2b18eb074f70e21dcc7232d12a457f.jpg'); /* background: hsl(   0, 100%, 50%); */ }
+.element-item.rock            { background: url('https://lh3.googleusercontent.com/O1C6Kb5A6fBOtHxRTWEwlInhe6s73bcg-uMpYTXqrUPIGBEwmbSbPRv8MkEel210nA=w300'); /*  background: hsl(  36, 100%, 50%); */ }
+.element-item.kpop            { background: url('https://i.pinimg.com/736x/9e/32/90/9e32906f4e9726e50f22e853298bda23--wallpaper-for-phone-wallpaper-kpop.jpg'); /* background: hsl(  72, 100%, 50%);  */}
+.element-item.classical       { background: url('https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX2992893.jpg'); /*  background: hsl( 108, 100%, 50%);  */}
