@@ -10,20 +10,19 @@ body {
 .quicksearch{
 	position:relative; 
 	margin-left:775px;	
-    top: 120px;
+    top: 100px;
 }
 
 
 #title1 {	
-  font-family: Ubuntu ;
+  font-family: Ubuntu;
   font-weight: bold;
   font-size: 250%;
   display: inline;
-  margin-left:45px;
-  
+  margin-left:45px; 
 }
 #title2 {
-  font-family: Ubuntu ;
+  font-family: Ubuntu;
   font-weight: bold;
   font-size: 250%;
   color: #00b4a8;
@@ -163,7 +162,7 @@ body {
   position: relative; 
   margin-left: 220px;
   margin-right: 250px;
-  margin-bottom: 10px;  																				
+  margin-bottom: 30px;  																				
 }
 
 /* clear fix */

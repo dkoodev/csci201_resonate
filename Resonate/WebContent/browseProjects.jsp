@@ -9,11 +9,12 @@
 %>
 <!-- Browse Projects Page or Home Page -->
 
-<div id="title1"> Listen </div>
-<div id="title2"> Up </div>
-
+<div style="margin-top: 25px;">
+	<div id="title1"> Listen </div>
+	<div id="title2"> Up </div>
+</div>
 <!-- SEARCH -->
-<p><input type="text" class="quicksearch" placeholder="Search" /></p>
+<input type="text" class="quicksearch" placeholder="Search" />
 
 
 <div id="sortTitle">
@@ -60,6 +61,8 @@
  </div>
  
 <script>
+	var buttonFilter;
+
 	var $grid = $('.grid').isotope({
 	itemSelector: '.element-item',
 	layoutMode: 'fitRows',
@@ -74,6 +77,12 @@
 		 date: true,
 		 vote: false,
 		 category: true
+	},
+	filter: function() {
+	    var $this = $(this);
+	    var searchResult = qsRegex ? $this.text().match( qsRegex ) : true;
+	    var buttonResult = buttonFilter ? $this.is( buttonFilter ) : true;
+	    return searchResult && buttonResult;
 	}
 	});
 	
@@ -92,11 +101,16 @@
 	};
 	
 	//bind filter button click
-	$('#filters').on( 'click', 'button', function() {
+/* 	$('#filters').on( 'click', 'button', function() {
 	var filterValue = $( this ).attr('data-filter');
 	// use filterFn if matches value
 	filterValue = filterFns[ filterValue ] || filterValue;
 	$grid.isotope({ filter: filterValue });
+	}); */
+	
+	$('#filters').on( 'click', 'button', function() {
+		  buttonFilter = $( this ).attr('data-filter');
+		  $grid.isotope();
 	});
 	
 	//bind sort button click
@@ -111,6 +125,12 @@
 	$buttonGroup.on( 'click', 'button', function() {
 	 $buttonGroup.find('.is-checked').removeClass('is-checked');
 	 $( this ).addClass('is-checked');
+	 
+	if($('#mainBody').height() < 625) {
+		$('#footer').addClass('down');
+	} else {
+		$('#footer').removeClass('down');
+	}
 	});
 	});
 
@@ -119,18 +139,24 @@
 	var qsRegex;
 
 	// init Isotope
-	var $grid = $('.grid').isotope({
+/* 	var $grid = $('.grid').isotope({
 	  itemSelector: '.element-item',
 	  layoutMode: 'fitRows',
 	  filter: function() {
 	    return qsRegex ? $(this).text().match( qsRegex ) : true;
 	  }
-	});
+	}); */
 
 	// use value of search field to filter
 	var $quicksearch = $('.quicksearch').keyup( debounce( function() {
 	  qsRegex = new RegExp( $quicksearch.val(), 'gi' );
 	  $grid.isotope();
+	  
+	if($('#mainBody').delay(100).height() < 625) {
+		$('#footer').addClass('down');
+	} else {
+		$('#footer').removeClass('down');
+	}
 	}, 200 ) );
 
 	// debounce so filtering doesn't happen every millisecond
