@@ -70,7 +70,7 @@ public class JDBCDriver {
 	}
 	
 	public static Track insertTrack(
-							String name, String fileLocation, 
+							String name, int upvoteCount, String fileLocation, 
 							String fileName, Integer delay, 
 							User currentUser, Project currentProject, 
 							Integer role_id){
@@ -82,12 +82,13 @@ public class JDBCDriver {
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
-					"INSERT INTO Tracks (name, project_id, role_id, user_id, fileLocation, fileName, delay)" + 
+					"INSERT INTO Tracks (name, project_id, role_id, user_id, upvoteCount, fileLocation, fileName, delay)" + 
 							"VALUES ("
 								+ "'"+  name						+"',"
 								+ 	 	currentProject.getId()  	+","
 								+ 		role_id  				+","
 								+ 		currentUser.get_id()  	+","
+								+		upvoteCount				+","
 								+ "'"+  fileLocation  			+"',"
 								+ "'"+  fileName  				+"',"
 								+  		delay  					
@@ -127,11 +128,11 @@ public class JDBCDriver {
 					new_track_fileLocation = rs.getString("fileLocation");
 					new_track_fileName = rs.getString("fileName");
 					new_track_delay = rs.getInt("delay");
-				}while(rs.next());
+				} while(rs.next());
 				
 				User creator = getUserById(new_track_user_id, false);
 					
-				Track track = new Track(new_track_name, new_track_id, new_track_fileLocation, new_track_fileName, new_track_delay, creator);
+				Track track = new Track(new_track_name, new_track_id, 0, new_track_fileLocation, new_track_fileName, new_track_delay, creator);
 				
 				insertContributor(creator, new_track_project_id, role_id);
 				
@@ -461,13 +462,14 @@ public class JDBCDriver {
 	    		do {
 	    			int id = rs.getInt("_id");
 	    			String name = rs.getString("name");
+	    			int upvoteCount = rs.getInt("upvoteCount");
 	    			String fileLocation = rs.getString("fileLocation");
 	    			String fileName = rs.getString("fileName");
 	    			int delay = rs.getInt("delay");
 	    			//int user_id = rs.getInt("t.user_id");
 	    					
 	    			User creator = getUserById(userId, true); //(user_id);
-	    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+	    			Track track = new Track(name, id, upvoteCount, fileLocation, fileName, delay, creator);
 
 	    			tracks.add(track);
 	    		} while(rs.next());
@@ -545,13 +547,14 @@ public class JDBCDriver {
 		    		do {
 		    			int id = rs.getInt("_id");
 		    			String name = rs.getString("name");
+		    			int upvoteCount = rs.getInt("upvoteCount");
 		    			String fileLocation = rs.getString("fileLocation");
 		    			String fileName = rs.getString("fileName");
 		    			int delay = rs.getInt("delay");
 		    			int user_id = rs.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id, true);
-		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+		    			Track track = new Track(name, id, upvoteCount, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
 		    		} while(rs.next());
@@ -593,13 +596,14 @@ public class JDBCDriver {
 		    		do {
 		    			int id = rs.getInt("_id");
 		    			String name = rs.getString("name");
+		    			int upvoteCount = rs.getInt("upvoteCount");
 		    			String fileLocation = rs.getString("fileLocation");
 		    			String fileName = rs.getString("fileName");
 		    			int delay = rs.getInt("delay");
 		    			int user_id = rs.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id, true);
-		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
+		    			Track track = new Track(name, id, upvoteCount, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
 		    			System.out.println("Track Made: " + track.getName());
