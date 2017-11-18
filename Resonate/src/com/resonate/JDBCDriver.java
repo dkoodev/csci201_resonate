@@ -69,14 +69,104 @@ public class JDBCDriver {
 		}
 	}
 	
-	public static boolean insertLike(int project_id, int user_id) {
+	public static int getTrackVotes(int project_id) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return -1;
+		}
+		
+		try {
+			ps = conn.prepareStatement(
+					"SELECT * from Track"
+					+ "WHERE project_id = " + project_id + ""
+					+ ";");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		int upvoteCount = rs.getInt("upvoteCount");
+		    	
+		    		return upvoteCount;
+		    } else {
+			    	close();
+			    	return -1;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return -1;
+		} finally {
+			close();
+		}
+		
+	}
+	
+	public static boolean updateTrackVote(int project_id, int track_id) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
 			return false;
 		}
 
 		try {
-			// Inserting project into table
+			ps = conn.prepareStatement(
+					"UPDATE Tracks "
+					+ "SET 	upvoteCount = upvotecount + 1 "
+					+ "WHERE project_id=" + project_id + ""
+						+ "AND track_id=" + track_id + ";"
+					);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return false;
+		} finally { // will this run..?
+			close();
+		}
+		
+		return true;
+	}
+		
+	public static int getProjectLikes(int project_id) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return -1;
+		}
+		
+		try {
+			ps = conn.prepareStatement(
+					"SELECT * from LikedProjects"
+					+ "WHERE project_id = " + project_id + ""
+					+ ";");
+		    rs = ps.executeQuery();
+		    int likeCount = 0;
+		    if(rs.next()) {
+		    		likeCount = 0;
+		    		do {
+		    			likeCount++;
+		    		} while(rs.next());
+		    		return likeCount;
+		    } else {
+			    	close();
+			    	return -1;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return -1;
+		} finally {
+			close();
+		}
+		
+	}
+	
+	public static boolean insertProjectLike(int project_id, int user_id) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+
+		try {
 			ps = conn.prepareStatement(
 					"INSERT INTO LikedProjects (project_id, user_id)" + 
 							"VALUES ("
