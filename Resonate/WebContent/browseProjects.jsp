@@ -16,6 +16,16 @@
 <p><input type="text" class="quicksearch" placeholder="Search" /></p>
 
 
+<div id="sortTitle">
+<p>Sort By</p></div>
+<div id="sorts" class="clickable">  
+  <button class="button is-checked" data-sort-by="original-order">Original Order</button>
+  <button class="button" data-sort-by="vote">Popularity</button>
+  <button class="button" data-sort-by="name">Name</button>
+  <button class="button" data-sort-by="date">Date</button>  
+</div>  
+
+
 <div id="filterTitle">
 	<p>Filter By</p></div> 
 <div id="genreTitle">
@@ -28,14 +38,6 @@
   <button class="button" data-filter=".classical">Classical</button>
 </div> 
 
-<div id="sortTitle">
-<p>Sort By</p></div>
-<div id="sorts" class="clickable">  
-  <button class="button is-checked" data-sort-by="original-order">Original Order</button>
-  <button class="button" data-sort-by="vote">Popularity</button>
-  <button class="button" data-sort-by="name">Name</button>
-  <button class="button" data-sort-by="date">Date</button>  
-</div>  
 
  <div class="grid">
  <%
@@ -43,13 +45,13 @@
  %>
 	 <div class="element-item <%= project.getGenre() %>" data-category=<%= project.getGenre() %> >
 	 <p class="name"> <a href="auditionstage.jsp?project=<%=project.getId()%>"> <%= project.getName() %></a></p>
-	 <p class="date"> <%= project.getCreateDate() %></p>
+	 <p class="date">Date: <%= project.getCreateDate() %></p>
 	 <!-- <p><i class="arrow up"></i></p> -->
 	 <a href="#" onclick="addProjectLike(<%=project.getId()%> , <%= (u == null) ? -1 : u.get_id() %>)"><img id="arrow" src="images/vote_blue.png" /></a>
 	 
 	 <p id="project_vote_<%=project.getId()%>" class="v vote"> <%= project.getUpvoteCount() %></p>    
 	 
-	 <p class="genre"> <%= project.getGenre() %></p>    
+	 <p class="genre">Genre: <%= project.getGenre() %></p>    
 	</div>
 
 <%
