@@ -110,7 +110,7 @@ public class JDBCDriver {
 			ps = conn.prepareStatement(
 					"UPDATE Tracks "
 					+ "SET 	upvoteCount = upvoteCount + 1 "
-					+ "WHERE project_id=" + project_id + ""
+					+ "WHERE project_id=" + project_id + " "
 						+ "AND _id=" + track_id + ";"
 					);
 			ps.executeUpdate();
