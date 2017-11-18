@@ -16,7 +16,7 @@
 		    		<div id="table3">
 		        		 <p id="bio">
 						<font id="font"><u>About Me</u></font><br>
-						This user has no description. :/
+						<%= u.getBio() %>
 					 </p>
 	            </div>    
 		     </td>
@@ -24,7 +24,7 @@
 	</table>
 </div>
 <div>
-<%-- 
+
 <%@page import="java.util.Vector" %>
 
 <%
@@ -74,5 +74,5 @@ You haven't liked any projects yet. <a href="browseproject.jsp">Go find one!</a>
 	}
 }
 %>
- --%>
+
 <%@ include file="includes/global_footer.jsp" %>

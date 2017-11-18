@@ -1,5 +1,5 @@
 <%@ include file="global_header.jsp" %>
-
+<%@page import="java.util.Vector" %>
 <div id="banner">
 	<table>
 		<tr>

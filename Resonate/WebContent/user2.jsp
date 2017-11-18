@@ -15,7 +15,13 @@
 		    <td id="td1"> 
 	            <div id="table2">
 		        		 <p id="likedprojects">
-						Looks like you haven't liked any projects yet! <br>
+		        		 	<% Vector<Project> liked = u.getLikedProjects(); %>
+		        		 	<% for(int i = 0; i < liked.size(); i++) { %>
+		        		 	<div>
+		        		 		<%= liked.get(i).getPhoto() %> 
+		        		 	</div>
+
+						<br>
 						Explore the Resonate Community! <br><br>
 						<a href="browseProjects.jsp" style="text-decoration: none;"><button class="button2"> <span>Browse Projects </span></button> </a><br />
 					 </p>
@@ -24,9 +30,6 @@
 	     </tr>
 	</table>
 </div>
-<%-- 
-<%@page import="java.util.Vector" %>
-
 <%
 
 if (u == null) {
@@ -74,5 +77,5 @@ You haven't liked any projects yet. <a href="browseproject.jsp">Go find one!</a>
 	}
 }
 %>
- --%>
+
 <%@ include file="includes/global_footer.jsp" %>
