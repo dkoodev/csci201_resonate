@@ -1,18 +1,24 @@
 @charset "UTF-8";
 
+
+#piano {
+	background: #000000 url('../../images/piano.jpg') no-repeat fixed;
+	background-size: cover;
+	width: 100%;
+	height: 500px; 
+}
+
 #accountOverview{
 	display: block;
 	margin-left:0px; 
 	font-size: 50px;
 	text-align: center; 
-	font-family: Courier; 
-	word-spacing: -10px;
+	font-family: Gotham Bold; 
 }
 
 #profile{
     font-size: 25px;
-	font-family: Courier; 
-	word-spacing: -10px;
+	font-family: Gotham Bold; 
 }
 
 

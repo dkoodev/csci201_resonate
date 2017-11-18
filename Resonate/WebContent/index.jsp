@@ -2,6 +2,11 @@
 
 <!-- Promotions Page or Home Page -->
 <%
+ if (request.getParameter("logout") != null) {
+	session.invalidate();
+	response.sendRedirect("/Resonate/index.jsp");
+	return;
+}   
 %>
 
 <div id="piano">
