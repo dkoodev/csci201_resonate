@@ -3,14 +3,16 @@ package com.resonate.objects;
 public class Track {
 	String name = null;
 	int id = -1;
+	int upvoteCount = 0;
 	String fileLocation = null;
 	String fileName = null;
 	Integer delay = null;
 	User creator = null;
 	
-	public Track(String name, int id, String fileLocation, String fileName, Integer delay, User creator) {
+	public Track(String name, int id, int upvoteCount, String fileLocation, String fileName, Integer delay, User creator) {
 		this.name = name;
 		this.id = id;
+		this.upvoteCount = upvoteCount;
 		this.fileLocation = fileLocation;
 		this.fileName = fileName;
 		this.delay = delay;
@@ -56,6 +58,11 @@ public class Track {
 		this.creator = creator;
 	}
 	
-	
+	public int getVotes() {
+		return upvoteCount;
+	}
+	public void setVotes(int upv) {
+		this.upvoteCount = upv;
+	}
 
 }

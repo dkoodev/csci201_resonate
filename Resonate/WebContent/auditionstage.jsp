@@ -13,6 +13,7 @@ if (p == null) {
 	response.sendRedirect("/Resonate/browseProjects.jsp");
 	return;
 }
+session.setAttribute("project", p);
 
 Vector<Track> tracks = p.getTracks();
 %>
@@ -32,7 +33,7 @@ for (int i=0; i<tracks.size(); i++ ) {
 	<div style="float:right; text-align: right;">
 		<span id="duration_0">00:00:00</span><br />
 		<img src="images/vote_orange.png" class="voteArrow" />
-		<span id="vote_track_0" class="voteNums">12</span>
+		<span id="vote_track_0" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
 </div>
 <audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>
