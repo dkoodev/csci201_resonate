@@ -69,6 +69,35 @@ public class JDBCDriver {
 		}
 	}
 	
+	public static boolean insertLike(int project_id, int user_id) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+
+		try {
+			// Inserting project into table
+			ps = conn.prepareStatement(
+					"INSERT INTO LikedProjects (project_id, user_id)" + 
+							"VALUES ("
+								+ 	 	project_id		+","
+								+  		user_id			
+							+ ");"
+					);
+			ps.executeUpdate();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return false;
+		} finally { // will this run..?
+			close();
+		}
+		
+		return true;
+	}
+	
 	public static Track insertTrack(
 							String name, int upvoteCount, String fileLocation, 
 							String fileName, Integer delay, 
