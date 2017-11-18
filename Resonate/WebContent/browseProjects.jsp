@@ -47,10 +47,8 @@
 	 <!-- <p><i class="arrow up"></i></p> -->
 	 <a href="#" onclick="addProjectLike(<%=project.getId()%>)"><img id="arrow" src="images/vote_blue.png" /></a>
 	 
-	 <p id="v" class="vote"> <%= project.getUpvoteCount() %></p>    
+	 <p id="project_vote_<%=project.getId()%>" class="v vote"> <%= project.getUpvoteCount() %></p>    
 	 
-	
-	   
 	 <p class="genre"> <%= project.getGenre() %></p>    
 	</div>
 
