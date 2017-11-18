@@ -113,7 +113,7 @@ public class JDBCDriver {
 					+ "WHERE project_id=" + project_id + ""
 						+ "AND track_id=" + track_id + ";"
 					);
-		
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,14 +168,22 @@ public class JDBCDriver {
 
 		try {
 			ps = conn.prepareStatement(
-					"INSERT INTO LikedProjects (project_id, user_id)" + 
-							"VALUES ("
-								+ 	 	project_id		+","
-								+  		user_id			
-							+ ");"
+					"UPDATE Projects "
+					+ "SET 	upvoteCount = upvotecount + 1 "
+					+ "WHERE project_id=" + project_id + ";"
 					);
 			ps.executeUpdate();
-		
+			
+			if(!checkUserLikedProjectAlready(project_id, user_id)) {
+				ps = conn.prepareStatement(
+						"INSERT INTO LikedProjects (project_id, user_id)" + 
+								"VALUES ("
+									+ 	 	project_id		+","
+									+  		user_id			
+								+ ");"
+						);
+				ps.executeUpdate();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,6 +195,38 @@ public class JDBCDriver {
 		
 		return true;
 	}
+	
+	public static boolean checkUserLikedProjectAlready(int project_id, int user_id) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+
+		try {
+			ps = conn.prepareStatement(
+					"SELECT * from LikedProjects"
+					+ "WHERE project_id = " + project_id
+					+ "AND user_id = " + user_id
+					+ ";");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+		    		return true;
+		    } else {
+			    	close();
+			    	return false;
+		    }
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return false;
+		} finally { // will this run..?
+			close();
+			return false;
+		}
+	}
+
 	
 	public static Track insertTrack(
 							String name, int upvoteCount, String fileLocation, 
