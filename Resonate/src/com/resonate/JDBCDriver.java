@@ -735,7 +735,7 @@ public class JDBCDriver {
 		
 		return tracks;
 	}
-	
+
 	public static Vector<Track> getTracksByProjectId(int projectId){
 		if(!connect()) {
 			System.out.println("Not connected to database");
@@ -1109,7 +1109,7 @@ public class JDBCDriver {
 				proj_genre = rs.getString("genre");
 				proj_photo = rs.getString("photo");
 				proj_createDate = rs.getString("createDate");
-				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_genre, proj_photo, proj_createDate, null, null, null, null, null, null);
+				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_genre, proj_photo, proj_createDate, null, null, getTracksByProjectId(proj_id), null, null, null);
 				projects.add(p);
 			}
 		} catch (SQLException e) {
