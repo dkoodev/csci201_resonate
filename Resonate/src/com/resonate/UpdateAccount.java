@@ -64,7 +64,7 @@ public class UpdateAccount extends HttpServlet {
 			user.setBio(bio);
 			
 			if(JDBCDriver.updateUser(user)) {
-				user = JDBCDriver.getUserById(user.get_id());
+				user = JDBCDriver.getUserById(user.get_id(), false);
 				session.setAttribute("user", user);
 				response.sendRedirect("/updateProfile.jsp");
 			}else {

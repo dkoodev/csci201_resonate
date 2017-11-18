@@ -15,9 +15,6 @@ import com.resonate.objects.Track;
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 import com.resonate.objects.User;
 
-//@Daniel u._id doesn't work in jdbc
-// see here: https://stackoverflow.com/questions/7224024/jdbc-resultset-get-columns-with-table-alias
-
 public class JDBCDriver {
 	private static Connection conn = null;
 	private static ResultSet rs = null;
@@ -55,7 +52,6 @@ public class JDBCDriver {
 		try{
 			if (rs!=null){
 				rs.close();
-				rs = null;
 			}
 			if(conn != null){
 				conn.close();
@@ -133,7 +129,7 @@ public class JDBCDriver {
 					new_track_delay = rs.getInt("delay");
 				}while(rs.next());
 				
-				User creator = getUserById(new_track_user_id);
+				User creator = getUserById(new_track_user_id, false);
 					
 				Track track = new Track(new_track_name, new_track_id, new_track_fileLocation, new_track_fileName, new_track_delay, creator);
 				
@@ -344,8 +340,8 @@ public class JDBCDriver {
 			    		upvoteCount = rs.getInt("upvoteCount");
 			    		createDate = rs.getString("createDate");
 
-				    Project project = new Project(project_id, upvoteCount, project_name, project_description,project_genre, project_photo, createDate, null, null, null, null, null, null);
-				    projects.add(project);
+					    Project project = new Project(project_id, upvoteCount, project_name, project_description,project_genre, project_photo, createDate, null, null, null, null, null, null);
+					    projects.add(project);
 		    		} while(rs.next());
 
 		    } else {
@@ -405,6 +401,7 @@ public class JDBCDriver {
 		    contributors = getContributorsByProjectId(projectId);
 		    
 		    tracks = getTracksByProjectId(projectId);
+		    System.out.println("tracks: " + tracks);
 		    
 		    roles = getRolesByProjectId(projectId);
 		    
@@ -469,7 +466,7 @@ public class JDBCDriver {
 	    			int delay = rs.getInt("delay");
 	    			//int user_id = rs.getInt("t.user_id");
 	    					
-	    			User creator = getUserById(userId); //(user_id);
+	    			User creator = getUserById(userId, true); //(user_id);
 	    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 	    			tracks.add(track);
@@ -514,16 +511,18 @@ public class JDBCDriver {
 		    			roles.add(role);
 		    		} while(rs.next());
 		    } else {
-		    	close();
-		    	return null;
+		    	
+		    		close();
+		    	return roles;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			close();
-			return null;
+			return roles;
 		} finally {
-			close();
+			
+				close();
 		}
 		
 		return roles;
@@ -551,22 +550,25 @@ public class JDBCDriver {
 		    			int delay = rs.getInt("delay");
 		    			int user_id = rs.getInt("user_id");
 		    					
-		    			User creator = getUserById(user_id);
+		    			User creator = getUserById(user_id, true);
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
 		    		} while(rs.next());
 		    } else {
-		    	close();
-		    	return null;
+		    	
+		    		close();
+		    	return tracks;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			close();
-			return null;
+			
+				close();
+			return tracks;
 		} finally {
-			close();
+			
+				close();
 		}
 		
 		return tracks;
@@ -583,8 +585,10 @@ public class JDBCDriver {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
 					"SELECT * from Tracks "
-					+ "WHERE project_id = " + projectId + ";");
+					+ "WHERE project_id=?");
+			ps.setInt(1, projectId);
 		    rs = ps.executeQuery();
+		    System.out.println("Query executed.");
 		    if(rs.next()) {
 		    		do {
 		    			int id = rs.getInt("_id");
@@ -594,20 +598,22 @@ public class JDBCDriver {
 		    			int delay = rs.getInt("delay");
 		    			int user_id = rs.getInt("user_id");
 		    					
-		    			User creator = getUserById(user_id);
+		    			User creator = getUserById(user_id, true);
 		    			Track track = new Track(name, id, fileLocation, fileName, delay, creator);
 
 		    			tracks.add(track);
+		    			System.out.println("Track Made: " + track.getName());
 		    		} while(rs.next());
 		    } else {
-		    		return null;
+		    	System.out.println("Returning " + tracks.size() + " tracks.");
+		    	return tracks;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
 		} finally {
-			close();
+			
+				close();
 		}
 		
 		return tracks;
@@ -642,14 +648,15 @@ public class JDBCDriver {
 		    			editors.add(editor);
 		    		} while(rs.next());
 		    } else {
-		    		return null;
+		    		return editors;
 		    }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			return editors;
 		} finally {
-			close();
+			
+				close();
 		}
 		return editors;
 	}
@@ -682,7 +689,8 @@ public class JDBCDriver {
 		    			contributors.add(contributor);
 		    		} while(rs.next());
 		    } else {
-		    	close();
+		    	
+		    		close();
 		    	return null;
 		    }
 		} catch (SQLException e) {
@@ -690,12 +698,14 @@ public class JDBCDriver {
 			e.printStackTrace();
 			return null;
 		} finally {
-			close();
+			
+				close();
 		}
 		return contributors;
 	}
 
-	public static User getUserById(int user_id) {
+	// For whatever reason, this gets called inside other resultsets. It needs its own.
+	public static User getUserById(int user_id, boolean altRS) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
 			return null;
@@ -711,29 +721,50 @@ public class JDBCDriver {
 		
 		try {
 			ps = conn.prepareStatement("SELECT * from NonAdminUsers where _id=" + id + ";");
-		    rs = ps.executeQuery();
-		    
-		    if(rs.next()) {
-			     do { // should only be one row, but needed or sqle
-					id = rs.getInt("_id");
-					username = rs.getString("username");
-					name = rs.getString("name");
-					password = null;
-					email = rs.getString("email");
-					photo = rs.getString("photo");
-					bio = rs.getString("bio");
-			    } while (rs.next());
-		    } else {
-		    	close();
-		    	return null;
-		    }
-
+			if (altRS) {
+				ResultSet rs2 = ps.executeQuery();
+				 if(rs2.next()) {
+				     do { // should only be one row, but needed or sqle
+						id = rs2.getInt("_id");
+						username = rs2.getString("username");
+						name = rs2.getString("name");
+						password = null;
+						email = rs2.getString("email");
+						photo = rs2.getString("photo");
+						bio = rs2.getString("bio");
+				    } while (rs2.next());
+			    } else {
+			    	rs2.close();
+			    	return null;
+			    }
+				 rs2.close();
+			} else {
+			    rs = ps.executeQuery();
+			    
+			    if(rs.next()) {
+				     do { // should only be one row, but needed or sqle
+						id = rs.getInt("_id");
+						username = rs.getString("username");
+						name = rs.getString("name");
+						password = null;
+						email = rs.getString("email");
+						photo = rs.getString("photo");
+						bio = rs.getString("bio");
+				    } while (rs.next());
+			    } else {
+			    	
+			    		close();
+			    	return null;
+			    }
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			close();
+			if (!altRS)
+				close();
 			return null;
 		} finally {
-			close();
+			if (!altRS)
+				close();
 		}
 		// Create instance of user
 		User user = new User(id, username, name, password, email, photo, bio);
