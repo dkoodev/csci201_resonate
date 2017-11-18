@@ -35,6 +35,7 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span id="vote_track_0" class="voteNums">12</span>
 	</div>
 </div>
+<audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>
 <%
 }
 %>
@@ -72,10 +73,10 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span id="vote_track_0" class="voteNums">8</span>
 	</div>
 </div> -->
-
+<!-- 
 <audio id="audio_0" src="uploads/tracks/project1/project1_audio1_guitar1.mp3" preload="auto"></audio>
 <audio id="audio_1" src="uploads/tracks/project1/project1_audio2_bass1.mp3" preload="auto"></audio>
-<audio id="audio_2" src="uploads/tracks/project1/project1_audio3_guitar2.mp3" preload="auto"></audio>
+<audio id="audio_2" src="uploads/tracks/project1/project1_audio3_guitar2.mp3" preload="auto"></audio>-->
 <table style="width:100%; height:100%; overflow-x: scroll;">
 	<tr style="width:100%; height:625px;">
 		<td style="width: 320px; padding: 0px 7px 0px 7px;">
@@ -100,8 +101,10 @@ for (int i=0; i<tracks.size(); i++ ) {
 				</div>		
 			</div>
 			<div id="controls">
-				<div id="projInfo">Project: <span class="bold">DKoo's Masterpiece</span><br />
-								Project Owner: <span class="bold">You</span></div>
+				<div id="projInfo">Project: <span class="bold"><%= p.getName() %></span><br />
+								Project Owner: <span class="bold">You
+								<% //TODO %>
+								</span></div>
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
 			</div>
