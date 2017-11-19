@@ -625,7 +625,7 @@ public class JDBCDriver {
 
 		    contributors = getContributorsByProjectId(projectId);
 		    
-		    tracks = getTracksByProjectId(projectId);
+		    tracks = getTracksByProjectId(projectId, false);
 		    System.out.println("tracks: " + tracks);
 		    
 		    roles = getRolesByProjectId(projectId);
@@ -801,7 +801,7 @@ public class JDBCDriver {
 		return tracks;
 	}
 
-	public static Vector<Track> getTracksByProjectId(int projectId){
+	public static Vector<Track> getTracksByProjectId(int projectId, boolean altRS){
 		if(!connect()) {
 			System.out.println("Not connected to database");
 			return null;
@@ -814,33 +814,58 @@ public class JDBCDriver {
 					"SELECT * from Tracks "
 					+ "WHERE project_id=?");
 			ps.setInt(1, projectId);
-		    rs = ps.executeQuery();
-		    System.out.println("Query executed.");
-		    if(rs.next()) {
+			if (altRS) {
+				ResultSet rs2 = ps.executeQuery();
+			    if(rs2.next()) {
 		    		do {
-		    			int id = rs.getInt("_id");
-		    			String name = rs.getString("name");
-		    			int upvoteCount = rs.getInt("upvoteCount");
-		    			String fileLocation = rs.getString("fileLocation");
-		    			String fileName = rs.getString("fileName");
-		    			int delay = rs.getInt("delay");
-		    			int user_id = rs.getInt("user_id");
+		    			int id = rs2.getInt("_id");
+		    			String name = rs2.getString("name");
+		    			int upvoteCount = rs2.getInt("upvoteCount");
+		    			String fileLocation = rs2.getString("fileLocation");
+		    			String fileName = rs2.getString("fileName");
+		    			int delay = rs2.getInt("delay");
+		    			int user_id = rs2.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id, true);
 		    			Track track = new Track(name, id, upvoteCount, fileLocation, fileName, delay, creator);
-
+	
 		    			tracks.add(track);
 		    			System.out.println("Track Made: " + track.getName());
-		    		} while(rs.next());
-		    } else {
-		    	System.out.println("Returning " + tracks.size() + " tracks.");
-		    	return tracks;
-		    }
+		    		} while(rs2.next());
+		    		rs2.close();
+			    } else {
+			    	rs2.close();
+			    	return tracks;
+			    }
+			} else {
+			    rs = ps.executeQuery();
+			    System.out.println("Query executed.");
+			    if(rs.next()) {
+			    		do {
+			    			int id = rs.getInt("_id");
+			    			String name = rs.getString("name");
+			    			int upvoteCount = rs.getInt("upvoteCount");
+			    			String fileLocation = rs.getString("fileLocation");
+			    			String fileName = rs.getString("fileName");
+			    			int delay = rs.getInt("delay");
+			    			int user_id = rs.getInt("user_id");
+			    					
+			    			User creator = getUserById(user_id, true);
+			    			Track track = new Track(name, id, upvoteCount, fileLocation, fileName, delay, creator);
+		
+			    			tracks.add(track);
+			    			System.out.println("Track Made: " + track.getName());
+			    		} while(rs.next());
+			    } else {
+			    	System.out.println("Returning " + tracks.size() + " tracks.");
+			    	return tracks;
+			    }
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			
+			if (!altRS)
 				close();
 		}
 		
@@ -1174,7 +1199,7 @@ public class JDBCDriver {
 				proj_genre = rs.getString("genre");
 				proj_photo = rs.getString("photo");
 				proj_createDate = rs.getString("createDate");
-				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_genre, proj_photo, proj_createDate, null, null, getTracksByProjectId(proj_id), null, null, null);
+				Project p = new Project(proj_id, proj_votes, proj_name, proj_desc, proj_genre, proj_photo, proj_createDate, null, null, getTracksByProjectId(proj_id, true), null, null, null);
 				projects.add(p);
 			}
 		} catch (SQLException e) {
