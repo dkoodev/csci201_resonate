@@ -42,7 +42,7 @@ public class CreateTrack extends HttpServlet {
 		String track_name = request.getParameter("");
 		String track_fileLocation = null;
 		String track_fileName = null;
-		Integer track_delay = null;
+		Integer track_delay = -1;
 		Integer role_id = -1;
 		
 		Track track = new Track(track_name, -1, 0, track_fileLocation, track_fileName, track_delay, currentUser);

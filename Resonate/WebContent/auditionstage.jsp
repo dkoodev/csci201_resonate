@@ -172,7 +172,7 @@ $(function() {
 		/* Initializing audio */
 		var audio = document.getElementById("audio_" + index.toString());
 		var aWidth = 60;
-		$(audio).data('tOffset', 0);
+		$(audio).data('tOffset', -1);
 		audio.loop = false;
 		if (audio.readyState > 3) {
 			aWidth = audioLoad(audio, element, index);
@@ -230,7 +230,7 @@ $(function() {
 			else audio.currentTime = (playhead-$(audio).data('tOffset'));
 			
 			if (x == 0 && y == 0) {
-				x = 333; y = 22 + 72*(tracksin-(index));
+				x = 333-scrollOffset; y = 22 + 72*(tracksin-(index));
 				$(element).data('inserted', true);
 				$(element).data('xVal', x);
 				$(element).data('yVal', y);
@@ -245,6 +245,8 @@ $(function() {
 				  $(element).removeClass('snapTrack');
 				  
 				  $('#noInserts').css('opacity', 0);
+				  
+				  $(audio).data('tOffset', 0);
 				  
 				  dragobj.draggable(true);
 		
@@ -264,6 +266,8 @@ $(function() {
 			  	$(element).addClass('snapTrack');
 			  	$(element).removeClass('snapTrackInserted');
 			  
+			  	$(audio).data('tOffset', -1);
+			  	
 			  	tracksin--;
 			  }
 	  	});
