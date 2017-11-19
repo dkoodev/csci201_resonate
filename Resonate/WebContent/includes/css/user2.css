@@ -1,5 +1,15 @@
 @charset "UTF-8";
 
+tr.border_bottom td {
+  	border-bottom:1pt solid black;
+  	margin-left: 1cm;
+  	margin-right: 2cm;  	
+}
+
+tr {
+	width: 500px;
+}
+
 #td1 {
 	padding: 0 !important;
 }
@@ -8,13 +18,19 @@
 	margin-left: 30px;
 }
 
-/* #ProjectUpdate{
-	margin-top:0px;
-} */
+#long2 {
+	position: absolute;
+	right: 20px;
+}
 
 #title{
 	font-size:120%;
 	font-weight:bold;
+}
+
+#createDate {
+	font-size: 15px;
+	text-align: right;
 }
 
 
@@ -30,6 +46,8 @@
 	border-color: #f09021; 
 	border-width: 5px;
 	width: 1020px;
+	position: absolute;
+	top: 375px;
 }
 
 #nav {
@@ -55,19 +73,19 @@
 	width: 200px;
 }
 
-li a:hover {
+#nav li a:hover {
 	background-color: #f09021;
 	text-decoration: none;
 }
 
 .active {
 	background-color: #111;
-/*     border-style: solid; */
+	border-style: solid;
     border-bottom: #333;
     border-right: #333;
     border-top: #333;
-/*     border-color: #111;
-    border-width: 6px; */
+	border-color: #f09021;
+    border-width: 6px;
 }
 
 .button2 {

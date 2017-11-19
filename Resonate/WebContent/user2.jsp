@@ -16,24 +16,22 @@
 	            <div id="table2">
 		        		<div id="likedprojects">
 		        			<table id="projects">
-							<tr class="border_bottom">
+							<tr>
+							
 								<td>
 									<p id="long1">
-										</br>
 										<font id="title"> Projects Liked by <%= u.getName() %></font>
 									</p>
+								<hr>	
 								</td>
+								
 							</tr>
-								<td>
-									<p id="long2">	
-										<!--  Replace with data from database -->							
-										<font id="ProjectUpdate">Last Updated: Two days ago</font>
-									</p>
-								</td>
 							
 							<% Vector<Project> projects = u.getLikedProjects();
 								if (projects.size() == 0) {
 								%>
+								<tr>
+								
 									Looks like you haven't liked any projects yet!
 									Explore the Resonate Community! <br><br>
 									<a href="browseProjects.jsp" style="text-decoration: none;"><button class="button2"> <span>Browse Projects </span></button> </a><br />
@@ -42,29 +40,21 @@
 									for(int i=0; i < projects.size(); i++) { 
 									Project p = projects.elementAt(i); 				
 								%>
-									<tr class="border_bottom">
-										<%-- <td>
+								<tr class="border_bottom">
+								
+										<td>
+										
 											<img id="tableImg" src="<%= p.getPhoto() %>" />
-										</td> --%>
-										<td >
-											<p id="long">
-												<br><br><font id="ProjectTitle"> <%= p.getName() %></font>
-											</p>
-											<!-- added this -->
+										</td>
+										<td>
+											<font id="ProjectTitle"> <%= p.getName() %></font>
 											<%if(p.getTracks() != null){	%>										
-											
 												<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font>	
 											<% }%>					
 											<br>		
-											<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>									
-										</td>	
-										<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-									<!-- 	<td>
-											<p id="long2">	
-												 Replace with data from database							
-												<font id="ProjectUpdate">Last Updated: Two days ago</font>
-											</p>
-										</td> --><td></td><td></td><td></td><td></td>
+											<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>		
+											<br><font id="createDate">Date Created: <%= p.getCreateDate() %> </font>
+										</td>
 									</tr>
 									<% } //end of for loop
 								} //end of else statement%>
