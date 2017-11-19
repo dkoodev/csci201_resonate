@@ -54,7 +54,7 @@ $(function() {
 		console.log(votes);
 		var vInt = parseInt(votes);
 		console.log(vInt);
-		
+		//$(elem). TODO ANIMATE
 		$(elem).text(vInt+1);
 		
 	}
