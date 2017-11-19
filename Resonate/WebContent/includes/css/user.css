@@ -53,16 +53,16 @@
 	width: 200px;
 }
 
-li a:hover {
+#nav li a:hover {
 	background-color: #f09021;
 }
 
 .active {
 	background-color: #111;
-/*     border-style: solid; */
+	border-style: solid;
     border-bottom: #333;
     border-right: #333;
     border-top: #333;
-/*     border-color: #111;
-    border-width: 6px; */
+	border-color: #f09021;
+    border-width: 6px;
 }

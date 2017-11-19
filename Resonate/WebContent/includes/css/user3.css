@@ -13,6 +13,14 @@
 	font-weight:bold;
 }
 
+#long2 {
+	position: absolute;
+	right: 20px;
+}
+
+#createDate {
+	font-size: 15px;
+}
 
 #myprojects{
 	background-color: white; 
@@ -24,8 +32,10 @@
 	border-style: outset; 
 	border-color: #f09021; 
 	border-width: 5px;
-	height: 1000px;
 	width: 1020px; 
+	position: absolute;
+	top: 375px;
+	height: 100%;
 }
 
 #nav {
@@ -51,18 +61,18 @@
 	width: 200px;
 }
 
-li a:hover {
+#nav li a:hover {
 	background-color: #f09021;
 }
 
 .active {
 	background-color: #111;
-/*     border-style: solid; */
+	border-style: solid;
     border-bottom: #333;
     border-right: #333;
     border-top: #333;
-/*     border-color: #111;
-    border-width: 6px; */
+	border-color: #f09021;
+    border-width: 6px;
 }
 
 .button2 {
