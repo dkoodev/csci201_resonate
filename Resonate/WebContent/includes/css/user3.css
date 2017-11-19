@@ -1,5 +1,19 @@
 @charset "UTF-8";
 
+tr.border_bottom td {
+  	border-bottom:1pt solid black;
+  	margin-left: 1cm;
+  	margin-right: 2cm;  	
+}
+
+tr {
+	width: 500px;
+}
+
+#projects {
+	width: 100%;
+}
+
 #td1 {
 	padding: 0 !important;
 }
@@ -33,23 +47,24 @@
 	border-color: #f09021; 
 	border-width: 5px;
 	width: 1020px; 
-	position: absolute;
-	top: 375px;
-	height: 100%;
+	position: relative;
 }
 
 #nav {
     list-style-type: none;
     margin: 0;
-    padding: 0;
-	height: 100%;	
-    
+    padding: 0;    
 }
 
 #navbar2 {
 	padding-left: 0 !important; 
 	background: #333;
-	height: 800px; 
+	
+}
+
+u1 {
+	position: relative;
+	margin-top: 0 !important;
 }
 
 #li {
