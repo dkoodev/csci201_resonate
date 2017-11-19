@@ -8,10 +8,20 @@
 	margin-left: 30px;
 }
 
+/* #ProjectUpdate{
+	margin-top:0px;
+} */
+
+#title{
+	font-size:120%;
+	font-weight:bold;
+}
+
+
 #likedprojects{
 	background-color: white; 
 	font-size: 25px; 
-	font-family: Courier; 
+	font-family: Ubuntu; 
 	padding-top: 80px;
 	padding-left: 70px; 
 	padding-bottom: 70px;
@@ -53,12 +63,12 @@ li a:hover {
 
 .active {
 	background-color: #111;
-    border-style: solid;
+/*     border-style: solid; */
     border-bottom: #333;
     border-right: #333;
     border-top: #333;
-    border-color: #f09021;
-    border-width: 6px;
+/*     border-color: #111;
+    border-width: 6px; */
 }
 
 .button2 {
