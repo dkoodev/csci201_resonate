@@ -104,7 +104,10 @@ for (int i=0; i<tracks.size(); i++ ) {
 			<div id="controls">
 				<div id="projInfo">Project: <span class="bold"><%= p.getName() %></span><br />
 								Project Owner: <span class="bold">You
-								<% //TODO %>
+								<% for (User editor : p.getEditors() ) {
+									
+								}
+								%>
 								</span></div>
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
@@ -112,6 +115,10 @@ for (int i=0; i<tracks.size(); i++ ) {
 		</td>
 	</tr>
 </table>
+
+<form id="style="opacity:0;" method="POST" action="SaveProject">
+	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
+</form>
 
 <script type="text/javascript">
 
@@ -318,6 +325,12 @@ $(function() {
 		playheadDiv.style.webkitTransform =
 			playheadDiv.style.transform =
 			    'translate(0px, 0px)';
+	});
+	
+	$("#saveBtn").click(function() {
+		$('.trackable').each(function(index) {
+			
+		});
 	});
 });
 var d = new Date();
