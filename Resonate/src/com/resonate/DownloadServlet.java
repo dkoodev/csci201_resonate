@@ -62,7 +62,7 @@ public class DownloadServlet extends HttpServlet {
 	    	
 		new CombineTracks(tracks, fileName);
 	    	
-        File file = new File("/WebContent/", fileName);
+        File file = new File("/WebContent/mergedTracks/", fileName);
         response.setHeader("Content-Type", getServletContext().getMimeType(fileName));
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\"");
