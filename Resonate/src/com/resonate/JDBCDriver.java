@@ -71,6 +71,31 @@ public class JDBCDriver {
 		}
 	}
 	
+	public static boolean saveDelay(int track_id, int delay) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return false;
+		}
+		
+		try {
+			ps = conn.prepareStatement(
+					"UPDATE Tracks "
+					+ "SET 	delay = " + delay
+					+ "WHERE _id=" + track_id + ";"
+					);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return false;
+		} finally { // will this run..?
+			close();
+		}
+		
+		return true;
+	}
+	
 	public static int getTrackVotes(int project_id) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
@@ -203,7 +228,7 @@ public class JDBCDriver {
 			System.out.println("Not connected to database");
 			return false;
 		}
-
+		
 		try {
 			ps = conn.prepareStatement(
 					"SELECT * from LikedProjects"
@@ -212,18 +237,17 @@ public class JDBCDriver {
 					+ ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
+		    		System.out.println(rs.getString("project_id") + "," + rs.getString("user_id") + "," + rs.getString("_id"));
 		    		return true;
 		    } else {
 			    	//close();
+		    		System.out.println("Nothing returned return false");
 			    	return false;
 		    }
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			//close();
-			return false;
-		} finally { // will this run..?
 			//close();
 			return false;
 		}
