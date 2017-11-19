@@ -81,6 +81,7 @@ $(element).data("tOffset", <%= tracks.elementAt(i).getDelay() %>);
 				<div id="playBtn"><div id="playTriangle"></div></div>
 				
 				<div id="saveBtn" style="float:right; height:50px;">Save!</div>
+				<div id="downloadBtn" style="float: right; height: 50px;">Download!</div>
 			</div>
 		</td>
 	</tr>
@@ -89,7 +90,7 @@ $(element).data("tOffset", <%= tracks.elementAt(i).getDelay() %>);
 <form id="saveForm" style="opacity:0;" method="POST" action="SaveProject">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
-<form id="downloadForm" style="opacity:0;" method="POST" action="SaveProject">
+<form id="downloadForm" style="opacity:0;" method="POST" action="DownloadServlet">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
 <script type="text/javascript">
@@ -316,6 +317,26 @@ $(function() {
 		});
 		$("#saveForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
 		$("#saveForm").submit();
+	});
+	
+	$("#downloadBtn").click(function() {
+		var numberoftracks = 0;
+		$('.snapTrackInserted').each(function(index, element) {
+			//var element = document.getElementById("track_" + index.toString());
+			var tempId = $(element).attr('id');
+			var idParts = tempId.split("_");
+			var idNum = idParts[1];
+			console.log(idNum);
+			
+			var audio = document.getElementById("audio_" + idNum);
+			var delay = $(audio).data('tOffset');
+			if (delay == null) delay = -1;
+			var tid = $(element).data('trackId');
+			$("#downloadForm").append("<input type=\"hidden\" name=\"track_" + index + "\" value=\""+ tid + "\" />");
+			numberoftracks++;
+		});
+		$("#downloadForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
+		$("#downloadForm").submit();
 	});
 });
 var d = new Date();
