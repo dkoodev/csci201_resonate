@@ -8,6 +8,16 @@
 	margin-left: 30px;
 }
 
+/* #ProjectUpdate{
+	margin-top:0px;
+} */
+
+#title{
+	font-size:120%;
+	font-weight:bold;
+}
+
+
 #likedprojects{
 	background-color: white; 
 	font-size: 25px; 
