@@ -19,7 +19,7 @@
 							<tr class="border_bottom">
 								<td>
 									<p id="long1">
-										<font id="title"> <%= u.getUsername() %>'s Projects </font>
+										<font id="title"> <%= u.getName() %>'s Projects </font>
 									</p>
 								</td>
 							</tr>
