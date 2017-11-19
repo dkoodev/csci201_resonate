@@ -16,7 +16,12 @@
 		    		<div id="table3">
 		        		 <p id="bio">
 						<font id="font"><u>About Me</u></font><br>
-						<%= u.getBio() %>
+						<%if(u.getBio() != null) {%>					
+							<%= u.getBio() %>
+						<%} 
+						else{
+							
+						}%>
 					 </p>
 	            </div>    
 		     </td>
