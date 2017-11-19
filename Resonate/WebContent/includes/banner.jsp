@@ -1,5 +1,10 @@
 <%@ include file="global_header.jsp" %>
 <%@page import="java.util.Vector" %>
+
+<% if (u == null) {
+	response.sendRedirect("/Resonate/login.jsp");
+	return;
+} %>
 <div id="banner">
 	<table>
 		<tr>
