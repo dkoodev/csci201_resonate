@@ -884,7 +884,7 @@ public class JDBCDriver {
 			//ps = conn.prepareStatement("SELECT * from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = '" + projectId + "'");
 			ps = conn.prepareStatement("SELECT u._id as userid," +
 											" u.username, u.name, u.email, u.photo, u.bio" +
-											" from Editors e, NonAdminUsers u where e.project_id= u._id AND e.project_id = " + projectId + "");
+											" from Editors e, NonAdminUsers u where e.user_id= u._id AND e.project_id = " + projectId + "");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		do {
