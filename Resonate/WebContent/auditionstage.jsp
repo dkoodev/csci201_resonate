@@ -39,49 +39,13 @@ for (int i=0; i<tracks.size(); i++ ) {
 <script type="text/javascript">
 var element = document.getElementById("track_<%=i%>");
 $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
+$(element).data("tOffset", <%= tracks.elementAt(i).getDelay() %>);
 </script>
 <audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>
 <%
 }
 %>
-<!-- 
-<div id="track_0" class="snapTrack trackable">
-	<div style="float:left">
-		<span class="trackTitle">Track Title</span><br />
-		<span class="creator">Creator: isaac</span><br />
-	</div>
-	<div style="float:right; text-align: right;">
-		<span id="duration_0">00:00:00</span><br />
-		<img src="images/vote_orange.png" class="voteArrow" />
-		<span id="vote_track_0" class="voteNums">12</span>
-	</div>
-</div>
-<div id="track_1" class="snapTrack trackable">
-	<div style="float:left">
-		<span class="trackTitle">Track Title 2</span><br />
-		<span class="creator">Creator: git god</span><br />
-	</div>
-	<div style="float:right; text-align: right;">
-		<span id="duration_1">00:00:00</span><br />
-		<img src="images/vote_orange.png" class="voteArrow" />
-		<span id="vote_track_0" class="voteNums">14</span>
-	</div>
-</div>
-<div id="track_2" class="snapTrack trackable">
-	<div style="float:left">
-		<span class="trackTitle">Solo</span><br />
-		<span class="creator">Creator: git god</span><br />
-	</div>
-	<div style="float:right; text-align: right;">
-		<span id="duration_2">00:00:00</span><br />
-		<img src="images/vote_orange.png" class="voteArrow" />
-		<span id="vote_track_0" class="voteNums">8</span>
-	</div>
-</div> -->
-<!-- 
-<audio id="audio_0" src="uploads/tracks/project1/project1_audio1_guitar1.mp3" preload="auto"></audio>
-<audio id="audio_1" src="uploads/tracks/project1/project1_audio2_bass1.mp3" preload="auto"></audio>
-<audio id="audio_2" src="uploads/tracks/project1/project1_audio3_guitar2.mp3" preload="auto"></audio>-->
+
 <table style="width:100%; height:100%; overflow-x: scroll;">
 	<tr style="width:100%; height:625px;">
 		<td style="width: 320px; padding: 0px 7px 0px 7px;">
@@ -107,7 +71,7 @@ $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
 			</div>
 			<div id="controls">
 				<div id="projInfo">Project: <span class="bold"><%= p.getName() %></span><br />
-								Project Owner: <span class="bold">
+								Editors: <span class="bold">
 								<% for (User editor : p.getEditors() ) { %>
 									<%=editor.getName() %>
 									<%= (!editor.equals(p.getEditors().lastElement())) ? ", " : "" %> 
@@ -117,6 +81,7 @@ $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
 				<div id="playBtn"><div id="playTriangle"></div></div>
 				
 				<div id="saveBtn" style="float:right; height:50px;">Save!</div>
+				<div id="downloadBtn" style="float: right; height: 50px;">Download!</div>
 			</div>
 		</td>
 	</tr>
@@ -125,7 +90,9 @@ $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
 <form id="saveForm" style="opacity:0;" method="POST" action="SaveProject">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
-
+<form id="downloadForm" style="opacity:0;" method="POST" action="DownloadServlet">
+	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
+</form>
 <script type="text/javascript">
 
 // TODO: Potentially waveforms, if there's time.
@@ -172,7 +139,7 @@ $(function() {
 		/* Initializing audio */
 		var audio = document.getElementById("audio_" + index.toString());
 		var aWidth = 60;
-		$(audio).data('tOffset', -1);
+		//$(audio).data('tOffset', -1);
 		audio.loop = false;
 		if (audio.readyState > 3) {
 			aWidth = audioLoad(audio, element, index);
@@ -350,6 +317,26 @@ $(function() {
 		});
 		$("#saveForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
 		$("#saveForm").submit();
+	});
+	
+	$("#downloadBtn").click(function() {
+		var numberoftracks = 0;
+		$('.snapTrackInserted').each(function(index, element) {
+			//var element = document.getElementById("track_" + index.toString());
+			var tempId = $(element).attr('id');
+			var idParts = tempId.split("_");
+			var idNum = idParts[1];
+			console.log(idNum);
+			
+			var audio = document.getElementById("audio_" + idNum);
+			var delay = $(audio).data('tOffset');
+			if (delay == null) delay = -1;
+			var tid = $(element).data('trackId');
+			$("#downloadForm").append("<input type=\"hidden\" name=\"track_" + index + "\" value=\""+ tid + "\" />");
+			numberoftracks++;
+		});
+		$("#downloadForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
+		$("#downloadForm").submit();
 	});
 });
 var d = new Date();
