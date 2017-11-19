@@ -170,7 +170,7 @@ public class JDBCDriver {
 			ps = conn.prepareStatement(
 					"UPDATE Projects "
 					+ "SET 	upvoteCount = upvotecount + 1 "
-					+ "WHERE project_id=" + project_id + ";"
+					+ "WHERE _id=" + project_id + ";"
 					);
 			ps.executeUpdate();
 			
@@ -205,24 +205,24 @@ public class JDBCDriver {
 		try {
 			ps = conn.prepareStatement(
 					"SELECT * from LikedProjects"
-					+ "WHERE project_id = " + project_id
-					+ "AND user_id = " + user_id
+					+ " WHERE project_id = " + project_id
+					+ " AND user_id = " + user_id
 					+ ";");
 		    rs = ps.executeQuery();
 		    if(rs.next()) {
 		    		return true;
 		    } else {
-			    	close();
+			    	//close();
 			    	return false;
 		    }
 		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			close();
+			//close();
 			return false;
 		} finally { // will this run..?
-			close();
+			//close();
 			return false;
 		}
 	}
