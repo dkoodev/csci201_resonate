@@ -30,17 +30,19 @@ public class JDBCDriver {
 	} 
 	
 	public static boolean connect(){
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://"+ host +"/" + database + "?user=" + user + "&password="+ password +"&useSSL=false");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Error connecting to database (cnfe): " + e.getMessage());
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.out.println("Error connecting to database (sqle): " + e.getMessage());
-			e.printStackTrace();
+		if(conn == null) {
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection("jdbc:mysql://"+ host +"/" + database + "?user=" + user + "&password="+ password +"&useSSL=false");
+			} catch (ClassNotFoundException e) {
+				System.out.println("Error connecting to database (cnfe): " + e.getMessage());
+				e.printStackTrace();
+			} catch (SQLException e) {
+				System.out.println("Error connecting to database (sqle): " + e.getMessage());
+				e.printStackTrace();
+			}
 		}
-		
+
 		if(conn == null) {
 			return false;
 		}else {
