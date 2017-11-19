@@ -49,7 +49,7 @@ public class Login extends HttpServlet {
         						+ ", id: " + validatedUser.get_id()
         				);
         		
-	        	session.setMaxInactiveInterval(600); // 10 min.
+	        	session.setMaxInactiveInterval(1200); // 20 min.
 	        	session.setAttribute("user", validatedUser); 
 	        	response.sendRedirect("/Resonate/user.jsp");
         	} else {
