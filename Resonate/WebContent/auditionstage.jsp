@@ -36,6 +36,10 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span id="track_vote_<%=tracks.elementAt(i).getId() %>" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
 </div>
+<script type="text/javascript">
+var element = document.getElementById("track_<%=i%>");
+$(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
+</script>
 <audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>
 <%
 }
@@ -103,20 +107,22 @@ for (int i=0; i<tracks.size(); i++ ) {
 			</div>
 			<div id="controls">
 				<div id="projInfo">Project: <span class="bold"><%= p.getName() %></span><br />
-								Project Owner: <span class="bold">You
-								<% for (User editor : p.getEditors() ) {
-									
-								}
-								%>
+								Project Owner: <span class="bold">
+								<% for (User editor : p.getEditors() ) { %>
+									<%=editor.getName() %>
+									<%= (!editor.equals(p.getEditors().lastElement())) ? ", " : "" %> 
+								<% } %>
 								</span></div>
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
+				
+				<div id="saveBtn" style="float:right; height:50px;">Save!</div>
 			</div>
 		</td>
 	</tr>
 </table>
 
-<form id="style="opacity:0;" method="POST" action="SaveProject">
+<form id="saveForm" style="opacity:0;" method="POST" action="SaveProject">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
 
@@ -328,9 +334,18 @@ $(function() {
 	});
 	
 	$("#saveBtn").click(function() {
+		var numberoftracks = 0;
 		$('.trackable').each(function(index) {
-			
+			var element = document.getElementById("track_" + index.toString());
+			var audio = document.getElementById("audio_" + index.toString());
+			var delay = $(audio).data('tOffset');
+			if (delay == null) delay = -1;
+			var tid = $(element).data('trackId');
+			$("#saveForm").append("<input type=\"hidden\" name=\"track_" + index + "\" value=\""+ tid + " " + delay + "\" />");
+			numberoftracks++;
 		});
+		$("#saveForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
+		//$("#saveForm").submit();
 	});
 });
 var d = new Date();
