@@ -18,7 +18,7 @@ public class CombineTracks extends Thread {
 	
 	public CombineTracks(Vector<Track> tracks, String out) {
 		this.tracks = tracks;
-		outputName = out;
+		outputName = Config.destinationPath + out;
 		
 		this.start();
 	}
@@ -32,7 +32,7 @@ public class CombineTracks extends Thread {
 			cmds.addElement("/c");
 			cmds.addElement("ffmpeg.exe");
 		} else if (OSValidator.isMac() || OSValidator.isUnix()) {
-			cmds.addElement("ffmpeg");
+			cmds.addElement("./ffmpeg");
 		} else {
 			System.err.println("OS Not supported to combine tracks.");
 			return;
@@ -43,10 +43,16 @@ public class CombineTracks extends Thread {
 			cmds.addElement(t.getFileLocation());
 		}
 		cmds.addElement("-filter_complex");
-		cmds.addElement("\"[0:0][1:0] amix=inputs=4:duration=longest\"");
+		// inputs should depend on the # of files
+		String filter = "[0:0][1:0] amix=inputs=" + tracks.size()+ ":duration=longest";
+		cmds.addElement(filter);
 		cmds.addElement("-c:a");
 		cmds.addElement("libmp3lame");
-		cmds.addElement(outputName);
+		if(outputName.endsWith(".mp3")) {
+			cmds.addElement(outputName);
+		}else {
+			cmds.addElement(outputName + ".mp3");
+		}
 		String command[] = cmds.toArray(new String[cmds.size()]);
 		
 		File dir;
@@ -54,7 +60,11 @@ public class CombineTracks extends Thread {
 		if (OSValidator.isWindows()) {
 			dir = new File("C:/ffmpeg/win/bin");
 		} else if (OSValidator.isMac()) {
-			dir = new File("/ffmpeg/mac/bin");
+			if(Config.pathToProject.endsWith("/")) {
+				dir = new File(Config.pathToProject + "Resources/Resonate/ffmpeg/mac/bin/");
+			}else {
+				dir = new File(Config.pathToProject + "/Resources/Resonate/ffmpeg/mac/bin/");
+			}
 		} else if (OSValidator.isUnix()) {
 			dir = new File("/ffmpeg/nix/bin");
 		} else {
@@ -86,6 +96,7 @@ public class CombineTracks extends Thread {
 	}
 	
 	public static void main(String [] args) {
+		// Test Code
 		Vector<Track> t = new Vector<Track>();
 		t.addElement(new Track(null, -1, -1, "Melody.mp3", null, null, null));
 		t.addElement(new Track(null, -1, -1, "Instrumental.mp3", null, null, null));

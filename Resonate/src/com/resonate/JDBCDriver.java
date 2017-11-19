@@ -71,6 +71,45 @@ public class JDBCDriver {
 		}
 	}
 	
+	public static Track getTrackById(int track_id) {
+		if(!connect()) {
+			System.out.println("Not connected to database");
+			return null;
+		}
+		
+		try {
+		    // Getting list of editors
+			ps = conn.prepareStatement(
+					"SELECT * from Tracks"
+					+ "WHERE _id = " + track_id 
+					+ ";");
+		    rs = ps.executeQuery();
+		    if(rs.next()) {
+	    			int id = rs.getInt("_id");
+	    			String name = rs.getString("name");
+	    			int upvoteCount = rs.getInt("upvoteCount");
+	    			String fileLocation = rs.getString("fileLocation");
+	    			String fileName = rs.getString("fileName");
+	    			int delay = rs.getInt("delay");
+	    			int user_id = rs.getInt("user_id");
+	    					
+	    			User creator = getUserById(user_id, true); //(user_id);
+	    			Track track = new Track(name, id, upvoteCount, fileLocation, fileName, delay, creator);
+	    			return track;
+		    } else {
+		    	close();
+		    	return null;
+		    }
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			close();
+			return null;
+		} finally {
+			close();
+		}
+	}
+	
 	public static boolean saveDelay(int track_id, int delay) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
