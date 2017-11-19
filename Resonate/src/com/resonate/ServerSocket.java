@@ -44,6 +44,7 @@ public class ServerSocket {
 			}
 		} catch (IOException ioe) {
 			System.out.println("ioe: " + ioe.getMessage());
+			
 			close(session);
 		}
 	}
@@ -56,6 +57,7 @@ public class ServerSocket {
 	
 	@OnError
 	public void error(Throwable error) {
+		error.printStackTrace();
 		System.out.println("Error: " + error);
 	}
 }

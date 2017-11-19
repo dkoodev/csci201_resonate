@@ -19,6 +19,7 @@
 							<tr class="border_bottom">
 								<td>
 									<p id="long1">
+										</br>
 										<font id="title"> Projects liked by <%= u.getUsername() %></font>
 									</p>
 								</td>

@@ -14,6 +14,7 @@
 					<p id="username">
 						<%=u.getUsername() %>
 					</p><br />
+					<a href="createproject.jsp"><button class="create">Create a Project</button></a>
 				</div>
 			</td>
 		</tr>
