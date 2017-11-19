@@ -21,7 +21,7 @@
 <p>Sort By</p></div>
 <div id="sorts" class="clickable">  
   <button class="button is-checked" data-sort-by="original-order">Original Order</button>
-  <button class="button" data-sort-by="vote">Popularity</button>
+  <button class="button" data-sort-by="vote">Most Popular</button>
   <button class="button" data-sort-by="name">Name</button>
   <button class="button" data-sort-by="date">Date</button>  
 </div>  

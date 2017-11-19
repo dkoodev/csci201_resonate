@@ -20,10 +20,17 @@
 								<td>
 									<p id="long1">
 										</br>
-										<font id="title"> Projects liked by <%= u.getUsername() %></font>
+										<font id="title"> Projects Liked by <%= u.getName() %></font>
 									</p>
 								</td>
 							</tr>
+								<td>
+									<p id="long2">	
+										<!--  Replace with data from database -->							
+										<font id="ProjectUpdate">Last Updated: Two days ago</font>
+									</p>
+								</td>
+							
 							<% Vector<Project> projects = u.getLikedProjects();
 								if (projects.size() == 0) {
 								%>
@@ -36,23 +43,28 @@
 									Project p = projects.elementAt(i); 				
 								%>
 									<tr class="border_bottom">
-										<td>
+										<%-- <td>
 											<img id="tableImg" src="<%= p.getPhoto() %>" />
-										</td>
+										</td> --%>
 										<td >
 											<p id="long">
 												<br><br><font id="ProjectTitle"> <%= p.getName() %></font>
 											</p>
-											<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font><br>								
+											<!-- added this -->
+											<%if(p.getTracks() != null){	%>										
+											
+												<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font>	
+											<% }%>					
+											<br>		
 											<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>									
 										</td>	
 										<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-										<td>
+									<!-- 	<td>
 											<p id="long2">	
-												<!--  Replace with data from database -->							
+												 Replace with data from database							
 												<font id="ProjectUpdate">Last Updated: Two days ago</font>
 											</p>
-										</td><td></td><td></td><td></td><td></td>
+										</td> --><td></td><td></td><td></td><td></td>
 									</tr>
 									<% } //end of for loop
 								} //end of else statement%>
