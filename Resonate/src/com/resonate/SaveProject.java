@@ -39,8 +39,10 @@ public class SaveProject extends HttpServlet {
     		int trackId = Integer.parseInt(comp[0]);
     		int tDelay = Integer.parseInt(comp[1]);
     		
-    		JDBCDriver.saveDelay(trackId, tDelay);
+    		boolean f = JDBCDriver.saveDelay(trackId, tDelay);
+    		if (!f) System.out.println("Failure");
     	}
+    	response.sendRedirect("/Resonate/auditionstage.jsp?project=" + pId);
 	}
 
 }

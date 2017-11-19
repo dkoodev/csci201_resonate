@@ -81,7 +81,7 @@ public class JDBCDriver {
 			ps = conn.prepareStatement(
 					"UPDATE Tracks "
 					+ "SET 	delay = " + delay
-					+ "WHERE _id=" + track_id + ";"
+					+ " WHERE _id=" + track_id + ";"
 					);
 			ps.executeUpdate();
 		} catch (SQLException e) {

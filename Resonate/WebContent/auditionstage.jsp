@@ -345,7 +345,7 @@ $(function() {
 			numberoftracks++;
 		});
 		$("#saveForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
-		//$("#saveForm").submit();
+		$("#saveForm").submit();
 	});
 });
 var d = new Date();
