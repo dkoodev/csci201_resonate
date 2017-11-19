@@ -92,12 +92,13 @@ body {
 	height: 20x;
 	position: absolute;
     bottom: 0;
+    margin-bottom:10px;
 	/* display: inline; */
 }
 .v{
 	position:relative;
 	left: 52px;
-	top: 130px;
+	top: 120px;
 	color:white;
 }
 
