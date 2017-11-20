@@ -30,7 +30,7 @@
 
 									<td>
 										Looks like you haven't created any projects yet!
-										<a href="createproject.jsp" style="text-decoration: none;"><button class="button2"> <span>Create a New Project! </span></button> </a><br />
+										<a href="createproject.jsp" style="text-decoration: none;"><button class="button2"> <span>Create a Project</span></button> </a><br />
 									</td>
 								<%
 								} else {
@@ -38,21 +38,28 @@
 									Project p = projects.elementAt(i); 
 								%>
 									<td>
-										<img id="tableImg" src="<%= p.getPhoto() %>" />
+										<%if(p.getPhoto() != null && !p.getPhoto().equals("null")) { %>
+											<img id="tableImg" src="<%= p.getPhoto() %>" />
+										<%} 
+										else{%>
+											<img id="tableImg" src="https://youshark.neocities.org/assets/img/default.png"/>
+										<%}%>
+										
 									</td>
 									<td >
 										<div id="long">
 											<br><br><font id="ProjectTitle"> <%= p.getName() %></font>
 										</div>
-										<div id="long2">	
-												<font id="createDate">Date Created: <%= p.getCreateDate() %> </font>
-										</div>
+										<%-- <div id="long2">	
+												<font id="createDate"> Date Created: <%= p.getCreateDate() %> </font>
+										</div> --%>
 										<%if(p.getTracks() != null){	%>										
 											
 												<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font>	
 										<% }%>
 										<br>								
-										<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>									
+										<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>
+										<br><font id="createDate">Date Created: <%= p.getCreateDate() %> </font>								
 									</td>	
 									</tr>
 									<% } //end of for loop
