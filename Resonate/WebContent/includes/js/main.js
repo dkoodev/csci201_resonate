@@ -21,19 +21,12 @@ $(document).click(function(e) {
 /* Any functions that should be called at the beginning of each page call */
 $(function() {
 	var windowHeight = ("innerHeight" in window) ? window.innerHeight : document.documentElement.offsetHeight; 
-	
+		
 	if($('#mainBody').height() < 625) {
 		$('#footer').addClass('down');
 	}
 	
 	$("#piano").height(windowHeight-125);
-	
-	
-	$('.errorNotifier').popover().popover('show'); 
-	$('.inputs').on('focus', function () {
-		$('.errorNotifier').popover('hide');
-		$('.errorNotifier').popover('disable');
-	});
 	
 	$socket = new WebSocket("ws://localhost:8080/Resonate/resonating");
 	$socket.onopen = function(event) {
@@ -61,6 +54,12 @@ $(function() {
 	$socket.onclose = function(event) {
 		// TODO: throw error? Do nothing?
 	}
+	
+	$('.errorNotifier').popover().popover('show'); 
+	$('.inputs').on('focus', function () {
+		$('.errorNotifier').popover('hide');
+		$('.errorNotifier').popover('disable');
+	});
 });
 
 function addProjectLike(projectid, userid) {

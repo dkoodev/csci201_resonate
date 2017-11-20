@@ -59,6 +59,5 @@ public class ServerSocket {
 	public void error(Throwable error) {
 		error.printStackTrace();
 		System.out.println("Error: " + error);
-		error.printStackTrace();
 	}
 }
