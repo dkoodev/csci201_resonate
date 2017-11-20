@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 
@@ -16,14 +17,29 @@ public class CombineTracks extends Thread {
 	Vector<Track> tracks;
 	String outputName;
 	
-	public CombineTracks(Vector<Track> tracks, String out) {
+	
+	CountDownLatch latch;
+
+	
+	public CombineTracks(Vector<Track> tracks, String out, CountDownLatch latch) {
 		this.tracks = tracks;
 		outputName = Config.destinationPath + out;
-		
+		this.latch = latch;
 		this.start();
+
 	}
 	
 	public void run() {
+
+		if(tracks == null) {
+			System.out.println("Tracks is null");
+			return;
+		}
+		if(tracks.size() == 0) {
+			System.out.println("Tracks is empty");
+			return;
+		}
+
 		ProcessBuilder processBuilder = null;
 		Vector<String> cmds = new Vector<String>();
 		if (OSValidator.isWindows()) {
@@ -38,9 +54,26 @@ public class CombineTracks extends Thread {
 			return;
 		}
 		cmds.addElement("-y");
+		
+		System.out.println("Tracks size: " + tracks.size());
 		for(Track t : tracks) {
+			if(t == null) {
+				System.out.println("t is null");
+			}else {
+				System.out.println("t is not null");
+			}
+			if(t.getFileLocation() == null) {
+				System.out.println("getfilelocation is null");
+			}else {
+				System.out.println("getfilelocation is not null");
+
+			}
+			System.out.println("t.getFilename : " + t.getFileName());
+			System.out.print("t.id: "+ t.getId());
+
 			cmds.addElement("-i");
-			cmds.addElement(t.getFileLocation());
+			String pathToFileLocation = Config.pathToProject + "/Webcontent/" + t.getFileLocation();
+			cmds.addElement(pathToFileLocation);
 		}
 		cmds.addElement("-filter_complex");
 		// inputs should depend on the # of files
@@ -93,6 +126,10 @@ public class CombineTracks extends Thread {
 			System.out.println("Error in combining tracks thread (ioe):");
 			ioe.printStackTrace();
 		}
+
+		if(latch !=null) {
+			latch.countDown();
+		}
 	}
 	
 	public static void main(String [] args) {
@@ -103,6 +140,6 @@ public class CombineTracks extends Thread {
 		t.addElement(new Track(null, -1, -1, "Harmony 1.mp3", null, null, null));
 		t.addElement(new Track(null, -1, -1, "Harmony 2.mp3", null, null, null));
 		
-		new CombineTracks(t, "out.mp3");
+		new CombineTracks(t, "out.mp3", null);
 	}
 }

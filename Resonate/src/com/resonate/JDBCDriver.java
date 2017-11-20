@@ -80,7 +80,7 @@ public class JDBCDriver {
 		try {
 		    // Getting list of editors
 			ps = conn.prepareStatement(
-					"SELECT * from Tracks"
+					"SELECT * from Tracks "
 					+ "WHERE _id = " + track_id 
 					+ ";");
 		    rs = ps.executeQuery();
@@ -143,7 +143,7 @@ public class JDBCDriver {
 		
 		try {
 			ps = conn.prepareStatement(
-					"SELECT * from Track"
+					"SELECT * from Tracks "
 					+ "WHERE project_id = " + project_id + ""
 					+ ";");
 		    rs = ps.executeQuery();
