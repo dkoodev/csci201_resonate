@@ -219,7 +219,21 @@
 
 #downloadBtn {
 	background: #f09021;
-	margin-right: 40px;
+	/*margin-right: 40px;*/
+}
+
+#downloading {
+	width: 50px;
+	height: 50px;
+	float: right;
+	margin: 5px 40px 0 0;
+	opacity: 0;
+	transition: opacity 300ms;
+}
+
+#downloading img {
+	width:50px;
+	height: 50px;
 }
 
 #playhead {

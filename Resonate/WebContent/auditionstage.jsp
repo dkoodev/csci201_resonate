@@ -36,7 +36,6 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span id="track_vote_<%=tracks.elementAt(i).getId() %>" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
 </div>
-<div id="addTrack"><a href="addTrack.jsp">+ Add A Track!</a></div>
 <script type="text/javascript">
 var element = document.getElementById("track_<%=i%>");
 $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
@@ -47,6 +46,7 @@ $(element).data("savedOffset", <%= del %>);
 <%
 }
 %>
+<div id="addTrack"><a href="addTrack.jsp">+ Add A Track!</a></div>
 
 <table style="width:100%; height:100%; overflow-x: scroll;">
 	<tr style="width:100%; height:625px;">
@@ -94,6 +94,7 @@ $(element).data("savedOffset", <%= del %>);
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
 				
+				<div id="downloading"><img src="images/loading-crop.gif" /></div>
 				<div id="downloadBtn">Download!</div>
 				<% if (canSave) { %>
 				<div id="saveBtn">Save</div>
@@ -436,6 +437,7 @@ $(function() {
 	});
 	
 	$("#downloadBtn").click(function() {
+		$("#downloading").css('opacity', 1);
 		var numberoftracks = 0;
 		$('.snapTrackInserted').each(function(index, element) {
 			//var element = document.getElementById("track_" + index.toString());
