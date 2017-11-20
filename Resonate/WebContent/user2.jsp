@@ -20,6 +20,7 @@
 							
 								<td>
 									<p id="long1">
+										<br>
 										<font id="title"> Projects Liked by <%= u.getName() %></font>
 									</p>
 								<hr>	
@@ -33,7 +34,8 @@
 								<tr>
 								
 									Looks like you haven't liked any projects yet!
-									Explore the Resonate Community! <br><br>
+									Explore the Resonate Community! 
+									<br><br>
 									<a href="browseProjects.jsp" style="text-decoration: none;"><button class="button2"> <span>Browse Projects </span></button> </a><br />
 								<%
 								} else {
@@ -42,9 +44,13 @@
 								%>
 								<tr class="border_bottom">
 								
-										<td>
-										
-											<img id="tableImg" src="<%= p.getPhoto() %>" />
+										<td>										
+											<%if(p.getPhoto() != null && !p.getPhoto().equals("null")) { %>
+												<img id="tableImg" src="<%= p.getPhoto() %>" />
+											<%} 
+											else{%>
+												<img id="tableImg" src="https://youshark.neocities.org/assets/img/default.png"/>
+											<%}%>
 										</td>
 										<td>
 											<font id="ProjectTitle"> <%= p.getName() %></font>
