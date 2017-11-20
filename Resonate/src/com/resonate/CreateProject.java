@@ -49,7 +49,7 @@ public class CreateProject extends HttpServlet {
 	    	
         HttpSession session = request.getSession();
         
-        String root = "/Resonate/uploads";
+        String root = Config.destinationPath + "/uploads";
         String filename;
         
         Part filePart = request.getPart("photo"); 

@@ -70,6 +70,58 @@ public class JDBCDriver {
 			sqle.printStackTrace();
 		}
 	}
+//	
+//	public static int insertTrack(int project_id, int role_id, int user_id, String fileLocation, String fileName) {
+//		
+//		if(!connect()) {
+//			System.out.println("Not connected to database");
+//			return -1;
+//		}
+//		try {
+//			ps = conn.prepareStatement(
+//					"INSERT INTO Tracks (project_id, role_id, user_id, upvoteCount, fileLocation, fileName) "
+//					+ "VALUES ( ? , ?, ?, 0 , ?, ?);"
+//					);
+//			ps.setString(1,  Integer.toString(project_id));
+//			ps.setString(2, Integer.toString(role_id));
+//			ps.setString(3, Integer.toString(user_id));
+//			ps.setString(4, fileLocation);
+//			ps.setString(5, fileName);
+//			
+//			ps.executeUpdate();
+//			
+//			ps = conn.prepareStatement(
+//					"SELECT * FROM Tracks "
+//					+ "WHERE project_id = ? "
+//					+ "AND role_id = ? "
+//					+ "AND user_id = ? "
+//					+ "AND upvoteCount = 0 "
+//					+ "AND fileLocation = ? "
+//					+ "AND fileName = ? ;"
+//					);
+//			ps.setString(1,  Integer.toString(project_id));
+//			ps.setString(2, Integer.toString(role_id));
+//			ps.setString(3, Integer.toString(user_id));
+//			ps.setString(4, fileLocation);
+//			ps.setString(5, fileName);
+//			
+//			rs = ps.executeQuery();
+//			
+//			if(rs.next()) {
+//				int track_id = rs.getInt("_id");
+//				return track_id;
+//			}else {
+//				return -1;
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			close();
+//			return -1;
+//		} finally { // will this run..?
+//			close();
+//		}
+//	}
 	
 	public static Track getTrackById(int track_id) {
 		if(!connect()) {
@@ -306,7 +358,7 @@ public class JDBCDriver {
 		try {
 			// Inserting project into table
 			ps = conn.prepareStatement(
-					"INSERT INTO Tracks (name, project_id, role_id, user_id, upvoteCount, fileLocation, fileName, delay)" + 
+					"INSERT INTO Tracks (name, project_id, role_id, user_id, upvoteCount, fileLocation, fileName, delay) " + 
 							"VALUES ("
 								+ "'"+  name						+"',"
 								+ 	 	currentProject.getId()  	+","
@@ -321,14 +373,14 @@ public class JDBCDriver {
 			ps.executeUpdate();
 			
 			ps = conn.prepareStatement(
-					"SELECT * Tracks "
+					"SELECT * FROM Tracks "
 					+ "WHERE name='"+ name +"'"
-					+ "AND project_id=" + currentProject.getId()
-					+ "AND role_id=" + role_id
-					+ "AND user_id=" + currentUser.get_id()
-					+ "AND fileLocation='" + fileLocation +"'"
-					+ "AND fileName='" + fileName +"'"
-					+ "AND delay=" + delay
+					+ " AND project_id=" + currentProject.getId()
+					+ " AND role_id=" + role_id
+					+ " AND user_id=" + currentUser.get_id()
+					+ " AND fileLocation='" + fileLocation +"'"
+					+ " AND fileName='" + fileName +"'"
+					+ " AND delay=" + delay
 					+";"
 					);
 			rs = ps.executeQuery();
