@@ -324,3 +324,7 @@ body {
   opacity: 1;
   right: 0;
 }
+
+.vote, .voteNums {
+	transition: opacity 200ms, transform 200ms;
+}

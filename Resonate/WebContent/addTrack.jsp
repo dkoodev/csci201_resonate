@@ -8,12 +8,12 @@ if (u == null) {
 
 <div id="piano">
 
-	<p id="catchphrase">Only<font color="00b4a8">You</font> can take the project</p>
+	<p id="catchphrase">Only <font color="00b4a8">You</font> can take the project</p>
 	<p id="cpTwo">To the <font color="00b4a8">Next Level</font>.</p>
 	<div id="inp">
 		<form name="cp" id="cp" action="CreateTrack" method="POST" enctype="multipart/form-data">
 			<input id = "t" class="inputs" type="text" name="name" placeholder="Name Your Track" /><br /><br />
-		  	<div id="photo">Add a sound file: </div><br /> <input id="browse" class="inputs" type="file" name="track" accept=".mp3 .wav" /><br /><br />
+		  	<div id="photo">Add a sound file: </div><br /> <input id="browse" class="inputs" type="file" name="track" accept=".mp3, .wav" /><br /><br />
 			<div id="filesHolder">
 			</div>
 			<% if (error != null && error.equals("SQL Error")) { %>

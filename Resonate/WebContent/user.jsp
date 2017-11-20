@@ -5,7 +5,7 @@
 <div id="background">
 	<table id="user">
 		<tr>
-			<td id="navbar2">
+			<td id="navbar2" valign="top">
 				<div id="nav">
 			      <li><a id="li" href="user3.jsp">My Projects</a></li>
 				  <li><a id="li" href="user2.jsp">Liked Projects</a></li>

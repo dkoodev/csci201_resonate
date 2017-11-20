@@ -5,7 +5,7 @@
 <div id="background">
 	<table id="user">
 		<tr>
-			<td id="navbar2">
+			<td id="navbar2" valign="top">
 				<ul id="nav">
 				  <li><a id="li" class="active" href="#">My Projects</a></li>
 				  <li><a id="li" href="user2.jsp">Liked Projects</a></li>
@@ -16,7 +16,7 @@
 		    		<div id="table1">
 		        		<div id="myprojects">
 						<table id="projects">
-							<tr class="border_bottom">
+							<tr>
 								<td>
 									<p id="long1">
 										<font id="title"> <%= u.getName() %>'s Projects </font>
@@ -37,6 +37,7 @@
 									for(int i=0; i < projects.size(); i++) { 
 									Project p = projects.elementAt(i); 
 								%>
+								<tr class="border_bottom">
 									<td>
 										<%if(p.getPhoto() != null && !p.getPhoto().equals("null")) { %>
 											<img id="tableImg" src="<%= p.getPhoto() %>" />
@@ -48,7 +49,8 @@
 									</td>
 									<td >
 										<div id="long">
-											<br><br><font id="ProjectTitle"> <%= p.getName() %></font>
+											<br><br><font id="ProjectTitle"><a href="auditionstage.jsp?project=<%= p.getId() %>" style="color:black;">
+											<%= p.getName() %></a></font>
 										</div>
 										<%-- <div id="long2">	
 												<font id="createDate"> Date Created: <%= p.getCreateDate() %> </font>
@@ -61,9 +63,10 @@
 										<i class="material-icons" style="font-size:24px; color: #008CBA">arrow_upward</i> <%= p.getUpvoteCount() %>
 										<br><font id="createDate">Date Created: <%= p.getCreateDate() %> </font>								
 									</td>	
-									</tr>
+									
 									<% } //end of for loop
 								} //end of else statement%>
+								</tr>
 						</table>	
 					</div>
 	            </div>       

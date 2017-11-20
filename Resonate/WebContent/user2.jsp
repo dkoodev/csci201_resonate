@@ -5,7 +5,7 @@
 <div id="background">
 	<table id="user">
 		<tr>
-			<td id="navbar2">
+			<td id="navbar2" valign="top">
 				<ul id="nav">
 				  <li><a id="li" href="user3.jsp">My Projects</a></li>
 				  <li><a id="li" class="active">Liked Projects</a></li>
@@ -53,7 +53,8 @@
 											<%}%>
 										</td>
 										<td>
-											<font id="ProjectTitle"> <%= p.getName() %></font>
+											<font id="ProjectTitle"><a href="auditionstage.jsp?project=<%= p.getId() %>" style="color:black;">
+											<%= p.getName() %></a></font>
 											<%if(p.getTracks() != null){	%>										
 												<font id="ProjectInfo"> <%= p.getTracks().size() %> Tracks </font>	
 											<% }%>					
