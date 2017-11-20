@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Vector;
+import java.util.concurrent.CountDownLatch;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,8 @@ public class DownloadServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 	    	String project_id = request.getParameter("projectid");
 	    	String numTracks = request.getParameter("numTracks");
-	    	int pId = Integer.parseInt(project_id);
+	    	System.out.println("project_id from downloadservlet is: " + project_id);
+//	    	int pId = Integer.parseInt(project_id);
 	    	int nTracks = Integer.parseInt(numTracks);
 	    	
 	    	//Vector<String> trackDelays = new Vector<String>();
@@ -55,12 +57,33 @@ public class DownloadServlet extends HttpServlet {
 
 	    	for(Integer i : tracksToDownloadById) {
 	    		Track track = JDBCDriver.getTrackById(i);
-	    		tracks.add(track);
+	    		if(track == null) {
+	    			System.out.println("track was null in Downloadservlet getTrackById. Track id: " + i);
+	    		}else {
+	    			System.out.println("track was not null in Downloadservlet getTrackById. Track id: " + i);
+		    		tracks.add(track);
+	    		}
 	    	}
 	    	
 	    	String fileName = "project_"+project_id+"_tracks_"+numTracks+"_"+tracksString;
 	    	
-		new CombineTracks(tracks, fileName);
+	    	CountDownLatch latch = new CountDownLatch(1);
+
+	    	System.out.println("Countdownlatch created");
+	    	System.out.println("CombineTracks started");
+		new CombineTracks(tracks, fileName, latch);
+    		System.out.println("CombineTracks ended");
+	    	try {
+	    		latch.await();
+	    	} catch (InterruptedException e) {
+	    		// TODO Auto-generated catch block
+	    		e.printStackTrace();
+	    	}
+	    	System.out.println("After latch.await()");
+	    	
+	    	if(!fileName.endsWith(".mp3")) {
+	    		fileName += ".mp3";
+	    	}
 	    	
         File file = new File(Config.pathToProject + "/WebContent/mergedTracks/", fileName);
         response.setHeader("Content-Type", getServletContext().getMimeType(fileName));
