@@ -31,7 +31,7 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span class="creator">Creator: <%= tracks.elementAt(i).getCreator().getName() %></span><br />
 	</div>
 	<div style="float:right; text-align: right;">
-		<span id="duration_0">00:00:00</span><br />
+		<span id="duration_<%=i%>">00:00:00</span><br />
 		<a href="#" onClick="addTrackVote(<%=p.getId() %>, <%=tracks.elementAt(i).getId() %>);"><img src="images/vote_orange.png" class="voteArrow" /></a>
 		<span id="track_vote_<%=tracks.elementAt(i).getId() %>" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
@@ -80,8 +80,9 @@ $(element).data("tOffset", <%= tracks.elementAt(i).getDelay() %>);
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
 				
-				<div id="saveBtn" style="float:right; height:50px;">Save!</div>
-				<div id="downloadBtn" style="float: right; height: 50px;">Download!</div>
+				<div id="downloadBtn">Download!</div>
+				<div id="saveBtn">Save</div>
+				<div id="loadBtn">Load</div>
 			</div>
 		</td>
 	</tr>
@@ -317,6 +318,10 @@ $(function() {
 		});
 		$("#saveForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
 		$("#saveForm").submit();
+	});
+	
+	$("#saveBtn").click(function() {
+		
 	});
 	
 	$("#downloadBtn").click(function() {
