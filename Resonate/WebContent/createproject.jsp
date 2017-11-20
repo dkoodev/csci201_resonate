@@ -1,4 +1,10 @@
 <%@ include file="includes/global_header.jsp" %>
+
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %> 
+
+<!-- added this -->
+
 <%
 if (u == null) {
 	response.sendRedirect("/Resonate/login.jsp");
@@ -26,6 +32,21 @@ if (u == null) {
 			<input id = "t" class="inputs" type="text" name="description" placeholder="A short description" /><br />
 			</br>
 			<input id = "t" class="inputs" type="text" name="genre" placeholder="Genre" /><br />
+	</div> 
+			
+			<div id="suggested">Suggested Genres : </div>
+			<%
+			Vector<String> genreType =  new Vector<String>();
+			genreType.add("jazz");
+			genreType.add("kpop");
+			genreType.add("classical");
+			genreType.add("rock");%>
+			<%for(int i = 0; i < genreType.size(); i++){%>
+				<li id="genreType"><%=genreType.get(i)%></li>
+			<%}%>
+			<br>			
+			
+			
 		  	<p id="photo">Add a Project Photo: </p><input class="inputs" type="file" id="photoFile" name="photo" accept=".png, .jpg, .jpeg" /><br />
 			<p id="res">Add some resources for others to build from:</p>
 			<input class="inputs" type="button" onClick="addFileBtn()" value="Add A File" />
@@ -39,7 +60,7 @@ if (u == null) {
 				<input type="submit" value="Create Project!" class="errorNotifier" /><!-- Create Project!</button>-->
 			<% } %>	
 		</form>
-	</div>
+<!-- 	</div> -->
 </div>
 <%
 if (error != null && !error.equals("")) {
