@@ -1,7 +1,7 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: Ubuntu ;
+  font-family: 'Ubuntu', sans-serif !important;
 }
 
 /* ---- button ---- */
@@ -15,14 +15,14 @@ body {
 
 
 #title1 {	
-  font-family: Ubuntu;
+  font-family: 'Ubuntu', sans-serif !important;
   font-weight: bold;
   font-size: 250%;
   display: inline;
   margin-left:45px; 
 }
 #title2 {
-  font-family: Ubuntu;
+  font-family: 'Ubuntu', sans-serif !important;
   font-weight: bold;
   font-size: 250%;
   color: #00b4a8;

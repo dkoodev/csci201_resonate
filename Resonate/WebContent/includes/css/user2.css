@@ -42,7 +42,7 @@ tr {
 #likedprojects{
 	background-color: white; 
 	font-size: 25px; 
-	font-family: Ubuntu; 
+	font-family: 'Ubuntu', sans-serif !important; 
 	padding-top: 80px;
 	padding-left: 70px; 
 	padding-bottom: 70px;

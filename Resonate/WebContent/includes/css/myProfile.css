@@ -13,12 +13,12 @@
 	margin-left:0px; 
 	font-size: 50px;
 	text-align: center; 
-	font-family: Gotham Bold; 
+	font-family: 'Ubuntu', sans-serif !important; 
 }
 
 #profile{
     font-size: 25px;
-	font-family: Gotham Bold; 
+	font-family: 'Ubuntu', sans-serif !important; 
 }
 
 
@@ -46,7 +46,7 @@
 
 #edit{
 	font-size: 30px;
-	font-family: Courier; 
+	font-family: 'Ubuntu', sans-serif !important;
 	word-spacing: -10px;
 	text-align:center;
 }
