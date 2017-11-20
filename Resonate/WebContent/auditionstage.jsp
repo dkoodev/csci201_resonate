@@ -39,7 +39,7 @@ for (int i=0; i<tracks.size(); i++ ) {
 <script type="text/javascript">
 var element = document.getElementById("track_<%=i%>");
 $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
-$(element).data("tOffset", <%= tracks.elementAt(i).getDelay() %>);
+$(element).data("savedOffset", <%= tracks.elementAt(i).getDelay() %>);
 </script>
 <audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>
 <%
@@ -104,13 +104,15 @@ var scrollOffset = 0;
 var playhead = 0;
 var playing = false;
 
+var cEvent = jQuery.Event("logged");
+
 function audioLoad(audio, element, index) {
 	$(element).css('opacity', 1);
 	
 	var aWidth = 40*(audio.duration);
-	
+	$(element).data('aWidth', aWidth);
 	var min = Math.floor((audio.duration)/60);
-	var sec = Math.floor(audio.duration);
+	var sec = Math.floor(audio.duration)-min*60;
 	var ms = Math.floor(((audio.duration%1)*1000)%60);
 	var timeString;
 	if (min < 10) {
@@ -131,6 +133,54 @@ function audioLoad(audio, element, index) {
 	$("#duration_" + index.toString()).text(timeString);
 	
 	return aWidth;
+}
+
+function insertAudio(x, y, element, audio, aWidth, dragobj) {
+	var getId = $(element).attr('id');
+	var idParts = getId.split("_");
+	var index = parseInt(idParts[1]);
+	console.log(index);
+	
+	x = 333-scrollOffset; y = 22 + 72*(tracksin-(index));
+	$(element).data('inserted', true);
+	$(element).data('xVal', x);
+	$(element).data('yVal', y);
+	  element.style.webkitTransform =
+		    element.style.transform =
+		        'translate(' + (333 - scrollOffset) + 'px, ' + y + 'px)';
+	  $(element).css('width', aWidth);
+	  $(element).css('z-index', 5);
+	  $(element).css('background', '#ffffff url(images/waveform' + index%3 + '.PNG) repeat-x left bottom');
+	  tracksin++;
+	  $(element).addClass('snapTrackInserted');
+	  $(element).removeClass('snapTrack');
+	  
+	  $('#noInserts').css('opacity', 0);
+	  
+	  $(audio).data('tOffset', 0);
+	  
+	  dragobj.draggable(true);
+}
+
+function removeAudio(x, y, element, audio, dragobj) {
+	if (!audio.paused) audio.pause();
+  	element.style.webkitTransform =
+	    element.style.transform =
+	        'translate(0px, 0px)';
+  	x=y=0;
+  	$(element).data('inserted', false);
+  	$(element).data('xVal', null);
+	$(element).data('yVal', null);
+	$(audio).data('tOffset', 0);
+  	dragobj.draggable(false);
+  	$(element).css('width', 306);
+  	$(element).css('z-index', 15);
+  	$(element).addClass('snapTrack');
+  	$(element).removeClass('snapTrackInserted');
+  
+  	$(audio).data('tOffset', -1);
+  	
+  	tracksin--;
 }
 
 $(function() {
@@ -197,48 +247,38 @@ $(function() {
 			if (playhead == 0) audio.currentTime = 0;
 			else audio.currentTime = (playhead-$(audio).data('tOffset'));
 			
-			if (x == 0 && y == 0) {
-				x = 333-scrollOffset; y = 22 + 72*(tracksin-(index));
-				$(element).data('inserted', true);
-				$(element).data('xVal', x);
-				$(element).data('yVal', y);
-				  element.style.webkitTransform =
-					    element.style.transform =
-					        'translate(' + (333 - scrollOffset) + 'px, ' + y + 'px)';
-				  $(element).css('width', aWidth);
-				  $(element).css('z-index', 5);
-				  $(element).css('background', '#ffffff url(images/waveform' + index%3 + '.PNG) repeat-x left bottom');
-				  tracksin++;
-				  $(element).addClass('snapTrackInserted');
-				  $(element).removeClass('snapTrack');
-				  
-				  $('#noInserts').css('opacity', 0);
-				  
-				  $(audio).data('tOffset', 0);
-				  
-				  dragobj.draggable(true);
-		
+			console.log("double tapped");
+			
+			if (!$(element).data('inserted')) {
+				insertAudio(x, y, element, audio, aWidth, dragobj);
+				x = $(element).data('xVal');
+				y = $(element).data('yVal');
 			  } else {
-				if (!audio.paused) audio.pause();
-			  	element.style.webkitTransform =
-				    element.style.transform =
-				        'translate(0px, 0px)';
-			  	x=y=0;
-			  	$(element).data('inserted', false);
-			  	$(element).data('xVal', null);
-				$(element).data('yVal', null);
-				$(audio).data('tOffset', 0);
-			  	dragobj.draggable(false);
-			  	$(element).css('width', 306);
-			  	$(element).css('z-index', 15);
-			  	$(element).addClass('snapTrack');
-			  	$(element).removeClass('snapTrackInserted');
-			  
-			  	$(audio).data('tOffset', -1);
-			  	
-			  	tracksin--;
+				removeAudio(x, y, element, audio, dragobj)
+				x = $(element).data('xVal');
+				y = $(element).data('yVal');
 			  }
 	  	});
+		
+		$(element).on("logged", function(event) {
+			if (playhead == 0) audio.currentTime = 0;
+			else audio.currentTime = (playhead-$(audio).data('tOffset'));
+			
+			console.log("logged");
+			
+			if (!$(element).data('inserted')) {
+				insertAudio(x, y, element, audio, aWidth, dragobj);
+				x = $(element).data('xVal');
+				y = $(element).data('yVal');
+			  } else {
+				removeAudio(x, y, element, audio, dragobj)
+				x = $(element).data('xVal');
+				y = $(element).data('yVal');
+			  }
+		});
+		
+		$(element).data('dragobj', dragobj);
+		$(dragobj).trigger("doubletap");
 	});
 	
 	$('#scroller').scrollLeft(0);
@@ -320,8 +360,37 @@ $(function() {
 		$("#saveForm").submit();
 	});
 	
-	$("#saveBtn").click(function() {
-		
+	$("#loadBtn").click(function() {
+		$('.trackable').each(function(index, element) {
+			//var element = document.getElementById("track_" + index.toString());
+			var audio = document.getElementById("audio_" + index.toString());
+			var delay = $(element).data('savedOffset');
+			var x = $(element).data('xVal');
+			var y = $(element).data('yVal');
+			var pOffset = delay*(1000/25);
+			
+			var isIn = $(element).data('inserted');
+			
+			//if its not inserted and supposed to be
+			if(!$(element).data('inserted') && delay != -1) {
+				$(element).trigger("logged");
+				x += pOffset;
+				$(element).data('xVal', x);
+				
+				element.style.webkitTransform =
+					element.style.transform =
+					    'translate(' + x + 'px, ' + y + 'px)';
+			}
+			// if its inserted and not supposed to be
+			else if ($(element).data('inserted') && delay == -1) {
+				$(element).trigger("logged");
+			}
+			/*
+			if (delay != -1) {
+				var w = $(element).data('aWidth');
+				insertAudio(x, y, element, audio, w, dragobj);
+			}*/
+		});
 	});
 	
 	$("#downloadBtn").click(function() {

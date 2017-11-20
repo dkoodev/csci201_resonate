@@ -37,7 +37,7 @@ public class SaveProject extends HttpServlet {
     		//trackDelays.add(e)
     		String comp[] = temp.split(" ");
     		int trackId = Integer.parseInt(comp[0]);
-    		int tDelay = Integer.parseInt(comp[1]);
+    		float tDelay = Float.parseFloat(comp[1]);
     		
     		boolean f = JDBCDriver.saveDelay(trackId, tDelay);
     		if (!f) System.out.println("Failure");
