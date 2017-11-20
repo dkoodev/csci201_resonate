@@ -97,9 +97,6 @@ $(element).data("savedOffset", <%= del %>);
 </form>
 <script type="text/javascript">
 
-// TODO: Potentially waveforms, if there's time.
-// https://www.npmjs.com/package/waveform-data
-
 var tracksin = 0;
 var scrollOffset = 0;
 var playhead = 0;
@@ -191,7 +188,7 @@ $(function() {
 		/* Initializing audio */
 		var audio = document.getElementById("audio_" + index.toString());
 		var aWidth = 60;
-		//$(audio).data('tOffset', -1);
+		$(audio).data('tOffset', -1);
 		audio.loop = false;
 		if (audio.readyState > 3) {
 			aWidth = audioLoad(audio, element, index);
@@ -245,37 +242,39 @@ $(function() {
 		}).draggable(false);
 	  	
 		dragobj.on('doubletap', function (event) {
-			if (playhead == 0) audio.currentTime = 0;
-			else audio.currentTime = (playhead-$(audio).data('tOffset'));
-			
 			console.log("double tapped");
 			
 			if (!$(element).data('inserted')) {
 				insertAudio(x, y, element, audio, aWidth, dragobj);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
-			  } else {
+			} else {
 				removeAudio(x, y, element, audio, dragobj)
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
-			  }
+			}
+			
+			if (playhead == 0) audio.currentTime = 0;
+			else audio.currentTime = (playhead-$(audio).data('tOffset'));
+
 	  	});
 		
 		$(element).on("logged", function(event) {
-			if (playhead == 0) audio.currentTime = 0;
-			else audio.currentTime = (playhead-$(audio).data('tOffset'));
-			
+		
 			console.log("logged");
 			
 			if (!$(element).data('inserted')) {
 				insertAudio(x, y, element, audio, aWidth, dragobj);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
-			  } else {
+			} else {
 				removeAudio(x, y, element, audio, dragobj)
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
-			  }
+			}
+			
+			if (playhead == 0) audio.currentTime = 0;
+			else audio.currentTime = (playhead-$(audio).data('tOffset'));
 		});
 		
 		$(element).data('dragobj', dragobj);
@@ -369,28 +368,54 @@ $(function() {
 			var x = $(element).data('xVal');
 			var y = $(element).data('yVal');
 			var pOffset = delay*(1000/25);
+			console.log("poffset " + pOffset);
 			
 			var isIn = $(element).data('inserted');
 			
 			//if its not inserted and supposed to be
 			if(!$(element).data('inserted') && delay != -1) {
 				$(element).trigger("logged");
-				x += pOffset;
-				$(element).data('xVal', x);
 				
+				//x = $(element).data('xVal');
+				//x += pOffset;
+				x = 333 - scrollOffset + pOffset;
+				$(element).data('xVal', x);
+				$(audio).data('tOffset', delay).delay(1000);
+				/*
 				element.style.webkitTransform =
 					element.style.transform =
 					    'translate(' + x + 'px, ' + y + 'px)';
+				*/
+				setTimeout(function() {
+					console.log
+					element.style.webkitTransform =
+						element.style.transform =
+						    'translate(' + x + 'px, ' + y + 'px)';
+				}, 500);
 			}
 			// if its inserted and not supposed to be
 			else if ($(element).data('inserted') && delay == -1) {
 				$(element).trigger("logged");
+			} 
+			// if it inserted and is supposed to be: delay
+			else if ($(element).data('inserted') && delay != -1) {
+				//x = $(element).data('xVal');
+				x = 333 - scrollOffset + pOffset;
+				$(element).data('xVal', x);
+				$(audio).data('tOffset', delay);
+				
+				/*element.style.webkitTransform =
+					element.style.transform =
+					    'translate(' + x + 'px, ' + y + 'px)';
+				*/
+				$(element).css({
+					  '-webkit-transform' : 'translate(' + x + 'px, ' + y + 'px)',
+					  '-moz-transform'    : 'translate(' + x + 'px, ' + y + 'px)',
+					  '-ms-transform'     : 'translate(' + x + 'px, ' + y + 'px)',
+					  '-o-transform'      : 'translate(' + x + 'px, ' + y + 'px)',
+					  'transform'         : 'translate(' + x + 'px, ' + y + 'px)'
+					});
 			}
-			/*
-			if (delay != -1) {
-				var w = $(element).data('aWidth');
-				insertAudio(x, y, element, audio, w, dragobj);
-			}*/
 		});
 	});
 	
