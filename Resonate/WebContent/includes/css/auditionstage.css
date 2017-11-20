@@ -74,6 +74,39 @@
 	opacity: 0;
 }
 
+#addTrack {
+	width: 306px; 
+	height:60px; 
+	border: #606060 1px solid; 
+	border-radius: 7px;
+	-webkit-transition: transform 300ms, width 300ms; 
+	transition: transform 300ms, width 300ms, background 300ms, top 300ms, opacity 300ms;; 
+	-moz-user-select: -moz-none; 
+	-khtml-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select: none; 
+	user-select: none;	
+	position: absolute;
+	bottom: 100px;
+	left: 7px;
+	z-index: 15;
+	padding: 8px;
+	background: #f09021;
+	box-shadow: inset 0px 0px 25px -12px #000000;
+	color: #FFFFFF;
+	font-size: 27px;
+	font-weight: 700;
+	text-align: center;
+	text-decoration: none;
+}
+
+#addTrack a, #addTrack a:hover, #addTrack a:visited {
+	color: #FFFFFF;
+	font-size: 27px;
+	font-weight: 700;
+	text-align: center;
+}
+
 .title {
 	height: 35px;
 	font-size: 22px;
