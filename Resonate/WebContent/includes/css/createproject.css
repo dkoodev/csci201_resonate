@@ -27,9 +27,11 @@
 }
 
 #t{
-	padding-right:300px;
+	/* padding-right:300px; */
 	padding-top:5px;
 	padding-bottom:5px;
+	
+	width: 400px;
 }
 
 #photo{

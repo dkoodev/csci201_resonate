@@ -10,6 +10,7 @@ tr {
 	width: 500px;
 }
 
+
 #projects {
 	width: 100%;
 }
@@ -23,7 +24,7 @@ tr {
 }
 
 #long2 {
-	position: absolute;
+	position: relative;
 	right: 20px;
 }
 
@@ -33,7 +34,7 @@ tr {
 }
 
 #createDate {
-	font-size: 15px;
+	font-size: 20px;
 	text-align: right;
 }
 
@@ -90,16 +91,12 @@ tr {
 
 .active {
 	background-color: #111;
-	border-style: solid;
-    border-bottom: #333;
-    border-right: #333;
-    border-top: #333;
-	border-color: #f09021;
-    border-width: 6px;
 }
 
 .button2 {
-	margin-left: 80px;
+	/* margin-left: 80px; */
+	margin-left: 0px;
+	
     background-color: #f09021;
     border: none;
     color: white;
