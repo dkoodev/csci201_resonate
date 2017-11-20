@@ -142,7 +142,7 @@ public class JDBCDriver {
 	    			int upvoteCount = rs.getInt("upvoteCount");
 	    			String fileLocation = rs.getString("fileLocation");
 	    			String fileName = rs.getString("fileName");
-	    			int delay = rs.getInt("delay");
+	    			float delay = rs.getFloat("delay");
 	    			int user_id = rs.getInt("user_id");
 	    					
 	    			User creator = getUserById(user_id, true); //(user_id);
@@ -162,7 +162,7 @@ public class JDBCDriver {
 		}
 	}
 	
-	public static boolean saveDelay(int track_id, int delay) {
+	public static boolean saveDelay(int track_id, float delay) {
 		if(!connect()) {
 			System.out.println("Not connected to database");
 			return false;
@@ -347,7 +347,7 @@ public class JDBCDriver {
 	
 	public static Track insertTrack(
 							String name, int upvoteCount, String fileLocation, 
-							String fileName, Integer delay, 
+							String fileName, float delay, 
 							User currentUser, Project currentProject, 
 							Integer role_id){
 		if(!connect()) {
@@ -393,7 +393,7 @@ public class JDBCDriver {
 				int new_track_user_id = -1;
 				String new_track_fileLocation = null;
 				String new_track_fileName = null;
-				Integer new_track_delay = null;
+				float new_track_delay = -1;
 				
 				do {
 					new_track_id = rs.getInt("_id");
@@ -403,7 +403,7 @@ public class JDBCDriver {
 					new_track_user_id = rs.getInt("user_id");
 					new_track_fileLocation = rs.getString("fileLocation");
 					new_track_fileName = rs.getString("fileName");
-					new_track_delay = rs.getInt("delay");
+					new_track_delay = rs.getFloat("delay");
 				} while(rs.next());
 				
 				User creator = getUserById(new_track_user_id, false);
@@ -741,7 +741,7 @@ public class JDBCDriver {
 	    			int upvoteCount = rs.getInt("upvoteCount");
 	    			String fileLocation = rs.getString("fileLocation");
 	    			String fileName = rs.getString("fileName");
-	    			int delay = rs.getInt("delay");
+	    			float delay = rs.getFloat("delay");
 	    			//int user_id = rs.getInt("t.user_id");
 	    					
 	    			User creator = getUserById(userId, true); //(user_id);
@@ -826,7 +826,7 @@ public class JDBCDriver {
 		    			int upvoteCount = rs.getInt("upvoteCount");
 		    			String fileLocation = rs.getString("fileLocation");
 		    			String fileName = rs.getString("fileName");
-		    			int delay = rs.getInt("delay");
+		    			float delay = rs.getFloat("delay");
 		    			int user_id = rs.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id, true);
@@ -875,7 +875,7 @@ public class JDBCDriver {
 		    			int upvoteCount = rs2.getInt("upvoteCount");
 		    			String fileLocation = rs2.getString("fileLocation");
 		    			String fileName = rs2.getString("fileName");
-		    			int delay = rs2.getInt("delay");
+		    			float delay = rs2.getFloat("delay");
 		    			int user_id = rs2.getInt("user_id");
 		    					
 		    			User creator = getUserById(user_id, true);
@@ -899,7 +899,7 @@ public class JDBCDriver {
 			    			int upvoteCount = rs.getInt("upvoteCount");
 			    			String fileLocation = rs.getString("fileLocation");
 			    			String fileName = rs.getString("fileName");
-			    			int delay = rs.getInt("delay");
+			    			float delay = rs.getFloat("delay");
 			    			int user_id = rs.getInt("user_id");
 			    					
 			    			User creator = getUserById(user_id, true);
