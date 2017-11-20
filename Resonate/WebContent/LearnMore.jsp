@@ -23,8 +23,8 @@
 			tracks or ideas, and performers can play the parts available. 
 			This allows for private and shareable collaborative folders and groups 
 			between different types of users to create music as an end product.</p>
-			<p>Listeners can "Vote" for certain parts, 
-			resulting in a "Popular" track for a specific part such as drums and  main vocal. </p>
+		<!-- 	<p>Listeners can "Vote" for certain parts, 
+			resulting in a "Popular" track for a specific part such as drums and  main vocal. </p> -->
 		</div>
 	</div>
 	
