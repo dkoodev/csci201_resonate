@@ -34,6 +34,4 @@
 	</div>
 </div>
 
-<%@ include file="includes/global_footer.jsp" %>		
-
-
+<%@ include file="includes/global_footer.jsp" %>
