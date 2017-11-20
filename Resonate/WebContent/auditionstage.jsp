@@ -39,7 +39,8 @@ for (int i=0; i<tracks.size(); i++ ) {
 <script type="text/javascript">
 var element = document.getElementById("track_<%=i%>");
 $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
-$(element).data("savedOffset", <%= tracks.elementAt(i).getDelay() %>);
+<% float del = tracks.elementAt(i).getDelay(); %>
+$(element).data("savedOffset", <%= del %>);
 </script>
 <audio id="audio_<%=i %>" src="<%= tracks.elementAt(i).getFileLocation() %>" preload="auto"></audio>
 <%

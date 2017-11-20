@@ -131,15 +131,28 @@ public class CombineTracks extends Thread {
 			latch.countDown();
 		}
 	}
-	
+/*	FOR TESTING PORPOUSES
+                             /\
+                            /  |
+                           /   |
+              ____________/    (_______                    /|
+       __-----                         -----___           / |
+     _-                                        ---______ /  /
+ ___/ o                                                 > -<
+(___\                                    ________       \  \
+ `---\_     |   \               _____----        --------\  \
+       ---__\    |________------                          \ |
+             \   |                                         \'
+              \  |
+               \_|
 	public static void main(String [] args) {
 		// Test Code
 		Vector<Track> t = new Vector<Track>();
-		t.addElement(new Track(null, -1, -1, "Melody.mp3", null, null, null));
-		t.addElement(new Track(null, -1, -1, "Instrumental.mp3", null, null, null));
-		t.addElement(new Track(null, -1, -1, "Harmony 1.mp3", null, null, null));
-		t.addElement(new Track(null, -1, -1, "Harmony 2.mp3", null, null, null));
+		t.addElement(new Track(null, -1, -1, "Melody.mp3", null, -1, null));
+		t.addElement(new Track(null, -1, -1, "Instrumental.mp3", null, -1, null));
+		t.addElement(new Track(null, -1, -1, "Harmony 1.mp3", null, -1, null));
+		t.addElement(new Track(null, -1, -1, "Harmony 2.mp3", null, -1, null));
 		
 		new CombineTracks(t, "out.mp3", null);
-	}
+	}*/
 }
