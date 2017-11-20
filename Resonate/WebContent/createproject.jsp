@@ -30,13 +30,13 @@ if (u == null) {
 			<p id="res">Add some resources for others to build from:</p>
 			<input class="inputs" type="button" onClick="addFileBtn()" value="Add A File" />
 			<div id="filesHolder">
-			</div>
+			</div><br />
 			<% if (error != null && error.equals("SQL Error")) { %>
-				<input type="submit" value="Create Project!" class="errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again." />
+				<input type="submit" value="Create Project!" class="errorNotifier button2" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again." />
 			<% } else if (error != null && error.equals("Not Logged In")) { %>
-				<input type="submit" value="Create Project!" class="errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="How did you get here?" data-content="You are not logged in..." />
+				<input type="submit" value="Create Project!" class="errorNotifier button2" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="How did you get here?" data-content="You are not logged in..." />
 			<% } else { %>
-				<input type="submit" value="Create Project!" class="errorNotifier" /><!-- Create Project!</button>-->
+				<input type="submit" value="Create Project!" class="errorNotifier button2" /><!-- Create Project!</button>-->
 			<% } %>	
 		</form>
 	</div>
