@@ -68,6 +68,7 @@ tr {
     padding: 0;   
     position: relative;
     float: top; 
+    margin-top: 15px;
 }
 
 #navbar2 {

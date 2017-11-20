@@ -28,7 +28,7 @@ $(function() {
 	
 	$("#piano").height(windowHeight-125);
 	
-	$socket = new WebSocket("ws://localhost:8080/Resonate/resonating");
+	$socket = new WebSocket("ws://25.14.29.140:8080/Resonate/resonating");
 	$socket.onopen = function(event) {
 		// TODO: do nothing, right?
 	}
@@ -48,7 +48,30 @@ $(function() {
 		var vInt = parseInt(votes);
 		console.log(vInt);
 		//$(elem). TODO ANIMATE
+		$(elem).css({
+			  '-webkit-transform' : 'translate(0px, 20px)',
+			  '-moz-transform'    : 'translate(0px, 20px)',
+			  '-ms-transform'     : 'translate(0px, 20px)',
+			  '-o-transform'      : 'translate(0px, 20px)',
+			  'transform'         : 'translate(0px, 20px)',
+			  'opacity'			  : '0'
+			});
 		$(elem).text(vInt+1);
+		$(elem).css({
+			  '-webkit-transform' : 'translate(0px, -20px)',
+			  '-moz-transform'    : 'translate(0px, -20px)',
+			  '-ms-transform'     : 'translate(0px, -20px)',
+			  '-o-transform'      : 'translate(0px, -20px)',
+			  'transform'         : 'translate(0px, -20px)'
+			});
+		$(elem).css({
+			  '-webkit-transform' : 'translate(0px, 0px)',
+			  '-moz-transform'    : 'translate(0px, 0px)',
+			  '-ms-transform'     : 'translate(0px, 0px)',
+			  '-o-transform'      : 'translate(0px, 0px)',
+			  'transform'         : 'translate(0px, 0px)',
+			  'opacity'			  : '1'
+			});
 		
 	}
 	$socket.onclose = function(event) {
