@@ -113,6 +113,9 @@ $(element).data("savedOffset", <%= del %>);
 </form>
 <script type="text/javascript">
 
+var trackStack = new Array();
+
+
 var tracksin = 0;
 var scrollOffset = 0;
 var playhead = 0;
@@ -150,11 +153,14 @@ function audioLoad(audio, element, index) {
 	return aWidth;
 }
 
-function insertAudio(x, y, element, audio, aWidth, dragobj) {
+function insertAudio(x, y, element, audio, aWidth, dragobj, index) {
 	var getId = $(element).attr('id');
 	var idParts = getId.split("_");
 	var index = parseInt(idParts[1]);
-	console.log(index);
+	
+	trackStack.push(index);
+	
+	//console.log(index);
 	
 	x = 333-scrollOffset; y = 22 + 72*(tracksin-(index));
 	$(element).data('inserted', true);
@@ -177,7 +183,7 @@ function insertAudio(x, y, element, audio, aWidth, dragobj) {
 	  dragobj.draggable(true);
 }
 
-function removeAudio(x, y, element, audio, dragobj) {
+function removeAudio(x, y, element, audio, dragobj, index) {
 	if (!audio.paused) audio.pause();
   	element.style.webkitTransform =
 	    element.style.transform =
@@ -196,6 +202,25 @@ function removeAudio(x, y, element, audio, dragobj) {
   	$(audio).data('tOffset', -1);
   	
   	tracksin--;
+  	
+  	var removing = trackStack.lastIndexOf(index);
+  	if (removing == trackStack.length-1) {
+  		trackStack.pop();
+  	} else {
+  		var temp = trackStack.pop();
+  		trackStack[removing] = temp;
+  		
+  		// Its shifting time!
+  		var newElement = document.getElementById("track_" + temp.toString());
+  		var xv = $(newElement).data('xVal');
+  		var yv = $(newElement).data('yVal');
+  		var howMany = trackStack.length-removing;
+  		yv -= howMany*72;
+  		
+  		newElement.style.webkitTransform =
+			newElement.transform =
+			    'translate(' + xv + 'px, ' + yv + 'px)';
+  	}
 }
 
 $(function() {
@@ -262,11 +287,11 @@ $(function() {
 			console.log("double tapped");
 			
 			if (!$(element).data('inserted')) {
-				insertAudio(x, y, element, audio, aWidth, dragobj);
+				insertAudio(x, y, element, audio, aWidth, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			} else {
-				removeAudio(x, y, element, audio, dragobj)
+				removeAudio(x, y, element, audio, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			}
@@ -281,11 +306,11 @@ $(function() {
 			console.log("logged");
 			
 			if (!$(element).data('inserted')) {
-				insertAudio(x, y, element, audio, aWidth, dragobj);
+				insertAudio(x, y, element, audio, aWidth, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			} else {
-				removeAudio(x, y, element, audio, dragobj)
+				removeAudio(x, y, element, audio, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			}
