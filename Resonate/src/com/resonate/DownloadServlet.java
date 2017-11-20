@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.resonate.objects.Track;
 import com.resonate.server.CombineTracks;
@@ -85,11 +86,14 @@ public class DownloadServlet extends HttpServlet {
 	    		fileName += ".mp3";
 	    	}
 	    	
-        File file = new File(Config.pathToProject + "/WebContent/mergedTracks/", fileName);
-        response.setHeader("Content-Type", getServletContext().getMimeType(fileName));
-        response.setHeader("Content-Length", String.valueOf(file.length()));
-        response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\"");
-        Files.copy(file.toPath(), response.getOutputStream());
+	    	HttpSession session = request.getSession();
+	    	
+	    	File file = new File(Config.pathToProject + "/WebContent/mergedTracks/", fileName);
+
+	    	session.setAttribute("fileToDownload", file);
+	    	session.setAttribute("fileToDownloadFileName", fileName);
+	    	
+        response.sendRedirect("Downloading");
 	}
 
 
