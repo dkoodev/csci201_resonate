@@ -36,7 +36,6 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span id="track_vote_<%=tracks.elementAt(i).getId() %>" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
 </div>
-<div id="addTrack"><a href="addTrack.jsp">+ Add A Track!</a></div>
 <script type="text/javascript">
 var element = document.getElementById("track_<%=i%>");
 $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
@@ -47,6 +46,7 @@ $(element).data("savedOffset", <%= del %>);
 <%
 }
 %>
+<div id="addTrack"><a href="addTrack.jsp">+ Add A Track!</a></div>
 
 <table style="width:100%; height:100%; overflow-x: scroll;">
 	<tr style="width:100%; height:625px;">
@@ -94,6 +94,7 @@ $(element).data("savedOffset", <%= del %>);
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
 				
+				<div id="downloading"><img src="images/loading-crop.gif" /></div>
 				<div id="downloadBtn">Download!</div>
 				<% if (canSave) { %>
 				<div id="saveBtn">Save</div>
@@ -111,6 +112,9 @@ $(element).data("savedOffset", <%= del %>);
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
 <script type="text/javascript">
+
+var trackStack = new Array();
+
 
 var tracksin = 0;
 var scrollOffset = 0;
@@ -149,11 +153,14 @@ function audioLoad(audio, element, index) {
 	return aWidth;
 }
 
-function insertAudio(x, y, element, audio, aWidth, dragobj) {
+function insertAudio(x, y, element, audio, aWidth, dragobj, index) {
 	var getId = $(element).attr('id');
 	var idParts = getId.split("_");
 	var index = parseInt(idParts[1]);
-	console.log(index);
+	
+	trackStack.push(index);
+	
+	//console.log(index);
 	
 	x = 333-scrollOffset; y = 22 + 72*(tracksin-(index));
 	$(element).data('inserted', true);
@@ -176,7 +183,7 @@ function insertAudio(x, y, element, audio, aWidth, dragobj) {
 	  dragobj.draggable(true);
 }
 
-function removeAudio(x, y, element, audio, dragobj) {
+function removeAudio(x, y, element, audio, dragobj, index) {
 	if (!audio.paused) audio.pause();
   	element.style.webkitTransform =
 	    element.style.transform =
@@ -195,6 +202,25 @@ function removeAudio(x, y, element, audio, dragobj) {
   	$(audio).data('tOffset', -1);
   	
   	tracksin--;
+  	
+  	var removing = trackStack.lastIndexOf(index);
+  	if (removing == trackStack.length-1) {
+  		trackStack.pop();
+  	} else {
+  		var temp = trackStack.pop();
+  		trackStack[removing] = temp;
+  		
+  		// Its shifting time!
+  		var newElement = document.getElementById("track_" + temp.toString());
+  		var xv = $(newElement).data('xVal');
+  		var yv = $(newElement).data('yVal');
+  		var howMany = trackStack.length-removing;
+  		yv -= howMany*72;
+  		
+  		newElement.style.webkitTransform =
+			newElement.transform =
+			    'translate(' + xv + 'px, ' + yv + 'px)';
+  	}
 }
 
 $(function() {
@@ -261,11 +287,11 @@ $(function() {
 			console.log("double tapped");
 			
 			if (!$(element).data('inserted')) {
-				insertAudio(x, y, element, audio, aWidth, dragobj);
+				insertAudio(x, y, element, audio, aWidth, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			} else {
-				removeAudio(x, y, element, audio, dragobj)
+				removeAudio(x, y, element, audio, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			}
@@ -280,11 +306,11 @@ $(function() {
 			console.log("logged");
 			
 			if (!$(element).data('inserted')) {
-				insertAudio(x, y, element, audio, aWidth, dragobj);
+				insertAudio(x, y, element, audio, aWidth, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			} else {
-				removeAudio(x, y, element, audio, dragobj)
+				removeAudio(x, y, element, audio, dragobj, index);
 				x = $(element).data('xVal');
 				y = $(element).data('yVal');
 			}
@@ -436,6 +462,7 @@ $(function() {
 	});
 	
 	$("#downloadBtn").click(function() {
+		$("#downloading").css('opacity', 1);
 		var numberoftracks = 0;
 		$('.snapTrackInserted').each(function(index, element) {
 			//var element = document.getElementById("track_" + index.toString());
