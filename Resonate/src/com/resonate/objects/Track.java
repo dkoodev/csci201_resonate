@@ -6,10 +6,10 @@ public class Track {
 	int upvoteCount = 0;
 	String fileLocation = null;
 	String fileName = null;
-	Integer delay = null;
+	float delay = -1;
 	User creator = null;
 	
-	public Track(String name, int id, int upvoteCount, String fileLocation, String fileName, Integer delay, User creator) {
+	public Track(String name, int id, int upvoteCount, String fileLocation, String fileName, float delay, User creator) {
 		this.name = name;
 		this.id = id;
 		this.upvoteCount = upvoteCount;
@@ -43,10 +43,10 @@ public class Track {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public Integer getDelay() {
+	public float getDelay() {
 		return delay;
 	}
-	public void setDelay(Integer delay) {
+	public void setDelay(float delay) {
 		this.delay = delay;
 	}
 

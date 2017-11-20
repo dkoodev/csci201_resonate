@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `Tracks` (
   `upvoteCount` int(6) NOT NULL DEFAULT 0,
   `fileLocation` varchar(100) NOT NULL,
   `fileName` varchar(30) NOT NULL,
-  `delay` int(7) NOT NULL,
+  `delay` float NOT NULL,
   `createDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY fk1(project_id) REFERENCES Projects(_id),
   FOREIGN KEY fk2(role_id) REFERENCES Roles(_id),
