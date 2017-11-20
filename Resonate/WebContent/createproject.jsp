@@ -4,6 +4,8 @@ if (u == null) {
 	response.sendRedirect("/Resonate/login.jsp");
 	return;
 }
+
+
 %>
 
 <div id="piano">
