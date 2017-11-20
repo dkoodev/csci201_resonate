@@ -8,20 +8,20 @@ if (u == null) {
 
 <div id="piano">
 
-	<p id="catchphrase">Change the <font color="00b4a8">World</font>, One Note at a Time</p>
-	<p id="cpTwo">It All Starts With a Good <font color="00b4a8">Track</font></p>
+	<p id="catchphrase">Only<font color="00b4a8">You</font> can take the project</p>
+	<p id="cpTwo">To the <font color="00b4a8">Next Level</font>.</p>
 	<div id="inp">
 		<form name="cp" id="cp" action="CreateTrack" method="POST" enctype="multipart/form-data">
-			<input id = "t" class="inputs" type="text" name="name" placeholder="Name" /><br /><br />
-		  	<p id="photo">Add a mp3: </p><input class="inputs" type="file" id="photoFile" name="track" accept=".mp3" /><br />
+			<input id = "t" class="inputs" type="text" name="name" placeholder="Name Your Track" /><br /><br />
+		  	<div id="photo">Add a sound file: </div><br /> <input id="browse" class="inputs" type="file" name="track" accept=".mp3 .wav" /><br /><br />
 			<div id="filesHolder">
 			</div>
 			<% if (error != null && error.equals("SQL Error")) { %>
-				<input type="submit" value="Create Project!" class="errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again." />
+				<input type="submit" value="Create Track!" class="button2 errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="Uh Oh!" data-content="Something went wrong. Please try again." />
 			<% } else if (error != null && error.equals("Not Logged In")) { %>
-				<input type="submit" value="Create Project!" class="errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="How did you get here?" data-content="You are not logged in..." />
+				<input type="submit" value="Create Track!" class="button2 errorNotifier" data-toggle="popover" placement="bottom" role="tooltip" trigger="manual" title="How did you get here?" data-content="You are not logged in..." />
 			<% } else { %>
-				<input type="submit" value="Create Project!" class="errorNotifier" /><!-- Create Project!</button>-->
+				<input type="submit" value="Create Track!" class="button2 errorNotifier" /><!-- Create Project!</button>-->
 			<% } %>	
 		</form>
 	</div>
