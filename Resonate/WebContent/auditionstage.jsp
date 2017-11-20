@@ -36,6 +36,7 @@ for (int i=0; i<tracks.size(); i++ ) {
 		<span id="track_vote_<%=tracks.elementAt(i).getId() %>" class="voteNums"><%= tracks.elementAt(i).getVotes() %></span>
 	</div>
 </div>
+<div id="addTrack"><a href="addTrack.jsp">+ Add A Track!</a></div>
 <script type="text/javascript">
 var element = document.getElementById("track_<%=i%>");
 $(element).data("trackId", <%= tracks.elementAt(i).getId() %>);
@@ -67,22 +68,36 @@ $(element).data("savedOffset", <%= del %>);
 			</div>
 			<div id="scroller">
 				<div id="stage" style="width:8000px; height: 495px;">
-					<div id="noInserts">Double click a track to add it to your mix!</div>
+					<div id="noInserts">Double click a track to add it to your mix!
+					<br />Or, click 
+					<span style="color: #ffffff; background: #345678; border-radius: 6px; padding: 4px; font-weight: 700;">Load</span>
+					 to hear the Editors' mix!
+					</div>
 				</div>		
 			</div>
 			<div id="controls">
 				<div id="projInfo">Project: <span class="bold"><%= p.getName() %></span><br />
 								Editors: <span class="bold">
-								<% for (User editor : p.getEditors() ) { %>
-									<%=editor.getName() %>
-									<%= (!editor.equals(p.getEditors().lastElement())) ? ", " : "" %> 
+								<% boolean canSave = false;
+								for (User editor : p.getEditors() ) { 
+									if (u != null && editor.getName().equals(u.getName())) {
+										canSave = true;
+								%>
+									<%="You" %>
+									<% } else { %>
+										<%=editor.getName()%>
+									<% } %>
+									<%=(!editor.equals(p.getEditors().lastElement())) ? ", " : "" %> 
 								<% } %>
 								</span></div>
+				
 				<div id="stopBtn"><div id="stopSquare"></div></div>
 				<div id="playBtn"><div id="playTriangle"></div></div>
 				
 				<div id="downloadBtn">Download!</div>
+				<% if (canSave) { %>
 				<div id="saveBtn">Save</div>
+				<% } %>
 				<div id="loadBtn">Load</div>
 			</div>
 		</td>
@@ -101,6 +116,7 @@ var tracksin = 0;
 var scrollOffset = 0;
 var playhead = 0;
 var playing = false;
+var finalIndex = 0;
 
 var cEvent = jQuery.Event("logged");
 
@@ -387,7 +403,7 @@ $(function() {
 					    'translate(' + x + 'px, ' + y + 'px)';
 				*/
 				setTimeout(function() {
-					console.log
+					console.log(x);
 					element.style.webkitTransform =
 						element.style.transform =
 						    'translate(' + x + 'px, ' + y + 'px)';
@@ -449,7 +465,7 @@ setInterval(function () {
 	var addTime = currTime-prevTime;
 	if (playing) {
 		playhead += addTime/1000;
-		console.log(playhead);
+		//console.log(playhead);
 		var playheadDiv = document.getElementById("playhead");
 			
 		var playheadPos = (playhead*(1000/25)-scrollOffset);
