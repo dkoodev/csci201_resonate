@@ -54,7 +54,7 @@ public class CreateTrack extends HttpServlet {
 		String track_name = request.getParameter("name");
 		String track_fileLocation = null;
 		String track_fileName = null;
-		Integer track_delay = -1;
+		float track_delay = -1;
 		Integer role_id = 1;
  
 		// Multipart file thingy
