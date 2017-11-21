@@ -9,7 +9,7 @@ body {
 
 .quicksearch{
 	position:relative; 
-	margin-left:775px;	
+	margin-left:850px;	
     top: 100px;
 }
 
@@ -162,7 +162,7 @@ body {
   border: 1px solid #333;
   position: relative; 
   margin-left: 220px;
-  margin-right: 250px;
+  margin-right: 180px;
   margin-bottom: 30px;  																				
 }
 

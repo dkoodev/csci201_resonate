@@ -57,7 +57,15 @@ $(element).data("savedOffset", <%= del %>);
 		</div>
 		</td>
 		<td style="width:75%; background: #f0f0f0; border-left:#979797 2px solid;">
-		<div class="title" style="width: 100%; margin-left: 5px; padding-left:2px;">Stage</div>
+		<div class="title" style="width: 100%; margin-left: 5px; padding-left:2px;">
+			<div style="float:left;">Stage</div>
+			<div style="float:right; padding: 4px 20px 0 0; font-size: 18px;">
+			<% if (p.getId() == 13) { %>
+			<a href="uploads/projects/resources/13_CityOfStars_Resources.zip">View Project Resouces</a></div>
+			<% } else { %>
+			<a href="#">View Project Resouces</a></div>
+			<% } %>
+		</div>
 		<div style="width: 10px; height: 495px; float:left;">
 				<br /><br />1
 				<br /><br /><br />2
@@ -481,11 +489,21 @@ $(function() {
 		$("#downloadForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
 		$("#downloadForm").submit();
 	});
+	
 });
 var d = new Date();
 var prevTime = d.getTime();
 var currTime;
+var cookieValue;
 setInterval(function () {
+	
+	var cookieValue = Cookies.get('fileDownloadToken');
+	console.log(cookieValue);
+	if (cookieValue == "true") {
+		$("#downloading").css('opacity', 0);
+		Cookies.set('fileDownloadToken', 'false');
+	}
+	
 	d = new Date();
 	currTime = d.getTime();
 	
@@ -519,7 +537,7 @@ setInterval(function () {
 				}
 			}
 		});
-		
+				
 		if (!anyplays) {
 			playhead = 0;
 			playing = false;

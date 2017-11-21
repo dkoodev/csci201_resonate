@@ -31,6 +31,9 @@ String error = (String)session.getAttribute("errorMessage");
 		<script type="text/javascript" src="includes/js/jquery-3.2.1.min.js"></script>
 		<script type="text/javascript" src="includes/js/main.js"></script>
 		
+		<!-- js cookie -->
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+		
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="includes/css/bootstrap/bootstrap.min.css" />
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
