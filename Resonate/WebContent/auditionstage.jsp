@@ -57,7 +57,10 @@ $(element).data("savedOffset", <%= del %>);
 		</div>
 		</td>
 		<td style="width:75%; background: #f0f0f0; border-left:#979797 2px solid;">
-		<div class="title" style="width: 100%; margin-left: 5px; padding-left:2px;">Stage</div>
+		<div class="title" style="width: 100%; margin-left: 5px; padding-left:2px;">
+			<div style="float:left;">Stage</div>
+			<div style="float:right; padding: 4px 20px 0 0; font-size: 18px;"><a href="resources.jsp?project=<%=p.getId()%>">View Project Resouces</a></div>
+		</div>
 		<div style="width: 10px; height: 495px; float:left;">
 				<br /><br />1
 				<br /><br /><br />2
@@ -108,7 +111,7 @@ $(element).data("savedOffset", <%= del %>);
 <form id="saveForm" style="opacity:0;" method="POST" action="SaveProject">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
-<form id="downloadForm" style="opacity:0;" method="POST" action="DownloadServlet">
+<form id="downloadForm" style="opacity:0;" method="POST" action="DownloadServlet"  target="_blank">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
 <script type="text/javascript">
