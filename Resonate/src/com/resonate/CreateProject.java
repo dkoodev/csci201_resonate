@@ -105,7 +105,7 @@ public class CreateProject extends HttpServlet {
         if (newProject != null) {
 	        	// 	session.setAttribute("project", newProject); //TODO: Do we want this?
 	        	System.out.println("Project Creation success.");
-	        	response.sendRedirect("/Resonate/auditionstage.jsp");
+	        	response.sendRedirect("/Resonate/auditionstage.jsp?project=" + newProject.getId());
         } else {
         		session.setAttribute("errorMessage", "SQL Error");
         		response.sendRedirect("/Resonate/createproject.jsp");
