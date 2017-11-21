@@ -305,7 +305,13 @@ $(function() {
 			}
 			
 			if (playhead == 0) audio.currentTime = 0;
-			else audio.currentTime = (playhead-$(audio).data('tOffset'));
+			else {
+				var mvOff = (playhead-$(audio).data('tOffset'));
+				if (mvOff < 0) mvOff = 0
+				audio.currentTime = mvOff;
+				
+				if (mvOff > playhead) audio.pause();
+			}
 
 	  	});
 		
@@ -324,7 +330,13 @@ $(function() {
 			}
 			
 			if (playhead == 0) audio.currentTime = 0;
-			else audio.currentTime = (playhead-$(audio).data('tOffset'));
+			else {
+				var mvOff = (playhead-$(audio).data('tOffset'));
+				if (mvOff < 0) mvOff = 0
+				audio.currentTime = mvOff;
+				
+				if (mvOff > playhead) audio.pause();
+			}
 		});
 		
 		$(element).data('dragobj', dragobj);
@@ -453,6 +465,17 @@ $(function() {
 				x = 333 - scrollOffset + pOffset;
 				$(element).data('xVal', x);
 				$(audio).data('tOffset', delay);
+				
+				var mvOff = (playhead-$(audio).data('tOffset'));
+				if (mvOff < 0) {
+					mvOff = 0;
+				} 
+				audio.currentTime = mvOff;
+				if (mvOff > playhead) {
+					audio.pause();
+					audio.currentTime = 0;
+				}
+				
 				
 				/*element.style.webkitTransform =
 					element.style.transform =
