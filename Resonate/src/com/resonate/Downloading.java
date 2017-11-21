@@ -32,16 +32,13 @@ public class Downloading extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    		HttpSession session = request.getSession();
+    	HttpSession session = request.getSession();
 		File file = (File) session.getAttribute("fileToDownload");
 		String fileName = (String) session.getAttribute("fileToDownloadFileName");
         response.setHeader("Content-Type", getServletContext().getMimeType(fileName));
         response.setHeader("Content-Length", String.valueOf(file.length()));
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         Files.copy(file.toPath(), response.getOutputStream());
-        
-        Project p = (Project)session.getAttribute("project");
-		response.sendRedirect("Resonate/auditionstage.jsp?project=" + p.getId());
 	}
 
 

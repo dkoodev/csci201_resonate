@@ -59,7 +59,12 @@ $(element).data("savedOffset", <%= del %>);
 		<td style="width:75%; background: #f0f0f0; border-left:#979797 2px solid;">
 		<div class="title" style="width: 100%; margin-left: 5px; padding-left:2px;">
 			<div style="float:left;">Stage</div>
-			<div style="float:right; padding: 4px 20px 0 0; font-size: 18px;"><a href="resources.jsp?project=<%=p.getId()%>">View Project Resouces</a></div>
+			<div style="float:right; padding: 4px 20px 0 0; font-size: 18px;">
+			<% if (p.getId() == 13) { %>
+			<a href="uploads/projects/resources/13_CityOfStars_Resources.zip">View Project Resouces</a></div>
+			<% } else { %>
+			<a href="#">View Project Resouces</a></div>
+			<% } %>
 		</div>
 		<div style="width: 10px; height: 495px; float:left;">
 				<br /><br />1
@@ -111,7 +116,7 @@ $(element).data("savedOffset", <%= del %>);
 <form id="saveForm" style="opacity:0;" method="POST" action="SaveProject">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
-<form id="downloadForm" style="opacity:0;" method="POST" action="DownloadServlet"  target="_blank">
+<form id="downloadForm" style="opacity:0;" method="POST" action="DownloadServlet">
 	<input type="hidden" name="projectid" value="<%=p.getId() %>" />
 </form>
 <script type="text/javascript">
@@ -484,6 +489,10 @@ $(function() {
 		$("#downloadForm").append("<input type=\"hidden\" name=\"numTracks\" value=\"" + numberoftracks + "\" />");
 		$("#downloadForm").submit();
 	});
+	
+	window.onbeforeunload = function() {
+		$("#downloading").css('opacity', 0);
+	};
 });
 var d = new Date();
 var prevTime = d.getTime();

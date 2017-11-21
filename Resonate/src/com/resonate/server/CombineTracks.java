@@ -91,7 +91,12 @@ public class CombineTracks extends Thread {
 		File dir;
 		
 		if (OSValidator.isWindows()) {
-			dir = new File("C:/ffmpeg/win/bin");
+			if(Config.pathToProject.endsWith("/")) {
+				dir = new File(Config.pathToProject + "Resources/Resonate/ffmpeg/win/bin");
+			}else {
+				dir = new File(Config.pathToProject + "/Resources/Resonate/ffmpeg/win/bin");
+			}
+			
 		} else if (OSValidator.isMac()) {
 			if(Config.pathToProject.endsWith("/")) {
 				dir = new File(Config.pathToProject + "Resources/Resonate/ffmpeg/mac/bin/");
