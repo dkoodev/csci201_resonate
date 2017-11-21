@@ -28,7 +28,9 @@ $(function() {
 	
 	$("#piano").height(windowHeight-125);
 	
-	$socket = new WebSocket("ws://25.14.29.140:8080/Resonate/resonating");
+	$socket = new WebSocket("ws://25.11.67.57:8080/Resonate/resonating");
+//	$socket = new WebSocket("ws://localhost:8080/Resonate/resonating");
+	
 	$socket.onopen = function(event) {
 		// TODO: do nothing, right?
 	}
