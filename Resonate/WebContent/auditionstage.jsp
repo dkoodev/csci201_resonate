@@ -490,14 +490,20 @@ $(function() {
 		$("#downloadForm").submit();
 	});
 	
-	window.onbeforeunload = function() {
-		$("#downloading").css('opacity', 0);
-	};
 });
 var d = new Date();
 var prevTime = d.getTime();
 var currTime;
+var cookieValue;
 setInterval(function () {
+	
+	var cookieValue = Cookies.get('fileDownloadToken');
+	console.log(cookieValue);
+	if (cookieValue == "true") {
+		$("#downloading").css('opacity', 0);
+		Cookies.set('fileDownloadToken', 'false');
+	}
+	
 	d = new Date();
 	currTime = d.getTime();
 	
@@ -531,7 +537,7 @@ setInterval(function () {
 				}
 			}
 		});
-		
+				
 		if (!anyplays) {
 			playhead = 0;
 			playing = false;
